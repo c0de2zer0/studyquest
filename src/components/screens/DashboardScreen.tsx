@@ -1,5 +1,6 @@
 'use client';
 import { useStore } from '@/store';
+import { useShallow } from 'zustand/react/shallow';
 import { mockLeaderboard } from '@/lib/mock-data';
 import { formatTime } from '@/lib/utils';
 import { SectionLabel } from '@/components/atoms/SectionLabel';
@@ -8,6 +9,7 @@ import { Badge } from '@/components/atoms/Badge';
 import { useState } from 'react';
 import { useTimer } from '@/hooks/useTimer';
 import { RankBadge } from '@/components/RankBadge';
+import { DAILY_QUOTES } from '@/lib/constants';
 
 export function DashboardScreen() {
   useTimer();
@@ -18,7 +20,8 @@ export function DashboardScreen() {
     startTimer, pauseTimer, stopTimer,
     addTask,
     setActiveTab,
-  } = useStore(s => ({
+    taskHistory,
+  } = useStore(useShallow(s => ({
     user: s.user,
     tasks: s.tasks,
     isRunning: s.isRunning,
@@ -31,7 +34,8 @@ export function DashboardScreen() {
     addTask: s.addTask,
     completeTask: s.completeTask,
     setActiveTab: s.setActiveTab,
-  }));
+    taskHistory: s.taskHistory,
+  })));
 
   const [newTaskName, setNewTaskName] = useState('');
   const [showTaskInput, setShowTaskInput] = useState(false);
@@ -39,6 +43,18 @@ export function DashboardScreen() {
   const doneTasks = tasks.filter(t => t.status === 'done').length;
   const totalTasks = tasks.length;
   const examDaysLeft = user.examDaysLeft;
+
+  // Daily quote (date-seeded, changes every day, deterministic)
+  const dayOfYear = Math.floor(
+    (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
+  );
+  const quote = DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
+
+  // Task completion stats from history
+  const last7 = taskHistory.slice(-7);
+  const avgPct = last7.length
+    ? Math.round(last7.reduce((acc, d) => acc + (d.total > 0 ? d.done / d.total : 0), 0) / last7.length * 100)
+    : 0;
   const examPct = Math.round(((89 - examDaysLeft) / 89) * 100);
   const dailyPct = Math.round((user.todayHours / user.dailyGoal) * 100);
 
@@ -54,6 +70,34 @@ export function DashboardScreen() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+
+      {/* Daily Quote */}
+      <div className="card" style={{
+        borderLeft: `3px solid ${quote.color}`,
+        padding: '12px 14px',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: 10,
+        background: 'rgba(255,255,255,.03)',
+      }}>
+        <div style={{
+          width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
+          background: quote.color + '33',
+          border: `2px solid ${quote.color}66`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: 'Orbitron', fontSize: 8, fontWeight: 700, color: quote.color,
+        }}>
+          {quote.initials}
+        </div>
+        <div>
+          <div style={{ fontFamily: 'Rajdhani', fontSize: 13, color: 'var(--text)', lineHeight: 1.5, fontStyle: 'italic' }}>
+            "{quote.text}"
+          </div>
+          <div style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--muted)', marginTop: 4 }}>
+            — {quote.author}
+          </div>
+        </div>
+      </div>
 
       {/* Live Timer Card */}
       <div className="card card-cyan" style={{ border: '1px solid rgba(34,211,238,.2)' }}>
@@ -356,6 +400,62 @@ export function DashboardScreen() {
                 + Görev ekle...
               </button>
             )}
+          </div>
+        </div>
+      </div>
+
+      {/* Task Completion Tracker */}
+      <div>
+        <div className="card" style={{ padding: '12px 14px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+            <span style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--muted)', letterSpacing: 1 }}>
+              GÜNLÜK GÖREV TAKİBİ
+            </span>
+            <span style={{ fontFamily: 'Orbitron', fontSize: 9, color: '#10B981' }}>
+              Ort: %{avgPct}
+            </span>
+          </div>
+          {/* Today progress */}
+          <div style={{ marginBottom: 10 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+              <span style={{ fontFamily: 'Rajdhani', fontSize: 11, color: 'var(--text)' }}>
+                Bugün: {doneTasks}/{totalTasks} görev
+              </span>
+              <span style={{ fontFamily: 'Orbitron', fontSize: 10, fontWeight: 700, color: '#22D3EE' }}>
+                %{totalTasks > 0 ? Math.round(doneTasks / totalTasks * 100) : 0}
+              </span>
+            </div>
+            <div style={{ height: 4, background: 'rgba(255,255,255,.08)', borderRadius: 2, overflow: 'hidden' }}>
+              <div style={{
+                height: '100%',
+                width: `${totalTasks > 0 ? Math.round(doneTasks / totalTasks * 100) : 0}%`,
+                background: 'linear-gradient(90deg, #7B5CF5, #22D3EE)',
+                borderRadius: 2,
+                transition: 'width .3s',
+              }} />
+            </div>
+          </div>
+          {/* 7-day mini bar chart */}
+          <div style={{ display: 'flex', gap: 3, alignItems: 'flex-end', height: 36 }}>
+            {last7.map((entry, i) => {
+              const pct = entry.total > 0 ? entry.done / entry.total : 0;
+              const isToday = i === last7.length - 1;
+              const date = new Date(entry.date);
+              const dayLabel = ['Pz', 'Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct'][date.getDay()];
+              return (
+                <div key={entry.date} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                  <div style={{
+                    width: '100%',
+                    height: Math.max(2, pct * 24),
+                    background: isToday ? '#22D3EE' : pct >= 0.8 ? '#10B981' : pct >= 0.5 ? '#7B5CF5' : 'rgba(255,255,255,.2)',
+                    borderRadius: 2,
+                  }} />
+                  <span style={{ fontFamily: 'Space Mono', fontSize: 6, color: isToday ? '#22D3EE' : 'var(--muted)' }}>
+                    {dayLabel}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
