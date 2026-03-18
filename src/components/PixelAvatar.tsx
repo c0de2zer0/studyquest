@@ -82,6 +82,8 @@ const PixelAvatar = React.memo(function PixelAvatar({
       style={{ imageRendering: 'pixelated', display: 'block' }}
       aria-hidden="true"
     >
+      {/* Character ground shadow */}
+      <ellipse cx="8" cy="31.5" rx="5" ry="0.8" fill="rgba(0,0,0,0.25)" />
       {layers.map(layer => {
         const pixels = selectPixels(layer, direction, isWalking, frameIndex);
         return (

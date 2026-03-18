@@ -60,7 +60,19 @@ export function AvatarScreen() {
         padding: 24,
       }}>
         <div style={{ position: 'relative', display: 'inline-block', marginBottom: 12 }}>
-          <div style={{ animation: 'float 3s ease-in-out infinite', display: 'inline-block', cursor: 'pointer' }}>
+          <div style={{
+            animation: 'float 3s ease-in-out infinite',
+            display: 'inline-block',
+            cursor: 'pointer',
+            background: 'linear-gradient(180deg, #0D1117 0%, #1A1040 60%, #0D1117 100%)',
+            border: '1px solid rgba(123,92,245,.4)',
+            borderRadius: 12,
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px 16px',
+            minHeight: 200,
+            position: 'relative',
+          }}>
             <PixelAvatar
               equippedItems={user.equippedItems}
               size="preview"

@@ -42,16 +42,23 @@ export const BASE_BODY_LAYER: AnimatedLayerDef = {
   id: 'base-body',
   slot: 'body',
   pixels: [
-    // torso
-    { x: 4, y: 10, w: 8, h: 11, color: '#F5C09A' },
-    // left arm
-    { x: 1, y: 10, w: 3, h: 9, color: '#F5C09A' },
-    // right arm
-    { x: 12, y: 10, w: 3, h: 9, color: '#F5C09A' },
+    // neck
+    { x: 6, y: 9, w: 4, h: 1, color: '#E8B48A' },
+    // torso (wider, more natural)
+    { x: 3, y: 10, w: 10, h: 11, color: '#E8B48A' },
+    // left arm (attached to torso)
+    { x: 1, y: 10, w: 3, h: 10, color: '#E8B48A' },
+    // right arm (attached to torso)
+    { x: 12, y: 10, w: 3, h: 10, color: '#E8B48A' },
+    // hip connector
+    { x: 3, y: 21, w: 10, h: 1, color: '#D4956A' },
     // left leg
-    { x: 4, y: 21, w: 4, h: 9, color: '#F5C09A' },
+    { x: 3, y: 22, w: 4, h: 9, color: '#E8B48A' },
     // right leg
-    { x: 8, y: 21, w: 4, h: 9, color: '#F5C09A' },
+    { x: 9, y: 22, w: 4, h: 9, color: '#E8B48A' },
+    // feet
+    { x: 2, y: 30, w: 5, h: 2, color: '#D4956A' },
+    { x: 9, y: 30, w: 5, h: 2, color: '#D4956A' },
   ],
 };
 
@@ -59,14 +66,35 @@ export const BASE_HEAD_LAYER: AnimatedLayerDef = {
   id: 'base-head',
   slot: 'head',
   pixels: [
-    // face
-    { x: 3, y: 2, w: 10, h: 7, color: '#F5C09A' },
-    // left eye
+    // head shape (wider, more round)
+    { x: 3, y: 1, w: 10, h: 8, color: '#F5C89A' },
+    // forehead shading
+    { x: 4, y: 1, w: 8, h: 1, color: '#E8B48A' },
+    // left eye white
+    { x: 4, y: 3, w: 3, h: 3, color: '#FFFFFF' },
+    // right eye white
+    { x: 9, y: 3, w: 3, h: 3, color: '#FFFFFF' },
+    // left pupil
     { x: 5, y: 4, w: 2, h: 2, color: '#1A1A2E' },
-    // right eye
-    { x: 9, y: 4, w: 2, h: 2, color: '#1A1A2E' },
+    // right pupil
+    { x: 10, y: 4, w: 2, h: 2, color: '#1A1A2E' },
+    // left eye shine
+    { x: 5, y: 4, w: 1, h: 1, color: '#4A90E2' },
+    // right eye shine
+    { x: 10, y: 4, w: 1, h: 1, color: '#4A90E2' },
+    // nose
+    { x: 7, y: 6, w: 2, h: 1, color: '#D4956A' },
     // mouth
-    { x: 6, y: 6, w: 4, h: 1, color: '#C0705A' },
+    { x: 5, y: 7, w: 6, h: 1, color: '#C07050' },
+    // mouth corners (smile)
+    { x: 5, y: 7, w: 1, h: 1, color: '#A06040' },
+    { x: 10, y: 7, w: 1, h: 1, color: '#A06040' },
+    // chin
+    { x: 4, y: 8, w: 8, h: 1, color: '#E8B48A' },
+    // ear left
+    { x: 2, y: 3, w: 2, h: 4, color: '#E8B48A' },
+    // ear right
+    { x: 12, y: 3, w: 2, h: 4, color: '#E8B48A' },
   ],
 };
 
