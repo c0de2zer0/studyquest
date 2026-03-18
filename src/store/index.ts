@@ -1,7 +1,7 @@
 'use client';
 import { create } from 'zustand';
 import { mockUser, mockTasks, mockMarketItems, mockChatMessages, mockVoiceRooms, mockNotifications, mockTournaments } from '@/lib/mock-data';
-import { TIMER_MODES, POMODORO_COUNT, XP_PER_MINUTE } from '@/lib/constants';
+import { TIMER_MODES, POMODORO_COUNT, XP_PER_MINUTE, LP_PER_MINUTE, RANK_TIERS } from '@/lib/constants';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -54,6 +54,7 @@ export interface Message {
   userColor: string;
   content: string;
   timestamp: string;
+  channel: string;
   reactions: { emoji: string; count: number; reacted?: boolean }[];
   isSystem?: boolean;
   replyTo?: string;
@@ -170,6 +171,15 @@ export interface StoreState {
   // Profile settings
   profileTab: 'profile'|'settings';
   setProfileTab: (t: 'profile'|'settings') => void;
+
+  // Rank
+  gainLP: (minutesStudied: number) => void;
+  dismissRankUp: () => void;
+
+  // Lobby
+  activeLobbyRoom: string | null;
+  openLobby: (roomId: string) => void;
+  closeLobby: () => void;
 }
 
 function getDuration(mode: TimerMode, phase: TimerPhase, customWork: number, customBreak: number): number {
@@ -214,6 +224,7 @@ export const useStore = create<StoreState>((set, get) => ({
     }
     const xp = Math.round((elapsed / 60) * XP_PER_MINUTE);
     const coins = elapsed / 3600;
+    get().gainLP(Math.round(elapsed / 60));
     set(s => ({
       isRunning: false,
       elapsed: 0,
@@ -245,6 +256,7 @@ export const useStore = create<StoreState>((set, get) => ({
       if (timerPhase === 'work') {
         const xp = Math.round((duration / 60) * XP_PER_MINUTE);
         const coins = duration / 3600;
+        get().gainLP(Math.round(duration / 60));
         set(s => ({
           elapsed: 0,
           timerPhase: nextPhase,
@@ -317,15 +329,56 @@ export const useStore = create<StoreState>((set, get) => ({
     return true;
   },
   equipItem: (id) => {
-    const item = get().items.find(i => i.id === id);
+    const { items, user } = get();
+    const item = items.find(i => i.id === id);
     if (!item || !item.owned) return;
-    set(s => ({
-      items: s.items.map(i => {
-        if (i.id === id) return { ...i, equipped: true };
-        if (i.category === item.category && i.equipped) return { ...i, equipped: false };
-        return i;
-      })
-    }));
+    const isEquipped = item.equipped;
+    const equippedCostume = items.find(i => i.category === 'costume' && i.equipped);
+    const costumeSlots = ['hat', 'top', 'bottom', 'shoes'] as const;
+
+    set(s => {
+      const newEquipped = { ...s.user.equippedItems };
+
+      if (isEquipped) {
+        // Toggle off
+        if (item.category === 'costume') {
+          costumeSlots.forEach(slot => { newEquipped[slot] = null; });
+        } else {
+          const slot = item.category as keyof typeof newEquipped;
+          if (slot in newEquipped) newEquipped[slot] = null;
+        }
+        return {
+          items: s.items.map(i => i.id === id ? { ...i, equipped: false } : i),
+          user: { ...s.user, equippedItems: newEquipped },
+        };
+      }
+
+      // Equipping
+      if (item.category === 'costume') {
+        costumeSlots.forEach(slot => { newEquipped[slot] = id; });
+      } else {
+        if (equippedCostume) {
+          costumeSlots.forEach(slot => { newEquipped[slot] = null; });
+        }
+        const slot = item.category as keyof typeof newEquipped;
+        if (slot in newEquipped) newEquipped[slot] = id;
+      }
+
+      return {
+        items: s.items.map(i => {
+          if (i.id === id) return { ...i, equipped: true };
+          if (item.category === 'costume') {
+            if (costumeSlots.includes(i.category as typeof costumeSlots[number]) && i.equipped) return { ...i, equipped: false };
+            if (i.category === 'costume' && i.equipped) return { ...i, equipped: false };
+          } else {
+            if (i.category === 'costume' && i.equipped) return { ...i, equipped: false };
+            if (i.category === item.category && i.equipped) return { ...i, equipped: false };
+          }
+          return i;
+        }),
+        user: { ...s.user, equippedItems: newEquipped },
+      };
+    });
   },
   unequipItem: (id) => set(s => ({ items: s.items.map(i => i.id === id ? { ...i, equipped: false } : i) })),
   marketCategory: 'all',
@@ -344,6 +397,7 @@ export const useStore = create<StoreState>((set, get) => ({
     if (!text.trim()) return;
     const now = new Date();
     const timestamp = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    const channel = get().activeChannel;
     set(s => ({
       messages: [...s.messages, {
         id: `m${Date.now()}`,
@@ -353,6 +407,7 @@ export const useStore = create<StoreState>((set, get) => ({
         userColor: '#7B5CF5',
         content: text,
         timestamp,
+        channel,
         reactions: [],
         replyTo,
       }]
@@ -401,6 +456,7 @@ export const useStore = create<StoreState>((set, get) => ({
     const { randoElapsed } = get();
     const xp = Math.round((randoElapsed / 60) * XP_PER_MINUTE);
     const coins = 1.5;
+    get().gainLP(Math.round(randoElapsed / 60));
     set(s => ({
       randoState: 'complete',
       user: {
@@ -463,4 +519,57 @@ export const useStore = create<StoreState>((set, get) => ({
   // Profile
   profileTab: 'profile',
   setProfileTab: (t) => set({ profileTab: t }),
+
+  // Rank
+  gainLP: (minutesStudied) => {
+    if (minutesStudied <= 0) return;
+    const { user } = get();
+    const lpGain = minutesStudied * LP_PER_MINUTE;
+    let newLp = user.lp + lpGain;
+    let newTier = user.rankTier;
+    let newDivision = user.rankDivision;
+    let promoted = false;
+    let rankUpInfo: { newTier: string; newDivision: number } | null = null;
+    const divToRoman = ['', 'I', 'II', 'III', 'IV'] as const;
+
+    while (newLp >= 100 && newTier !== 'Usta') {
+      newLp -= 100;
+      if (newDivision > 1) {
+        newDivision -= 1;
+      } else {
+        const idx = RANK_TIERS.indexOf(newTier as typeof RANK_TIERS[number]);
+        if (idx < RANK_TIERS.length - 1) {
+          newTier = RANK_TIERS[idx + 1];
+          newDivision = 4;
+        } else {
+          // Already at Usta — stop
+          break;
+        }
+      }
+      promoted = true;
+      rankUpInfo = { newTier, newDivision };
+    }
+
+    const newRank = newTier === 'Usta' ? 'Usta' : `${newTier} ${divToRoman[newDivision]}`;
+    const newLpHistory = [...user.lpHistory, user.lp + lpGain].slice(-20);
+
+    set(s => ({
+      user: {
+        ...s.user,
+        lp: newLp,
+        rankTier: newTier,
+        rankDivision: newDivision,
+        rank: newRank,
+        lpHistory: newLpHistory,
+        showRankUpModal: promoted,
+        rankUpInfo,
+      }
+    }));
+  },
+  dismissRankUp: () => set(s => ({ user: { ...s.user, showRankUpModal: false, rankUpInfo: null } })),
+
+  // Lobby
+  activeLobbyRoom: null,
+  openLobby: (roomId) => set({ activeLobbyRoom: roomId }),
+  closeLobby: () => set({ activeLobbyRoom: null }),
 }));

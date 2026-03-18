@@ -32,6 +32,31 @@ export const RANK_THRESHOLDS = [
   { name: 'Efsane', emoji: '🌟', minHours: 800, maxHours: Infinity, color: '#FFD700' },
 ];
 
+/** @deprecated Use RANK_TIERS + RANK_TIER_COLORS instead. Left in place for legacy UI compatibility. */
+export const RANK_TIERS = ['Demir', 'Bronz', 'Gümüş', 'Altın', 'Platin', 'Elmas', 'Usta'] as const;
+
+export const LP_PER_MINUTE = 2;
+
+export const RANK_TIER_COLORS: Record<string, string> = {
+  Demir:  '#7C7C7C',
+  Bronz:  '#CD7F32',
+  Gümüş:  '#C0C0C0',
+  Altın:  '#FFD700',
+  Platin: '#4DD8D3',
+  Elmas:  '#B9F2FF',
+  Usta:   '#8B5CF6',
+};
+
+export const RANK_TIER_EMOJIS: Record<string, string> = {
+  Demir:  '⛏️',
+  Bronz:  '🥉',
+  Gümüş:  '🥈',
+  Altın:  '🥇',
+  Platin: '💠',
+  Elmas:  '💎',
+  Usta:   '👑',
+};
+
 export const XP_PER_MINUTE = 3;
 export const COINS_PER_HOUR = 1;
 export const POMODORO_COUNT = 4;
