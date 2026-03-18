@@ -1,5 +1,6 @@
 'use client';
 import { useStore } from '@/store';
+import { useShallow } from 'zustand/react/shallow';
 import { SectionLabel } from '@/components/atoms/SectionLabel';
 import { ProgressBar } from '@/components/atoms/ProgressBar';
 import { mockDailyHours, mockHeatmapData, mockSubjectDistribution } from '@/lib/mock-data';
@@ -17,7 +18,10 @@ const PERIOD_DATA: Record<Period, { today: string; week: string; month: string; 
 const HM_COLORS = ['rgba(255,255,255,.05)', 'rgba(123,92,245,.25)', 'rgba(123,92,245,.45)', 'rgba(123,92,245,.65)', '#7B5CF5'];
 
 export function AnalyticsScreen() {
-  const { user } = useStore();
+  const { user, taskHistory } = useStore(useShallow(s => ({
+    user: s.user,
+    taskHistory: s.taskHistory,
+  })));
   const [period, setPeriod] = useState<Period>('Bu Hafta');
   const [compMode, setCompMode] = useState<'week' | 'league'>('week');
   const [hoveredBar, setHoveredBar] = useState<number | null>(null);
@@ -198,6 +202,101 @@ export function AnalyticsScreen() {
         <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
           <span style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--muted)' }}>En uzun seri: 31 gün</span>
           <span style={{ fontFamily: 'Space Mono', fontSize: 8, color: '#F59E0B' }}>Mevcut seri: {user.streak} gün 🔥</span>
+        </div>
+      </div>
+
+      {/* Daily Task Completion Chart */}
+      <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+          <SectionLabel>GÜNLÜK GÖREV TAMAMLAMA</SectionLabel>
+          <span style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--muted)' }}>Son 30 gün</span>
+        </div>
+        <div className="card" style={{ padding: '12px 14px' }}>
+          {/* Summary row */}
+          {(() => {
+            const total30 = taskHistory.reduce((a, d) => a + d.total, 0);
+            const done30 = taskHistory.reduce((a, d) => a + d.done, 0);
+            const avgPct = total30 > 0 ? Math.round(done30 / total30 * 100) : 0;
+            const perfectDays = taskHistory.filter(d => d.total > 0 && d.done === d.total).length;
+            return (
+              <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+                <div style={{ flex: 1, background: 'rgba(16,185,129,.08)', borderRadius: 6, padding: '8px 10px' }}>
+                  <div style={{ fontFamily: 'Space Mono', fontSize: 7, color: 'var(--muted)' }}>TAMAMLANAN</div>
+                  <div style={{ fontFamily: 'Orbitron', fontSize: 14, fontWeight: 700, color: '#10B981' }}>{done30}</div>
+                  <div style={{ fontFamily: 'Space Mono', fontSize: 7, color: 'var(--muted)' }}>görev</div>
+                </div>
+                <div style={{ flex: 1, background: 'rgba(123,92,245,.08)', borderRadius: 6, padding: '8px 10px' }}>
+                  <div style={{ fontFamily: 'Space Mono', fontSize: 7, color: 'var(--muted)' }}>ORTALAMA</div>
+                  <div style={{ fontFamily: 'Orbitron', fontSize: 14, fontWeight: 700, color: '#7B5CF5' }}>%{avgPct}</div>
+                  <div style={{ fontFamily: 'Space Mono', fontSize: 7, color: 'var(--muted)' }}>tamamlama</div>
+                </div>
+                <div style={{ flex: 1, background: 'rgba(34,211,238,.08)', borderRadius: 6, padding: '8px 10px' }}>
+                  <div style={{ fontFamily: 'Space Mono', fontSize: 7, color: 'var(--muted)' }}>MÜKEMMEL</div>
+                  <div style={{ fontFamily: 'Orbitron', fontSize: 14, fontWeight: 700, color: '#22D3EE' }}>{perfectDays}</div>
+                  <div style={{ fontFamily: 'Space Mono', fontSize: 7, color: 'var(--muted)' }}>gün</div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Bar chart — 30 days */}
+          <div style={{ display: 'flex', gap: 2, alignItems: 'flex-end', height: 64 }}>
+            {taskHistory.map((entry, i) => {
+              const donePct = entry.total > 0 ? entry.done / entry.total : 0;
+              const incompletePct = 1 - donePct;
+              const maxH = 56;
+              const isToday = i === taskHistory.length - 1;
+              return (
+                <div
+                  key={entry.date}
+                  title={`${entry.date}: ${entry.done}/${entry.total} (%${Math.round(donePct * 100)})`}
+                  style={{
+                    flex: 1, height: maxH, display: 'flex', flexDirection: 'column',
+                    justifyContent: 'flex-end', cursor: 'help',
+                    outline: isToday ? '1px solid rgba(34,211,238,.5)' : 'none',
+                    borderRadius: 2,
+                  }}
+                >
+                  {incompletePct > 0 && (
+                    <div style={{
+                      width: '100%',
+                      height: `${Math.round(incompletePct * maxH)}px`,
+                      background: 'rgba(239,68,68,.3)',
+                      borderRadius: incompletePct === 1 ? '2px 2px 0 0' : '0',
+                    }} />
+                  )}
+                  {donePct > 0 && (
+                    <div style={{
+                      width: '100%',
+                      height: `${Math.round(donePct * maxH)}px`,
+                      background: isToday
+                        ? 'linear-gradient(180deg, #22D3EE, #0E7490)'
+                        : donePct >= 0.8 ? '#10B981' : '#7B5CF5',
+                      borderRadius: incompletePct > 0 ? '0' : '2px 2px 0 0',
+                    }} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* X axis labels */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
+            <span style={{ fontFamily: 'Space Mono', fontSize: 7, color: 'var(--muted)' }}>30g önce</span>
+            <span style={{ fontFamily: 'Space Mono', fontSize: 7, color: '#22D3EE' }}>Bugün</span>
+          </div>
+
+          {/* Legend */}
+          <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <div style={{ width: 8, height: 8, borderRadius: 2, background: '#10B981' }} />
+              <span style={{ fontFamily: 'Space Mono', fontSize: 7, color: 'var(--muted)' }}>Tamamlanan</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <div style={{ width: 8, height: 8, borderRadius: 2, background: 'rgba(239,68,68,.4)' }} />
+              <span style={{ fontFamily: 'Space Mono', fontSize: 7, color: 'var(--muted)' }}>Tamamlanmayan</span>
+            </div>
+          </div>
         </div>
       </div>
 
