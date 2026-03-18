@@ -2,6 +2,7 @@
 import { useStore } from '@/store';
 import { mockChannels, mockOnlineMembers } from '@/lib/mock-data';
 import { useState, useRef, useEffect } from 'react';
+import { LobbyRoom } from '@/components/screens/LobbyRoom';
 
 const QUICK_REACTIONS = ['👍', '❤️', '🔥', '💡', '✅', '😂', '💪', '🎉'];
 
@@ -315,16 +316,7 @@ export function CommunityScreen() {
         {(!isMobile || panel === 'members') && RightSidebar}
       </div>
 
-      {/* LobbyRoom overlay — rendered when activeLobbyRoom is set (section-10) */}
-      {activeLobbyRoom !== null && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(0,0,0,.85)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ background: 'var(--s2)', border: '1px solid rgba(123,92,245,.3)', borderRadius: 12, padding: 24, textAlign: 'center' }}>
-            <div style={{ fontFamily: 'Orbitron', fontSize: 14, color: '#22D3EE', marginBottom: 8 }}>🎮 Lobi Yükleniyor...</div>
-            <div style={{ fontFamily: 'Space Mono', fontSize: 9, color: 'var(--muted)', marginBottom: 16 }}>Oda: {activeLobbyRoom}</div>
-            <button onClick={closeLobby} style={{ fontFamily: 'Orbitron', fontSize: 8, padding: '8px 16px', background: 'rgba(239,68,68,.1)', border: '1px solid rgba(239,68,68,.3)', color: '#EF4444', borderRadius: 6, cursor: 'pointer' }}>LOBİDEN ÇIK</button>
-          </div>
-        </div>
-      )}
+      {activeLobbyRoom !== null && <LobbyRoom />}
     </div>
   );
 }
