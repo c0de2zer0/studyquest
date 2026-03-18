@@ -5,12 +5,13 @@ import { SectionLabel } from '@/components/atoms/SectionLabel';
 import { Badge } from '@/components/atoms/Badge';
 import { ProgressBar } from '@/components/atoms/ProgressBar';
 import { mockEvolutionTree, mockBadges } from '@/lib/mock-data';
+import PixelAvatar from '@/components/PixelAvatar';
 
-const ITEM_CATEGORIES = ['🎓 Şapka', '🧥 Üst', '💎 Aksesuar', '🌌 Arka Plan', '🦸 Kostüm'] as const;
-const CAT_KEYS = ['hat', 'top', 'accessory', 'background', 'costume'];
+const ITEM_CATEGORIES = ['🎓 Şapka', '💇 Saç', '🧥 Üst', '👖 Alt', '👟 Ayak', '💎 Aksesuar', '🌌 Arka Plan', '🦸 Kostüm'] as const;
+const CAT_KEYS = ['hat', 'hair', 'top', 'bottom', 'shoes', 'accessory', 'background', 'costume'];
 
-const SLOT_LABELS = ['Şapka', 'Üst', 'Aksesuar', 'Arka Plan'];
-const SLOT_KEYS = ['hat', 'top', 'accessory', 'background'];
+const SLOT_LABELS = ['Şapka', 'Saç', 'Üst', 'Alt', 'Ayak', 'Aksesuar', 'Arka Plan'];
+const SLOT_KEYS = ['hat', 'hair', 'top', 'bottom', 'shoes', 'accessory', 'background'];
 
 export function AvatarScreen() {
   const { user, items, equipItem, unequipItem, setActiveTab, showToast } = useStore();
@@ -59,11 +60,13 @@ export function AvatarScreen() {
         padding: 24,
       }}>
         <div style={{ position: 'relative', display: 'inline-block', marginBottom: 12 }}>
-          <div
-            style={{ fontSize: 72, animation: 'float 3s ease-in-out infinite', cursor: 'pointer', display: 'inline-block' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.05)'; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.transform = 'scale(1)'; }}
-          >{user.emoji}</div>
+          <div style={{ animation: 'float 3s ease-in-out infinite', display: 'inline-block', cursor: 'pointer' }}>
+            <PixelAvatar
+              equippedItems={user.equippedItems}
+              size="preview"
+              direction="down"
+            />
+          </div>
           {/* Glow below */}
           <div style={{
             position: 'absolute', bottom: -8, left: '50%', transform: 'translateX(-50%)',
