@@ -1,0 +1,31 @@
+{
+  "plugin_root": "/home/behlul/.claude/plugins/cache/piercelamb-plugins/deep-implement/0.2.1",
+  "sections_dir": "/home/behlul/studyquest/planning/sections",
+  "target_dir": "/home/behlul/studyquest",
+  "state_dir": "/home/behlul/studyquest/planning/implementation",
+  "git_root": "/home/behlul/studyquest",
+  "commit_style": "simple",
+  "test_command": "uv run pytest",
+  "sections": [
+    "section-01-store",
+    "section-02-constants-mockdata",
+    "section-03-avatar-layers",
+    "section-04-pixel-avatar",
+    "section-05-rank-components",
+    "section-06-market-expansion",
+    "section-07-avatar-screen",
+    "section-08-rank-ui",
+    "section-09-community",
+    "section-10-lobby"
+  ],
+  "sections_state": {},
+  "pre_commit": {
+    "present": false,
+    "type": "none",
+    "config_file": null,
+    "native_hook": null,
+    "may_modify_files": false,
+    "detected_formatters": []
+  },
+  "created_at": "2026-03-18T11:19:35.629729+00:00"
+}
