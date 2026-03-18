@@ -1,7 +1,7 @@
 'use client';
 import { create } from 'zustand';
-import { mockUser, mockTasks, mockMarketItems, mockChatMessages, mockVoiceRooms, mockNotifications, mockTournaments } from '@/lib/mock-data';
-import { TIMER_MODES, POMODORO_COUNT, XP_PER_MINUTE, LP_PER_MINUTE, RANK_TIERS } from '@/lib/constants';
+import { mockUser, mockTasks, mockMarketItems, mockChatMessages, mockVoiceRooms, mockNotifications, mockTournaments, mockCommunityPosts, mockTaskHistory, mockIntegrationSubjects, type CommunityPost, type TaskHistoryEntry } from '@/lib/mock-data';
+import { TIMER_MODES, POMODORO_COUNT, XP_PER_MINUTE, LP_PER_MINUTE, RANK_TIERS, SUBJECTS } from '@/lib/constants';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -175,6 +175,21 @@ export interface StoreState {
   // Rank
   gainLP: (minutesStudied: number) => void;
   dismissRankUp: () => void;
+
+  // Community posts
+  communityPosts: CommunityPost[];
+  createPost: (post: Omit<CommunityPost, 'id' | 'participants' | 'reactions' | 'timestamp'>) => void;
+  joinChallenge: (postId: string) => void;
+  addPostReaction: (postId: string, emoji: string) => void;
+
+  // Task history
+  taskHistory: TaskHistoryEntry[];
+
+  // Integration subjects
+  integrationSubjects: typeof mockIntegrationSubjects;
+
+  // All subjects (computed: SUBJECTS + integrationSubjects)
+  getAllSubjects: () => { id: string; name: string; emoji: string; color: string }[];
 
   // Lobby
   activeLobbyRoom: string | null;
@@ -567,6 +582,60 @@ export const useStore = create<StoreState>((set, get) => ({
     }));
   },
   dismissRankUp: () => set(s => ({ user: { ...s.user, showRankUpModal: false, rankUpInfo: null } })),
+
+  // Community posts
+  communityPosts: mockCommunityPosts,
+  createPost: (post) => set(s => ({
+    communityPosts: [
+      {
+        ...post,
+        id: `p${Date.now()}`,
+        participants: ['me'],
+        reactions: [],
+        timestamp: 'Az önce',
+      },
+      ...s.communityPosts,
+    ],
+  })),
+  joinChallenge: (postId) => set(s => ({
+    communityPosts: s.communityPosts.map(p =>
+      p.id === postId && !p.participants.includes('me')
+        ? { ...p, participants: [...p.participants, 'me'] }
+        : p
+    ),
+  })),
+  addPostReaction: (postId, emoji) => set(s => ({
+    communityPosts: s.communityPosts.map(p => {
+      if (p.id !== postId) return p;
+      const existing = p.reactions.find(r => r.emoji === emoji);
+      if (existing) {
+        return {
+          ...p,
+          reactions: p.reactions.map(r =>
+            r.emoji === emoji
+              ? { ...r, count: r.reacted ? r.count - 1 : r.count + 1, reacted: !r.reacted }
+              : r
+          ),
+        };
+      }
+      return { ...p, reactions: [...p.reactions, { emoji, count: 1, reacted: true }] };
+    }),
+  })),
+
+  // Task history
+  taskHistory: mockTaskHistory,
+
+  // Integration subjects
+  integrationSubjects: mockIntegrationSubjects,
+
+  // All subjects getter
+  getAllSubjects: () => {
+    const s = get();
+    return [
+      ...SUBJECTS,
+      ...s.integrationSubjects.map(is => ({ id: is.id, name: is.name, emoji: is.emoji, color: is.color })),
+    ];
+  },
 
   // Lobby
   activeLobbyRoom: null,

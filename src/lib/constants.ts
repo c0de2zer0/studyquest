@@ -76,3 +76,23 @@ export const TABS = [
 ] as const;
 
 export type TabId = typeof TABS[number]['id'];
+
+export interface DailyQuote {
+  text: string;
+  author: string;
+  initials: string;
+  color: string;
+}
+
+export const DAILY_QUOTES: DailyQuote[] = [
+  { text: 'Başarı, her gün tekrarlanan küçük çabaların toplamıdır.', author: 'Robert Collier', initials: 'RC', color: '#7B5CF5' },
+  { text: 'Bilgi güçtür, ama uyguladığın bilgi özgürlüktür.', author: 'Francis Bacon', initials: 'FB', color: '#22D3EE' },
+  { text: 'Zorlu olan şeyleri deneyin; kolaylar sizi büyütmez.', author: 'Marcus Aurelius', initials: 'MA', color: '#F59E0B' },
+  { text: 'Her uzman, bir zamanlar acemi birisiydi.', author: 'Helen Hayes', initials: 'HH', color: '#10B981' },
+  { text: 'Bugün yapabileceğini yarına bırakma.', author: 'Benjamin Franklin', initials: 'BF', color: '#EF4444' },
+  { text: 'Başlamak, yarının başarısının yarısıdır.', author: 'Aristoteles', initials: 'AR', color: '#A78BFA' },
+  { text: 'Disiplin, tutku ile hedef arasındaki köprüdür.', author: 'Jim Rohn', initials: 'JR', color: '#EC4899' },
+  { text: 'Zekâ çalışmadan bir sonuç vermez.', author: 'Albert Einstein', initials: 'AE', color: '#F97316' },
+  { text: 'Her büyük başarı, bir zamanlar imkânsız görünüyordu.', author: 'Nelson Mandela', initials: 'NM', color: '#84CC16' },
+  { text: 'Öğrenmek bir hazinedir; sahibine her yerde eşlik eder.', author: 'Çin Atasözü', initials: 'Ç', color: '#06B6D4' },
+];

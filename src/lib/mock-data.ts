@@ -285,3 +285,86 @@ export const mockEvolutionTree = [
   { id: 'ev6', emoji: '🐉', name: 'Ejder', reqHours: 500, unlocked: false, current: false },
   { id: 'ev7', emoji: '🌟', name: 'Efsane', reqHours: 800, unlocked: false, current: false },
 ];
+
+export interface CommunityPost {
+  id: string;
+  userId: string;
+  userName: string;
+  userEmoji: string;
+  userColor: string;
+  type: 'post' | 'challenge';
+  content: string;
+  subject?: string;
+  subjectColor?: string;
+  durationMin?: number;
+  participants: string[];
+  reactions: { emoji: string; count: number; reacted?: boolean }[];
+  timestamp: string;
+}
+
+export interface TaskHistoryEntry {
+  date: string;
+  done: number;
+  total: number;
+}
+
+export const mockCommunityPosts: CommunityPost[] = [
+  {
+    id: 'p1', userId: 'u2', userName: 'NightWolf', userEmoji: '🐺', userColor: '#7B5CF5',
+    type: 'challenge', content: 'Kim benimle matematik kafası yapıyor? 1 saat sprint!',
+    subject: 'Matematik', subjectColor: '#7B5CF5', durationMin: 60,
+    participants: ['u2', 'u3'], reactions: [{ emoji: '🔥', count: 12 }, { emoji: '💪', count: 8 }],
+    timestamp: '2 dk önce',
+  },
+  {
+    id: 'p2', userId: 'u4', userName: 'CyberSage', userEmoji: '🧠', userColor: '#22D3EE',
+    type: 'post', content: 'Fizik sorusunu sonunda çözdüm! Elektrik devreleri artık kafamda net.',
+    participants: [], reactions: [{ emoji: '🎉', count: 15 }, { emoji: '❤️', count: 6 }],
+    timestamp: '15 dk önce',
+  },
+  {
+    id: 'p3', userId: 'u5', userName: 'StarGazer', userEmoji: '⭐', userColor: '#F59E0B',
+    type: 'challenge', content: '30 dakika kimya çalışma odası açıyorum, gelin!',
+    subject: 'Kimya', subjectColor: '#F59E0B', durationMin: 30,
+    participants: ['u5', 'u6', 'u7'], reactions: [{ emoji: '⚗️', count: 5 }],
+    timestamp: '22 dk önce',
+  },
+  {
+    id: 'p4', userId: 'u6', userName: 'IronMind', userEmoji: '🏆', userColor: '#10B981',
+    type: 'post', content: 'Bu hafta 30 saat geçti, yeni rekor! Rank atlıyorum galiba 😤',
+    participants: [], reactions: [{ emoji: '🔥', count: 24 }, { emoji: '👑', count: 11 }],
+    timestamp: '1 sa önce',
+  },
+  {
+    id: 'p5', userId: 'u7', userName: 'MoonChild', userEmoji: '🌙', userColor: '#A78BFA',
+    type: 'challenge', content: '2 saatlik biyoloji maratonu — sadece kararlılar gelsin',
+    subject: 'Biyoloji', subjectColor: '#10B981', durationMin: 120,
+    participants: ['u7'], reactions: [{ emoji: '🌿', count: 3 }],
+    timestamp: '2 sa önce',
+  },
+  {
+    id: 'p6', userId: 'u8', userName: 'TechNinja', userEmoji: '🥷', userColor: '#EF4444',
+    type: 'post', content: 'YKS ye 47 gün kaldı. Hâlâ burada miyiz? Evet. Devam.',
+    participants: [], reactions: [{ emoji: '💀', count: 31 }, { emoji: '😤', count: 19 }],
+    timestamp: '3 sa önce',
+  },
+];
+
+export const mockTaskHistory: TaskHistoryEntry[] = Array.from({ length: 30 }, (_, i) => {
+  const seed = i * 7 + 3;
+  const total = (seed % 3) + 3;
+  const done = Math.min(total, Math.round(total * ((seed % 10) / 10 + 0.3)));
+  const d = new Date('2026-03-19');
+  d.setDate(d.getDate() - (29 - i));
+  return {
+    date: d.toISOString().split('T')[0],
+    done,
+    total,
+  };
+});
+
+export const mockIntegrationSubjects = [
+  { id: 'int-tarih', name: 'Tarih', emoji: '📜', color: '#F97316' },
+  { id: 'int-cografya', name: 'Coğrafya', emoji: '🗺️', color: '#84CC16' },
+  { id: 'int-felsefe', name: 'Felsefe', emoji: '🏛️', color: '#EC4899' },
+];
