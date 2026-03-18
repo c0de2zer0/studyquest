@@ -7,6 +7,7 @@ import { ProgressBar } from '@/components/atoms/ProgressBar';
 import { Badge } from '@/components/atoms/Badge';
 import { useState } from 'react';
 import { useTimer } from '@/hooks/useTimer';
+import { RankBadge } from '@/components/RankBadge';
 
 export function DashboardScreen() {
   useTimer();
@@ -202,6 +203,33 @@ export function DashboardScreen() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Rank Section */}
+      <div className="card" style={{ border: '1px solid rgba(123,92,245,.15)', padding: 12 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+          <span style={{ fontFamily: 'Orbitron', fontSize: 9, fontWeight: 700, color: 'var(--purple)', letterSpacing: 2 }}>RANK</span>
+          <span style={{ fontFamily: 'Space Mono', fontSize: 9, color: 'var(--muted)' }}>
+            {user.rankTier !== 'Usta' ? `${user.lp} LP / 100 LP` : `${user.lp} LP`}
+          </span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <RankBadge tier={user.rankTier} division={user.rankDivision} lp={user.lp} size="md" />
+          <div style={{ flex: 1 }}>
+            {user.rankTier !== 'Usta' && (
+              <div className="progress-track" style={{ height: 5, borderRadius: 3 }}>
+                <div className="progress-fill" style={{
+                  width: `${Math.min(100, user.lp)}%`, height: '100%',
+                  background: 'linear-gradient(90deg, var(--purple), var(--cyan))',
+                  borderRadius: 3, transition: 'width .4s ease',
+                }} />
+              </div>
+            )}
+            {user.rankTier === 'Usta' && (
+              <div style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--muted)' }}>Maksimum rank — LP birikim devam ediyor</div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Daily Task List */}

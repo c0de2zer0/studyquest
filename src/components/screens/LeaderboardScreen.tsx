@@ -4,11 +4,20 @@ import { SectionLabel } from '@/components/atoms/SectionLabel';
 import { Badge } from '@/components/atoms/Badge';
 import { ProgressBar } from '@/components/atoms/ProgressBar';
 import { mockLeaderboard } from '@/lib/mock-data';
-import { RANK_THRESHOLDS } from '@/lib/constants';
+import { RANK_TIERS, RANK_TIER_COLORS, RANK_TIER_EMOJIS } from '@/lib/constants';
+import { RankBadge } from '@/components/RankBadge';
 import { useCountdown } from '@/hooks/useCountdown';
 import { useState } from 'react';
 
 const VIEW_TABS = ['Haftalık', 'Aylık', 'Tüm Zamanlar', 'Arkadaşlar', 'Matematik'];
+
+function mockTierForRank(rank: number): string {
+  if (rank <= 2) return 'Elmas';
+  if (rank <= 4) return 'Platin';
+  if (rank <= 8) return 'Altın';
+  if (rank <= 15) return 'Gümüş';
+  return 'Bronz';
+}
 
 // Different mock data per view tab to simulate different leaderboards
 const VIEW_DATA: Record<string, typeof mockLeaderboard> = {
@@ -122,6 +131,14 @@ export function LeaderboardScreen() {
               <div style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--muted)' }}>LV.{entry.level} · {entry.totalHours}sa toplam</div>
             </div>
             <span style={{ fontFamily: 'Space Mono', fontSize: 11, color: entry.isMe ? '#7B5CF5' : '#22D3EE', flexShrink: 0 }}>{entry.xp.toLocaleString()}</span>
+            <div style={{ flexShrink: 0 }}>
+              <RankBadge
+                tier={entry.isMe ? user.rankTier : mockTierForRank(entry.rank)}
+                division={entry.isMe ? user.rankDivision : 4}
+                lp={entry.isMe ? user.lp : 0}
+                size="sm"
+              />
+            </div>
             <span style={{ fontFamily: 'Space Mono', fontSize: 9, color: (entry.trend || 0) > 0 ? '#10B981' : (entry.trend || 0) < 0 ? '#EF4444' : 'var(--dim)', flexShrink: 0, width: 28 }}>
               {(entry.trend || 0) > 0 ? `↑${entry.trend}` : (entry.trend || 0) < 0 ? `↓${Math.abs(entry.trend || 0)}` : '—'}
             </span>
@@ -138,25 +155,27 @@ export function LeaderboardScreen() {
       <div>
         <SectionLabel>RANK SİSTEMİ</SectionLabel>
         <div className="card">
-          {RANK_THRESHOLDS.map((rank, i) => {
-            const isCurrentRank = user.totalHours >= rank.minHours && user.totalHours < rank.maxHours;
+          {RANK_TIERS.map((tier, i) => {
+            const isCurrentTier = tier === user.rankTier;
             return (
-              <div key={rank.name} style={{
+              <div key={tier} style={{
                 display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0',
-                borderBottom: i < RANK_THRESHOLDS.length - 1 ? '1px solid rgba(255,255,255,.04)' : 'none',
-                background: isCurrentRank ? `${rank.color}0D` : 'transparent',
-                borderRadius: isCurrentRank ? 6 : 0,
-                paddingLeft: isCurrentRank ? 6 : 0,
-                paddingRight: isCurrentRank ? 6 : 0,
+                borderBottom: i < RANK_TIERS.length - 1 ? '1px solid rgba(255,255,255,.04)' : 'none',
+                background: isCurrentTier ? `${RANK_TIER_COLORS[tier]}0D` : 'transparent',
+                borderRadius: isCurrentTier ? 6 : 0,
+                paddingLeft: isCurrentTier ? 6 : 0,
+                paddingRight: isCurrentTier ? 6 : 0,
               }}>
-                <span style={{ fontSize: 16, flexShrink: 0 }}>{rank.emoji}</span>
+                <span style={{ fontSize: 16, flexShrink: 0 }}>{RANK_TIER_EMOJIS[tier]}</span>
                 <div style={{ flex: 1 }}>
-                  <span style={{ fontFamily: 'Orbitron', fontSize: 10, fontWeight: 700, color: isCurrentRank ? rank.color : 'var(--text)' }}>{rank.name}</span>
-                  <span style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--dim)', marginLeft: 8 }}>
-                    {rank.maxHours === Infinity ? `${rank.minHours}+ sa` : `${rank.minHours}–${rank.maxHours} sa`}
-                  </span>
+                  <RankBadge
+                    tier={tier}
+                    division={isCurrentTier ? user.rankDivision : 4}
+                    lp={isCurrentTier ? user.lp : 0}
+                    size="sm"
+                  />
                 </div>
-                {isCurrentRank && <Badge variant="purple">MEVCUT</Badge>}
+                {isCurrentTier && <Badge variant="purple">MEVCUT</Badge>}
               </div>
             );
           })}

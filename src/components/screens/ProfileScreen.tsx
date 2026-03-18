@@ -4,8 +4,8 @@ import { SectionLabel } from '@/components/atoms/SectionLabel';
 import { Badge } from '@/components/atoms/Badge';
 import { ProgressBar } from '@/components/atoms/ProgressBar';
 import { mockBadges, mockHeatmapData } from '@/lib/mock-data';
-import { RANK_THRESHOLDS } from '@/lib/constants';
-import { getRankFromHours } from '@/lib/utils';
+import { RANK_TIER_COLORS } from '@/lib/constants';
+import { RankBadge } from '@/components/RankBadge';
 import { useState } from 'react';
 
 const HM_COLORS = ['rgba(255,255,255,.05)', 'rgba(123,92,245,.25)', 'rgba(123,92,245,.45)', 'rgba(123,92,245,.65)', '#7B5CF5'];
@@ -20,7 +20,6 @@ const SETTINGS_ROWS = [
 
 export function ProfileScreen() {
   const { user, profileTab, setProfileTab, setActiveTab, showToast } = useStore();
-  const rank = getRankFromHours(user.totalHours);
   const [expandedSetting, setExpandedSetting] = useState<string | null>(null);
   const [editName, setEditName] = useState(user.name);
   const [editBio, setEditBio] = useState(user.bio);
@@ -58,13 +57,26 @@ export function ProfileScreen() {
             <div style={{ fontSize: 72, animation: 'float 3s ease-in-out infinite', display: 'inline-block', marginBottom: 10 }}>{user.emoji}</div>
             <div style={{ fontFamily: 'Orbitron', fontSize: 18, fontWeight: 700, letterSpacing: 2, color: 'var(--text)', marginBottom: 4 }}>{user.name.toUpperCase()}</div>
             <div style={{ fontFamily: 'Space Mono', fontSize: 9, color: 'var(--muted)', marginBottom: 10 }}>{user.bio}</div>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginBottom: 12, flexWrap: 'wrap' }}>
-              <Badge variant="purple" className="" pulse={false}>
-                {rank.emoji} {rank.name.toUpperCase()}
-              </Badge>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginBottom: 8, flexWrap: 'wrap' }}>
+              <RankBadge tier={user.rankTier} division={user.rankDivision} lp={user.lp} size="lg" />
               <Badge variant="amber">🔥 {user.streak} GÜN SERİ</Badge>
               <Badge variant="cyan">LV.{user.level}</Badge>
             </div>
+            {user.lpHistory.length > 0 && (
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', gap: 2, height: 24, marginBottom: 8 }}>
+                {user.lpHistory.map((gain, i) => {
+                  const maxGain = Math.max(...user.lpHistory, 1);
+                  const barH = Math.max(3, Math.round((gain / maxGain) * 20));
+                  return (
+                    <div key={i} style={{
+                      width: 6, height: barH, borderRadius: 2,
+                      background: RANK_TIER_COLORS[user.rankTier] || 'var(--purple)',
+                      opacity: 0.6 + 0.4 * (i / Math.max(1, user.lpHistory.length - 1)),
+                    }} />
+                  );
+                })}
+              </div>
+            )}
             <div style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--dim)' }}>📅 {user.joinDate}'ten beri</div>
 
             {/* Stats row */}
