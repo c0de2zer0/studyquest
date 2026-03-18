@@ -1,9 +1,10 @@
 'use client';
 import { useStore } from '@/store';
+import { useShallow } from 'zustand/react/shallow';
 import { useTimer } from '@/hooks/useTimer';
 import { formatTime } from '@/lib/utils';
 import { SectionLabel } from '@/components/atoms/SectionLabel';
-import { TIMER_MODES, AMBIENT_SOUNDS, SUBJECTS } from '@/lib/constants';
+import { TIMER_MODES, AMBIENT_SOUNDS } from '@/lib/constants';
 import { useState } from 'react';
 
 const TIMER_MODES_LIST = [
@@ -23,8 +24,8 @@ export function TimerScreen() {
     setTimerMode, startTimer, pauseTimer, stopTimer, skipPhase,
     setActiveSubject, setCustomWork, setCustomBreak,
     dismissSessionComplete, setAmbientSound, setAmbientVolume,
-    user,
-  } = useStore(s => ({
+    user, getAllSubjects,
+  } = useStore(useShallow(s => ({
     timerMode: s.timerMode,
     timerPhase: s.timerPhase,
     elapsed: s.elapsed,
@@ -50,7 +51,10 @@ export function TimerScreen() {
     setAmbientSound: s.setAmbientSound,
     setAmbientVolume: s.setAmbientVolume,
     user: s.user,
-  }));
+    getAllSubjects: s.getAllSubjects,
+  })));
+
+  const allSubjects = getAllSubjects();
 
   const [showConfirm, setShowConfirm] = useState(false);
   const [showSubjectPicker, setShowSubjectPicker] = useState(false);
@@ -331,7 +335,7 @@ export function TimerScreen() {
               flexShrink: 0,
             }}
           >
-            {SUBJECTS.find(s => s.name === activeSubject)?.emoji || '📚'}
+            {allSubjects.find(s => s.name === activeSubject)?.emoji || '📚'}
           </div>
           <div>
             <div style={{ fontFamily: 'Rajdhani', fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>
@@ -344,7 +348,7 @@ export function TimerScreen() {
         </div>
         {showSubjectPicker && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6, marginTop: 12 }}>
-            {SUBJECTS.map(s => (
+            {allSubjects.map(s => (
               <button
                 key={s.id}
                 onClick={() => {
