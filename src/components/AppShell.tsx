@@ -5,6 +5,7 @@ import { XPStrip } from './XPStrip';
 import { TabBar } from './TabBar';
 import { ToastContainer } from './atoms/Toast';
 import { AmbientBackground } from './AmbientBackground';
+import { RankUpModal } from './RankUpModal';
 
 // Screens
 import { DashboardScreen } from './screens/DashboardScreen';
@@ -21,6 +22,7 @@ import { ProfileScreen } from './screens/ProfileScreen';
 
 export function AppShell() {
   const { activeTab } = useStore();
+  const showRankUpModal = useStore(state => state.user.showRankUpModal);
 
   const screenMap = {
     dashboard: <DashboardScreen />,
@@ -48,6 +50,7 @@ export function AppShell() {
         </main>
       </div>
       <ToastContainer />
+      {showRankUpModal && <RankUpModal />}
     </div>
   );
 }
