@@ -212,6 +212,355 @@ export const AVATAR_LAYER_MAP: Record<string, AnimatedLayerDef> = {
     ],
   },
 
+  // ── More Hats ──
+  'item-hat-5': {
+    id: 'item-hat-5',
+    slot: 'hat',
+    pixels: [
+      { x: 4, y: 0, w: 8, h: 1, color: '#64748B' },
+      { x: 3, y: 1, w: 10, h: 2, color: '#475569' },
+      { x: 3, y: 3, w: 10, h: 1, color: '#334155' },
+    ],
+  },
+  'item-hat-6': {
+    id: 'item-hat-6',
+    slot: 'hat',
+    pixels: [
+      { x: 3, y: 1, w: 10, h: 3, color: '#1A1A2E' },
+      { x: 4, y: 1, w: 8, h: 1, color: '#334155' },
+    ],
+  },
+  'item-hat-7': {
+    id: 'item-hat-7',
+    slot: 'hat',
+    pixels: [
+      { x: 3, y: 0, w: 10, h: 2, color: '#A78BFA' },
+      { x: 4, y: 2, w: 8, h: 2, color: '#7B5CF6' },
+      { x: 6, y: 0, w: 4, h: 1, color: '#FFD700' },
+    ],
+  },
+  'item-hat-8': {
+    id: 'item-hat-8',
+    slot: 'hat',
+    pixels: [
+      { x: 4, y: 0, w: 8, h: 1, color: '#FFD700' },
+      { x: 3, y: 1, w: 10, h: 1, color: '#FDE68A' },
+      { x: 5, y: 0, w: 6, h: 1, color: '#FFFFFF' },
+    ],
+  },
+
+  // ── Hair ──
+  'item-hair-1': {
+    id: 'item-hair-1',
+    slot: 'hair',
+    pixels: [
+      { x: 3, y: 1, w: 10, h: 2, color: '#334155' },
+      { x: 4, y: 3, w: 8, h: 1, color: '#475569' },
+    ],
+  },
+  'item-hair-2': {
+    id: 'item-hair-2',
+    slot: 'hair',
+    pixels: [
+      { x: 3, y: 1, w: 10, h: 3, color: '#A78BFA' },
+      { x: 2, y: 2, w: 2, h: 4, color: '#7B5CF6' },
+      { x: 12, y: 2, w: 2, h: 4, color: '#7B5CF6' },
+    ],
+  },
+  'item-hair-3': {
+    id: 'item-hair-3',
+    slot: 'hair',
+    pixels: [
+      { x: 3, y: 1, w: 10, h: 2, color: '#22D3EE' },
+      { x: 2, y: 2, w: 1, h: 5, color: '#22D3EE' },
+      { x: 13, y: 2, w: 1, h: 5, color: '#22D3EE' },
+      { x: 5, y: 1, w: 6, h: 1, color: '#A78BFA' },
+    ],
+  },
+  'item-hair-4': {
+    id: 'item-hair-4',
+    slot: 'hair',
+    pixels: [
+      { x: 3, y: 1, w: 10, h: 2, color: '#92400E' },
+      { x: 2, y: 2, w: 2, h: 8, color: '#92400E' },
+      { x: 12, y: 2, w: 2, h: 8, color: '#92400E' },
+    ],
+  },
+  'item-hair-5': {
+    id: 'item-hair-5',
+    slot: 'hair',
+    pixels: [
+      { x: 3, y: 1, w: 10, h: 2, color: '#B9F2FF' },
+      { x: 2, y: 2, w: 2, h: 4, color: '#A78BFA' },
+      { x: 12, y: 2, w: 2, h: 4, color: '#22D3EE' },
+      { x: 5, y: 1, w: 6, h: 1, color: '#FFFFFF' },
+    ],
+  },
+  'item-hair-6': {
+    id: 'item-hair-6',
+    slot: 'hair',
+    pixels: [
+      { x: 3, y: 1, w: 10, h: 2, color: '#EF4444' },
+      { x: 2, y: 2, w: 2, h: 6, color: '#F97316' },
+      { x: 12, y: 2, w: 2, h: 6, color: '#F97316' },
+      { x: 5, y: 0, w: 6, h: 2, color: '#FFD700' },
+    ],
+  },
+
+  // ── More Tops ──
+  'item-top-4': {
+    id: 'item-top-4',
+    slot: 'top',
+    pixels: [
+      { x: 4, y: 10, w: 8, h: 10, color: '#1E293B' },
+      { x: 1, y: 10, w: 3, h: 8, color: '#1E293B' },
+      { x: 12, y: 10, w: 3, h: 8, color: '#1E293B' },
+      { x: 6, y: 10, w: 4, h: 1, color: '#7B5CF6' },
+    ],
+  },
+  'item-top-5': {
+    id: 'item-top-5',
+    slot: 'top',
+    pixels: [
+      { x: 4, y: 10, w: 8, h: 10, color: '#0F172A' },
+      { x: 1, y: 10, w: 3, h: 9, color: '#0F172A' },
+      { x: 12, y: 10, w: 3, h: 9, color: '#0F172A' },
+      { x: 4, y: 14, w: 8, h: 1, color: '#22D3EE' },
+      { x: 1, y: 14, w: 3, h: 1, color: '#22D3EE' },
+      { x: 12, y: 14, w: 3, h: 1, color: '#22D3EE' },
+    ],
+  },
+  'item-top-6': {
+    id: 'item-top-6',
+    slot: 'top',
+    pixels: [
+      { x: 4, y: 10, w: 8, h: 10, color: '#1E1B4B' },
+      { x: 1, y: 10, w: 3, h: 9, color: '#1E1B4B' },
+      { x: 12, y: 10, w: 3, h: 9, color: '#1E1B4B' },
+      { x: 5, y: 11, w: 6, h: 8, color: '#2D2A6E' },
+      { x: 6, y: 12, w: 4, h: 6, color: '#A78BFA' },
+    ],
+  },
+  'item-top-7': {
+    id: 'item-top-7',
+    slot: 'top',
+    pixels: [
+      { x: 4, y: 10, w: 8, h: 10, color: '#422006' },
+      { x: 1, y: 10, w: 3, h: 9, color: '#422006' },
+      { x: 12, y: 10, w: 3, h: 9, color: '#422006' },
+      { x: 4, y: 10, w: 8, h: 2, color: '#B45309' },
+      { x: 1, y: 10, w: 3, h: 2, color: '#B45309' },
+      { x: 12, y: 10, w: 3, h: 2, color: '#B45309' },
+      { x: 6, y: 13, w: 4, h: 4, color: '#EF4444' },
+    ],
+  },
+
+  // ── Bottom ──
+  'item-bottom-1': {
+    id: 'item-bottom-1',
+    slot: 'bottom',
+    pixels: [
+      { x: 4, y: 21, w: 8, h: 2, color: '#475569' },
+      { x: 4, y: 23, w: 4, h: 7, color: '#334155' },
+      { x: 8, y: 23, w: 4, h: 7, color: '#334155' },
+    ],
+  },
+  'item-bottom-2': {
+    id: 'item-bottom-2',
+    slot: 'bottom',
+    pixels: [
+      { x: 4, y: 21, w: 8, h: 9, color: '#22D3EE' },
+      { x: 5, y: 22, w: 3, h: 7, color: '#0E7490' },
+      { x: 8, y: 22, w: 3, h: 7, color: '#0E7490' },
+    ],
+  },
+  'item-bottom-3': {
+    id: 'item-bottom-3',
+    slot: 'bottom',
+    pixels: [
+      { x: 4, y: 21, w: 8, h: 5, color: '#1E293B' },
+      { x: 4, y: 23, w: 8, h: 1, color: '#7B5CF6' },
+      { x: 4, y: 25, w: 4, h: 4, color: '#F5C09A' },
+      { x: 8, y: 25, w: 4, h: 4, color: '#F5C09A' },
+    ],
+  },
+  'item-bottom-4': {
+    id: 'item-bottom-4',
+    slot: 'bottom',
+    pixels: [
+      { x: 4, y: 21, w: 8, h: 9, color: '#1E293B' },
+      { x: 4, y: 21, w: 8, h: 2, color: '#475569' },
+      { x: 5, y: 23, w: 6, h: 7, color: '#334155' },
+    ],
+  },
+  'item-bottom-5': {
+    id: 'item-bottom-5',
+    slot: 'bottom',
+    pixels: [
+      { x: 4, y: 21, w: 8, h: 9, color: '#1E1B4B' },
+      { x: 4, y: 24, w: 8, h: 1, color: '#A78BFA' },
+      { x: 4, y: 27, w: 4, h: 3, color: '#2D2A6E' },
+      { x: 8, y: 27, w: 4, h: 3, color: '#2D2A6E' },
+    ],
+  },
+  'item-bottom-6': {
+    id: 'item-bottom-6',
+    slot: 'bottom',
+    pixels: [
+      { x: 4, y: 21, w: 8, h: 9, color: '#422006' },
+      { x: 4, y: 21, w: 8, h: 2, color: '#B45309' },
+      { x: 5, y: 23, w: 6, h: 7, color: '#92400E' },
+      { x: 6, y: 25, w: 4, h: 3, color: '#EF4444' },
+    ],
+  },
+
+  // ── Shoes ──
+  'item-shoes-1': {
+    id: 'item-shoes-1',
+    slot: 'shoes',
+    pixels: [
+      { x: 4, y: 30, w: 4, h: 2, color: '#FFFFFF' },
+      { x: 8, y: 30, w: 4, h: 2, color: '#FFFFFF' },
+      { x: 3, y: 31, w: 5, h: 1, color: '#E5E7EB' },
+      { x: 8, y: 31, w: 5, h: 1, color: '#E5E7EB' },
+    ],
+  },
+  'item-shoes-2': {
+    id: 'item-shoes-2',
+    slot: 'shoes',
+    pixels: [
+      { x: 4, y: 30, w: 4, h: 2, color: '#22D3EE' },
+      { x: 8, y: 30, w: 4, h: 2, color: '#22D3EE' },
+      { x: 3, y: 31, w: 5, h: 1, color: '#0E7490' },
+      { x: 8, y: 31, w: 5, h: 1, color: '#0E7490' },
+      { x: 4, y: 30, w: 4, h: 1, color: '#67E8F9' },
+      { x: 8, y: 30, w: 4, h: 1, color: '#67E8F9' },
+    ],
+  },
+  'item-shoes-3': {
+    id: 'item-shoes-3',
+    slot: 'shoes',
+    pixels: [
+      { x: 4, y: 29, w: 4, h: 3, color: '#334155' },
+      { x: 8, y: 29, w: 4, h: 3, color: '#334155' },
+      { x: 4, y: 30, w: 4, h: 1, color: '#EF4444' },
+      { x: 8, y: 30, w: 4, h: 1, color: '#EF4444' },
+    ],
+  },
+  'item-shoes-4': {
+    id: 'item-shoes-4',
+    slot: 'shoes',
+    pixels: [
+      { x: 4, y: 28, w: 4, h: 4, color: '#1E293B' },
+      { x: 8, y: 28, w: 4, h: 4, color: '#1E293B' },
+      { x: 4, y: 29, w: 4, h: 1, color: '#7B5CF6' },
+      { x: 8, y: 29, w: 4, h: 1, color: '#7B5CF6' },
+      { x: 3, y: 31, w: 5, h: 1, color: '#0F172A' },
+      { x: 8, y: 31, w: 5, h: 1, color: '#0F172A' },
+    ],
+  },
+  'item-shoes-5': {
+    id: 'item-shoes-5',
+    slot: 'shoes',
+    pixels: [
+      { x: 4, y: 28, w: 4, h: 4, color: '#1E3A5F' },
+      { x: 8, y: 28, w: 4, h: 4, color: '#1E3A5F' },
+      { x: 4, y: 31, w: 4, h: 1, color: '#22D3EE' },
+      { x: 8, y: 31, w: 4, h: 1, color: '#22D3EE' },
+      { x: 3, y: 30, w: 2, h: 1, color: '#FFD700' },
+      { x: 11, y: 30, w: 2, h: 1, color: '#FFD700' },
+    ],
+  },
+  'item-shoes-6': {
+    id: 'item-shoes-6',
+    slot: 'shoes',
+    pixels: [
+      { x: 4, y: 30, w: 4, h: 2, color: '#FFD700' },
+      { x: 8, y: 30, w: 4, h: 2, color: '#FFD700' },
+      { x: 3, y: 31, w: 5, h: 1, color: '#F59E0B' },
+      { x: 8, y: 31, w: 5, h: 1, color: '#F59E0B' },
+    ],
+  },
+
+  // ── More Accessories ──
+  'item-acc-4': {
+    id: 'item-acc-4',
+    slot: 'accessory',
+    pixels: [
+      { x: 4, y: 4, w: 8, h: 2, color: '#0F172A' },
+      { x: 5, y: 4, w: 2, h: 2, color: '#EF4444' },
+      { x: 9, y: 4, w: 2, h: 2, color: '#EF4444' },
+      { x: 7, y: 5, w: 2, h: 1, color: '#475569' },
+    ],
+  },
+  'item-acc-5': {
+    id: 'item-acc-5',
+    slot: 'accessory',
+    pixels: [
+      { x: 3, y: 5, w: 2, h: 3, color: '#A78BFA' },
+      { x: 11, y: 5, w: 2, h: 3, color: '#A78BFA' },
+      { x: 3, y: 6, w: 2, h: 1, color: '#FFFFFF' },
+      { x: 11, y: 6, w: 2, h: 1, color: '#FFFFFF' },
+    ],
+  },
+  'item-acc-6': {
+    id: 'item-acc-6',
+    slot: 'accessory',
+    pixels: [
+      { x: 1, y: 17, w: 4, h: 2, color: '#22D3EE' },
+      { x: 2, y: 17, w: 2, h: 2, color: '#0E7490' },
+    ],
+  },
+  'item-acc-7': {
+    id: 'item-acc-7',
+    slot: 'accessory',
+    pixels: [
+      { x: 1, y: 10, w: 2, h: 10, color: '#7B5CF6' },
+      { x: 13, y: 10, w: 2, h: 10, color: '#7B5CF6' },
+    ],
+  },
+  'item-acc-8': {
+    id: 'item-acc-8',
+    slot: 'accessory',
+    pixels: [
+      { x: 1, y: 10, w: 3, h: 9, color: '#FFD700' },
+      { x: 12, y: 10, w: 3, h: 9, color: '#FFD700' },
+      { x: 1, y: 18, w: 3, h: 1, color: '#FDE68A' },
+      { x: 12, y: 18, w: 3, h: 1, color: '#FDE68A' },
+    ],
+  },
+
+  // ── Costume Virtual Sub-Items ──
+  'item-hat-costume-1': { id: 'item-hat-costume-1', slot: 'hat', pixels: [{ x: 3, y: 0, w: 10, h: 4, color: '#422006' }, { x: 4, y: 0, w: 8, h: 1, color: '#B45309' }, { x: 6, y: 1, w: 4, h: 1, color: '#EF4444' }] },
+  'item-top-costume-1': { id: 'item-top-costume-1', slot: 'top', pixels: [{ x: 4, y: 10, w: 8, h: 10, color: '#422006' }, { x: 1, y: 10, w: 3, h: 9, color: '#422006' }, { x: 12, y: 10, w: 3, h: 9, color: '#422006' }, { x: 5, y: 12, w: 6, h: 6, color: '#B45309' }] },
+  'item-bottom-costume-1': { id: 'item-bottom-costume-1', slot: 'bottom', pixels: [{ x: 4, y: 21, w: 8, h: 9, color: '#422006' }, { x: 5, y: 22, w: 6, h: 8, color: '#92400E' }] },
+  'item-shoes-costume-1': { id: 'item-shoes-costume-1', slot: 'shoes', pixels: [{ x: 4, y: 28, w: 4, h: 4, color: '#422006' }, { x: 8, y: 28, w: 4, h: 4, color: '#422006' }, { x: 3, y: 31, w: 5, h: 1, color: '#B45309' }, { x: 8, y: 31, w: 5, h: 1, color: '#B45309' }] },
+
+  'item-hat-costume-2': { id: 'item-hat-costume-2', slot: 'hat', pixels: [{ x: 3, y: 0, w: 10, h: 4, color: '#0F172A' }, { x: 4, y: 2, w: 8, h: 1, color: '#22D3EE' }] },
+  'item-top-costume-2': { id: 'item-top-costume-2', slot: 'top', pixels: [{ x: 4, y: 10, w: 8, h: 10, color: '#0F172A' }, { x: 1, y: 10, w: 3, h: 9, color: '#0F172A' }, { x: 12, y: 10, w: 3, h: 9, color: '#0F172A' }, { x: 4, y: 13, w: 8, h: 1, color: '#22D3EE' }] },
+  'item-bottom-costume-2': { id: 'item-bottom-costume-2', slot: 'bottom', pixels: [{ x: 4, y: 21, w: 8, h: 9, color: '#0F172A' }, { x: 4, y: 24, w: 8, h: 1, color: '#22D3EE' }] },
+  'item-shoes-costume-2': { id: 'item-shoes-costume-2', slot: 'shoes', pixels: [{ x: 4, y: 29, w: 4, h: 3, color: '#0F172A' }, { x: 8, y: 29, w: 4, h: 3, color: '#0F172A' }, { x: 4, y: 30, w: 4, h: 1, color: '#22D3EE' }, { x: 8, y: 30, w: 4, h: 1, color: '#22D3EE' }] },
+
+  'item-hat-costume-3': { id: 'item-hat-costume-3', slot: 'hat', pixels: [{ x: 3, y: 0, w: 10, h: 3, color: '#1A1A2E' }, { x: 3, y: 2, w: 10, h: 1, color: '#A78BFA' }] },
+  'item-top-costume-3': { id: 'item-top-costume-3', slot: 'top', pixels: [{ x: 4, y: 10, w: 8, h: 10, color: '#1A1A2E' }, { x: 1, y: 10, w: 3, h: 9, color: '#1A1A2E' }, { x: 12, y: 10, w: 3, h: 9, color: '#1A1A2E' }, { x: 4, y: 11, w: 1, h: 8, color: '#A78BFA' }, { x: 11, y: 11, w: 1, h: 8, color: '#A78BFA' }] },
+  'item-bottom-costume-3': { id: 'item-bottom-costume-3', slot: 'bottom', pixels: [{ x: 4, y: 21, w: 8, h: 9, color: '#1A1A2E' }, { x: 4, y: 21, w: 8, h: 1, color: '#A78BFA' }] },
+  'item-shoes-costume-3': { id: 'item-shoes-costume-3', slot: 'shoes', pixels: [{ x: 4, y: 29, w: 4, h: 3, color: '#1A1A2E' }, { x: 8, y: 29, w: 4, h: 3, color: '#1A1A2E' }] },
+
+  'item-hat-costume-4': { id: 'item-hat-costume-4', slot: 'hat', pixels: [{ x: 3, y: 1, w: 10, h: 3, color: '#1A1A2E' }] },
+  'item-top-costume-4': { id: 'item-top-costume-4', slot: 'top', pixels: [{ x: 4, y: 10, w: 8, h: 10, color: '#1A1A2E' }, { x: 1, y: 10, w: 3, h: 9, color: '#1A1A2E' }, { x: 12, y: 10, w: 3, h: 9, color: '#1A1A2E' }] },
+  'item-bottom-costume-4': { id: 'item-bottom-costume-4', slot: 'bottom', pixels: [{ x: 4, y: 21, w: 8, h: 9, color: '#1A1A2E' }] },
+  'item-shoes-costume-4': { id: 'item-shoes-costume-4', slot: 'shoes', pixels: [{ x: 4, y: 29, w: 4, h: 3, color: '#1A1A2E' }, { x: 8, y: 29, w: 4, h: 3, color: '#1A1A2E' }] },
+
+  'item-hat-costume-5': { id: 'item-hat-costume-5', slot: 'hat', pixels: [{ x: 4, y: 0, w: 8, h: 4, color: '#1E3A5F' }, { x: 5, y: 2, w: 6, h: 1, color: '#22D3EE' }] },
+  'item-top-costume-5': { id: 'item-top-costume-5', slot: 'top', pixels: [{ x: 4, y: 10, w: 8, h: 10, color: '#1E3A5F' }, { x: 1, y: 10, w: 3, h: 9, color: '#1E3A5F' }, { x: 12, y: 10, w: 3, h: 9, color: '#1E3A5F' }, { x: 6, y: 10, w: 4, h: 10, color: '#22D3EE' }] },
+  'item-bottom-costume-5': { id: 'item-bottom-costume-5', slot: 'bottom', pixels: [{ x: 4, y: 21, w: 8, h: 9, color: '#1E3A5F' }, { x: 6, y: 21, w: 4, h: 9, color: '#22D3EE' }] },
+  'item-shoes-costume-5': { id: 'item-shoes-costume-5', slot: 'shoes', pixels: [{ x: 4, y: 28, w: 4, h: 4, color: '#1E3A5F' }, { x: 8, y: 28, w: 4, h: 4, color: '#1E3A5F' }, { x: 4, y: 31, w: 4, h: 1, color: '#22D3EE' }, { x: 8, y: 31, w: 4, h: 1, color: '#22D3EE' }] },
+
+  'item-hat-costume-6': { id: 'item-hat-costume-6', slot: 'hat', pixels: [{ x: 4, y: 0, w: 8, h: 3, color: '#7B5CF6' }, { x: 5, y: 2, w: 6, h: 1, color: '#A78BFA' }] },
+  'item-top-costume-6': { id: 'item-top-costume-6', slot: 'top', pixels: [{ x: 4, y: 10, w: 8, h: 10, color: '#7B5CF6' }, { x: 1, y: 10, w: 3, h: 9, color: '#7B5CF6' }, { x: 12, y: 10, w: 3, h: 9, color: '#7B5CF6' }] },
+  'item-bottom-costume-6': { id: 'item-bottom-costume-6', slot: 'bottom', pixels: [{ x: 4, y: 21, w: 8, h: 9, color: '#7B5CF6' }] },
+  'item-shoes-costume-6': { id: 'item-shoes-costume-6', slot: 'shoes', pixels: [{ x: 4, y: 29, w: 4, h: 3, color: '#7B5CF6' }, { x: 8, y: 29, w: 4, h: 3, color: '#7B5CF6' }] },
+
   // ── Accessories ──
   'item-acc-1': {
     id: 'item-acc-1',
@@ -249,4 +598,19 @@ export const AVATAR_LAYER_MAP: Record<string, AnimatedLayerDef> = {
       { x: 7, y: 10, w: 2, h: 1, color: '#FFFFFF' },
     ],
   },
+};
+
+// ─── Background Palettes ─────────────────────────────────────────────────────
+// Color gradients for background items (rendered as CSS gradient swatches,
+// not SVG character layers).
+
+export const BACKGROUND_PALETTES: Record<string, string[]> = {
+  'item-bg-1': ['#0F0A2E', '#1A1040', '#2D1B69'],   // Galaksi
+  'item-bg-2': ['#0D0D1A', '#1A1A2E', '#00FF9F'],   // Neon Şehir
+  'item-bg-3': ['#0A1A0A', '#1A2E1A', '#22D3EE'],   // Siber Orman
+  'item-bg-4': ['#0A1020', '#0D2040', '#164E63'],   // Dijital Okyanus
+  'item-bg-5': ['#0F0F1A', '#1A1A3E', '#7C3AED'],   // Neon Dağlar
+  'item-bg-6': ['#050510', '#0A0A20', '#1A1A40'],   // Uzay İstasyonu
+  'item-bg-7': ['#1A0A00', '#2D1400', '#7C2D12'],   // Ejderha Şatosu
+  'item-bg-8': ['#001A00', '#003300', '#00FF00'],   // Matrix Boyutu
 };

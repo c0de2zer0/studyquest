@@ -101,6 +101,57 @@ export const mockMarketItems = [
   { id: 'item-bg-2', name: 'Neon Şehir', category: 'background', emoji: '🌆', rarity: 'epic', price: 250, owned: false, equipped: false },
   // Special
   { id: 'item-special-1', name: 'DNA Kanadı', category: 'top', emoji: '🧬', rarity: 'legendary', price: 1500, owned: false, equipped: false, isDaily: true, dailyPrice: 1050 },
+  // More Hats
+  { id: 'item-hat-5', name: 'Piksel Kask', category: 'hat', emoji: '⛑️', rarity: 'common', price: 20, owned: false, equipped: false },
+  { id: 'item-hat-6', name: 'Ninja Bandanası', category: 'hat', emoji: '🥷', rarity: 'rare', price: 65, owned: false, equipped: false },
+  { id: 'item-hat-7', name: 'Zaman Tacı', category: 'hat', emoji: '👁️', rarity: 'epic', price: 200, owned: false, equipped: false },
+  { id: 'item-hat-8', name: 'Tanrı Halosu', category: 'hat', emoji: '😇', rarity: 'legendary', price: 750, owned: false, equipped: false },
+  // Hair
+  { id: 'item-hair-1', name: 'Kısa Saç', category: 'hair', emoji: '💈', rarity: 'common', price: 15, owned: false, equipped: false },
+  { id: 'item-hair-2', name: 'Anime Saçı', category: 'hair', emoji: '🌀', rarity: 'rare', price: 55, owned: false, equipped: false },
+  { id: 'item-hair-3', name: 'Neon Örgü', category: 'hair', emoji: '🎀', rarity: 'rare', price: 70, owned: false, equipped: false },
+  { id: 'item-hair-4', name: 'Uzun Dalgalı', category: 'hair', emoji: '🌊', rarity: 'epic', price: 160, owned: false, equipped: false },
+  { id: 'item-hair-5', name: 'Hologram Peruk', category: 'hair', emoji: '✨', rarity: 'epic', price: 220, owned: false, equipped: false },
+  { id: 'item-hair-6', name: 'Efsanevi Alev Saçı', category: 'hair', emoji: '🔥', rarity: 'legendary', price: 600, owned: false, equipped: false },
+  // More Tops
+  { id: 'item-top-4', name: 'Kodlayıcı Hoodie', category: 'top', emoji: '👕', rarity: 'common', price: 25, owned: false, equipped: false },
+  { id: 'item-top-5', name: 'Neon Zırh', category: 'top', emoji: '🦺', rarity: 'rare', price: 90, owned: false, equipped: false },
+  { id: 'item-top-6', name: 'Kuantum Ceket', category: 'top', emoji: '🧥', rarity: 'epic', price: 280, owned: false, equipped: false },
+  { id: 'item-top-7', name: 'Ejderha Zırhı', category: 'top', emoji: '🐉', rarity: 'legendary', price: 900, owned: false, equipped: false },
+  // Bottom
+  { id: 'item-bottom-1', name: 'Kargo Pantolon', category: 'bottom', emoji: '👖', rarity: 'common', price: 20, owned: false, equipped: false },
+  { id: 'item-bottom-2', name: 'Neon Tayt', category: 'bottom', emoji: '🩲', rarity: 'rare', price: 60, owned: false, equipped: false },
+  { id: 'item-bottom-3', name: 'Siber Şort', category: 'bottom', emoji: '🩳', rarity: 'rare', price: 75, owned: false, equipped: false },
+  { id: 'item-bottom-4', name: 'Zırh Etek', category: 'bottom', emoji: '🥋', rarity: 'epic', price: 175, owned: false, equipped: false },
+  { id: 'item-bottom-5', name: 'Hologram Pantolon', category: 'bottom', emoji: '💠', rarity: 'epic', price: 250, owned: false, equipped: false },
+  { id: 'item-bottom-6', name: 'Ejderha Bacakları', category: 'bottom', emoji: '🐲', rarity: 'legendary', price: 650, owned: false, equipped: false },
+  // Shoes
+  { id: 'item-shoes-1', name: 'Spor Ayakkabı', category: 'shoes', emoji: '👟', rarity: 'common', price: 18, owned: false, equipped: false },
+  { id: 'item-shoes-2', name: 'Neon Koşucular', category: 'shoes', emoji: '🏃', rarity: 'rare', price: 55, owned: false, equipped: false },
+  { id: 'item-shoes-3', name: 'Lazer Botlar', category: 'shoes', emoji: '🥾', rarity: 'rare', price: 80, owned: false, equipped: false },
+  { id: 'item-shoes-4', name: 'Siber Çizmeler', category: 'shoes', emoji: '👢', rarity: 'epic', price: 190, owned: false, equipped: false },
+  { id: 'item-shoes-5', name: 'Uçuş Botları', category: 'shoes', emoji: '🚀', rarity: 'epic', price: 320, owned: false, equipped: false },
+  { id: 'item-shoes-6', name: 'Tanrı Sandalet', category: 'shoes', emoji: '⚡', rarity: 'legendary', price: 700, owned: false, equipped: false },
+  // More Accessories
+  { id: 'item-acc-4', name: 'Lazer Gözlük', category: 'accessory', emoji: '🕶️', rarity: 'common', price: 35, owned: false, equipped: false },
+  { id: 'item-acc-5', name: 'Hologram Küpe', category: 'accessory', emoji: '🔮', rarity: 'rare', price: 70, owned: false, equipped: false },
+  { id: 'item-acc-6', name: 'Zaman Bilekliği', category: 'accessory', emoji: '⌚', rarity: 'rare', price: 85, owned: false, equipped: false },
+  { id: 'item-acc-7', name: 'Kuantum Kalkan', category: 'accessory', emoji: '🛡️', rarity: 'epic', price: 220, owned: false, equipped: false },
+  { id: 'item-acc-8', name: 'Tanrı Eldivenler', category: 'accessory', emoji: '🧤', rarity: 'legendary', price: 850, owned: false, equipped: false },
+  // More Backgrounds
+  { id: 'item-bg-3', name: 'Siber Orman', category: 'background', emoji: '🌲', rarity: 'common', price: 30, owned: false, equipped: false },
+  { id: 'item-bg-4', name: 'Dijital Okyanus', category: 'background', emoji: '🌊', rarity: 'rare', price: 90, owned: false, equipped: false },
+  { id: 'item-bg-5', name: 'Neon Dağlar', category: 'background', emoji: '⛰️', rarity: 'rare', price: 110, owned: false, equipped: false },
+  { id: 'item-bg-6', name: 'Uzay İstasyonu', category: 'background', emoji: '🛸', rarity: 'epic', price: 260, owned: false, equipped: false },
+  { id: 'item-bg-7', name: 'Ejderha Şatosu', category: 'background', emoji: '🏰', rarity: 'epic', price: 300, owned: false, equipped: false },
+  { id: 'item-bg-8', name: 'Matrix Boyutu', category: 'background', emoji: '💻', rarity: 'legendary', price: 950, owned: false, equipped: false },
+  // Costumes
+  { id: 'item-costume-1', name: 'Ejderha Şövalye Seti', category: 'costume', emoji: '🐉', rarity: 'legendary', price: 800, owned: false, equipped: false, costumeSlots: { hat: 'item-hat-costume-1', top: 'item-top-costume-1', bottom: 'item-bottom-costume-1', shoes: 'item-shoes-costume-1' } },
+  { id: 'item-costume-2', name: 'Neon Savaşçı Seti', category: 'costume', emoji: '⚔️', rarity: 'epic', price: 350, owned: false, equipped: false, costumeSlots: { hat: 'item-hat-costume-2', top: 'item-top-costume-2', bottom: 'item-bottom-costume-2', shoes: 'item-shoes-costume-2' } },
+  { id: 'item-costume-3', name: 'Cyber Punk Seti', category: 'costume', emoji: '🤖', rarity: 'epic', price: 380, owned: false, equipped: false, costumeSlots: { hat: 'item-hat-costume-3', top: 'item-top-costume-3', bottom: 'item-bottom-costume-3', shoes: 'item-shoes-costume-3' } },
+  { id: 'item-costume-4', name: 'Ninja Karanlık Seti', category: 'costume', emoji: '🥷', rarity: 'rare', price: 140, owned: false, equipped: false, costumeSlots: { hat: 'item-hat-costume-4', top: 'item-top-costume-4', bottom: 'item-bottom-costume-4', shoes: 'item-shoes-costume-4' } },
+  { id: 'item-costume-5', name: 'Uzay Gezgini Seti', category: 'costume', emoji: '🚀', rarity: 'legendary', price: 950, owned: false, equipped: false, costumeSlots: { hat: 'item-hat-costume-5', top: 'item-top-costume-5', bottom: 'item-bottom-costume-5', shoes: 'item-shoes-costume-5' } },
+  { id: 'item-costume-6', name: 'Piksel Kahraman Seti', category: 'costume', emoji: '🦸', rarity: 'common', price: 45, owned: false, equipped: false, costumeSlots: { hat: 'item-hat-costume-6', top: 'item-top-costume-6', bottom: 'item-bottom-costume-6', shoes: 'item-shoes-costume-6' } },
 ];
 
 export const mockChatMessages = [

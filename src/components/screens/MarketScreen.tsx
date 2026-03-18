@@ -3,13 +3,60 @@ import { useStore } from '@/store';
 import { SectionLabel } from '@/components/atoms/SectionLabel';
 import { Badge } from '@/components/atoms/Badge';
 import { useState, useEffect } from 'react';
+import { AVATAR_LAYER_MAP, BACKGROUND_PALETTES } from '@/lib/avatar-layers';
+import type { MarketItem } from '@/store';
 
 const RARITY_COLORS: Record<string, string> = {
   common: '#64748B', rare: '#22D3EE', epic: '#A78BFA', legendary: '#FFD700',
 };
 
-const CATEGORIES = ['Tümü', '🎓 Şapka', '🧥 Üst Giysi', '💎 Aksesuar', '🌌 Arka Plan'];
-const CAT_KEYS = ['all', 'hat', 'top', 'accessory', 'background'];
+const CATEGORIES = ['Tümü', '🎓 Şapka', '💇 Saç', '🧥 Üst', '👖 Alt', '👟 Ayakkabı', '💎 Aksesuar', '🌌 Arka Plan', '🎭 Kostüm'];
+const CAT_KEYS   = ['all',  'hat',     'hair',    'top',   'bottom', 'shoes',       'accessory',   'background',   'costume'];
+
+function ItemPixelPreview({ item }: { item: MarketItem }) {
+  if (item.category === 'background') {
+    const colors = BACKGROUND_PALETTES[item.id] ?? ['#1A1A2E', '#0F0F1A', '#2D1B69'];
+    return (
+      <div style={{
+        width: 28, height: 18, borderRadius: 3, flexShrink: 0,
+        background: `linear-gradient(135deg, ${colors[0]}, ${colors[1]}, ${colors[2]})`,
+        border: '1px solid rgba(255,255,255,.1)',
+      }} />
+    );
+  }
+  if (item.category === 'costume') {
+    return (
+      <div style={{ fontSize: 16, lineHeight: 1 }}>{item.emoji}</div>
+    );
+  }
+  const layerDef = AVATAR_LAYER_MAP[item.id];
+  if (!layerDef) return null;
+
+  const slotViewBoxes: Record<string, { vb: string; w: number; h: number }> = {
+    hat:       { vb: '0 0 16 8',  w: 20, h: 10 },
+    hair:      { vb: '0 0 16 8',  w: 20, h: 10 },
+    top:       { vb: '0 0 16 22', w: 20, h: 28 },
+    bottom:    { vb: '0 0 16 32', w: 18, h: 28 },
+    shoes:     { vb: '0 0 16 32', w: 18, h: 28 },
+    accessory: { vb: '0 0 16 32', w: 12, h: 24 },
+  };
+  const dims = slotViewBoxes[item.category];
+  if (!dims) return null;
+
+  return (
+    <svg
+      viewBox={dims.vb}
+      width={dims.w}
+      height={dims.h}
+      style={{ imageRendering: 'pixelated', border: '1px solid rgba(255,255,255,.08)', borderRadius: 2, flexShrink: 0 }}
+      aria-hidden="true"
+    >
+      {layerDef.pixels.map((rect, i) => (
+        <rect key={i} x={rect.x} y={rect.y} width={rect.w} height={rect.h} fill={rect.color} />
+      ))}
+    </svg>
+  );
+}
 
 const EARNING_ROWS = [
   { action: '1 saat çalışma', reward: '+1 sa' },
@@ -50,8 +97,7 @@ export function MarketScreen() {
   // Filter items
   const filteredItems = items.filter(item => {
     if ((item as any).isDaily) return false;
-    const catKey = marketCategory === 'all' ? null : CAT_KEYS[CATEGORIES.indexOf(marketCategory)];
-    if (catKey && item.category !== catKey) return false;
+    if (marketCategory !== 'all' && item.category !== marketCategory) return false;
     if (marketSearch && !item.name.toLowerCase().includes(marketSearch.toLowerCase())) return false;
     return true;
   }).sort((a, b) => {
@@ -130,23 +176,29 @@ export function MarketScreen() {
 
       {/* Category tabs */}
       <div style={{ display: 'flex', gap: 6, overflowX: 'auto' }} className="no-scrollbar">
-        {CATEGORIES.map((cat, i) => (
-          <button
-            key={cat}
-            onClick={() => setMarketCategory(cat === 'Tümü' ? 'all' : cat)}
-            style={{
-              fontFamily: 'Space Mono', fontSize: 8, padding: '5px 10px', borderRadius: 6,
-              whiteSpace: 'nowrap', cursor: 'pointer', flexShrink: 0,
-              background: (marketCategory === 'all' ? cat === 'Tümü' : cat.includes(CAT_KEYS[i]?.charAt(0).toUpperCase() || '')) ? 'rgba(123,92,245,.15)' : 'rgba(255,255,255,.04)',
-              border: `1px solid rgba(255,255,255,.08)`,
-              color: 'var(--dim)',
-              position: 'relative',
-            }}
-          >
-            {cat}
-            {cat.includes('Kostüm') && <span style={{ position: 'absolute', top: -2, right: -2, width: 6, height: 6, borderRadius: '50%', background: '#EF4444' }} />}
-          </button>
-        ))}
+        {CATEGORIES.map((cat, i) => {
+          const key = CAT_KEYS[i];
+          const isActive = marketCategory === key;
+          return (
+            <button
+              key={cat}
+              onClick={() => setMarketCategory(key)}
+              style={{
+                fontFamily: 'Space Mono', fontSize: 8, padding: '5px 10px', borderRadius: 6,
+                whiteSpace: 'nowrap', cursor: 'pointer', flexShrink: 0,
+                background: isActive ? 'rgba(123,92,245,.15)' : 'rgba(255,255,255,.04)',
+                border: `1px solid ${isActive ? 'rgba(123,92,245,.4)' : 'rgba(255,255,255,.08)'}`,
+                color: isActive ? '#9D82F8' : 'var(--dim)',
+                position: 'relative',
+              }}
+            >
+              {cat}
+              {key === 'costume' && (
+                <span style={{ position: 'absolute', top: -2, right: -2, width: 6, height: 6, borderRadius: '50%', background: '#EF4444' }} />
+              )}
+            </button>
+          );
+        })}
       </div>
 
       {/* Sort */}
