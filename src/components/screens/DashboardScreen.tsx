@@ -6,7 +6,7 @@ import { formatTime } from '@/lib/utils';
 import { SectionLabel } from '@/components/atoms/SectionLabel';
 import { ProgressBar } from '@/components/atoms/ProgressBar';
 import { Badge } from '@/components/atoms/Badge';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTimer } from '@/hooks/useTimer';
 import { RankBadge } from '@/components/RankBadge';
 import { DAILY_QUOTES } from '@/lib/constants';
@@ -45,9 +45,11 @@ export function DashboardScreen() {
   const examDaysLeft = user.examDaysLeft;
 
   // Daily quote (date-seeded, changes every day, deterministic)
-  const dayOfYear = Math.floor(
-    (Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000
-  );
+  const dayOfYear = useMemo(() => {
+    const today = new Date();
+    const startOfYear = new Date(today.getFullYear(), 0, 0);
+    return Math.floor((today.getTime() - startOfYear.getTime()) / 86400000);
+  }, []);
   const quote = DAILY_QUOTES[dayOfYear % DAILY_QUOTES.length];
 
   // Task completion stats from history
