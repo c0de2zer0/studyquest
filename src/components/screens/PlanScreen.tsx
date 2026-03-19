@@ -4,6 +4,7 @@ import { useStore } from '@/store';
 import { SectionLabel } from '@/components/atoms/SectionLabel';
 import { Badge } from '@/components/atoms/Badge';
 import { ProgressBar } from '@/components/atoms/ProgressBar';
+import { AIPlanModal } from '@/components/AIPlanModal';
 import { mockWeeklyCalendar } from '@/lib/mock-data';
 
 const DAYS = ['Pzt', 'Sal', 'Çrş', 'Per', 'Cum', 'Cmt', 'Paz'];
@@ -18,35 +19,10 @@ const INTEGRATIONS = [
   { id: 'todoist', name: 'Todoist', emoji: '✅', color: '#EF4444', status: 'disconnected', statusText: 'Bağlanmadı' },
 ];
 
-type AiStep = 'source' | 'input' | 'processing' | 'results' | 'done';
-
 export function PlanScreen() {
   const { planView, setPlanView, planWeekOffset, setPlanWeekOffset, showToast } = useStore();
-  const [showAiModal, setShowAiModal] = useState(false);
-  const [aiStep, setAiStep] = useState<AiStep>('source');
-  const [aiSource, setAiSource] = useState('');
-  const [aiText, setAiText] = useState('');
+  const [showAiPlan, setShowAiPlan] = useState(false);
   const [selectedTask, setSelectedTask] = useState<string | null>(null);
-
-  const mockExtractedTasks = [
-    { id: 'ex1', name: 'Türev ve İntegral', subject: 'Matematik', day: 'Pzt', duration: '2 saat', emoji: '📐', selected: true },
-    { id: 'ex2', name: 'Elektrik Devreleri', subject: 'Fizik', day: 'Sal', duration: '1.5 saat', emoji: '⚡', selected: true },
-    { id: 'ex3', name: 'Organik Kimya', subject: 'Kimya', day: 'Çrş', duration: '2 saat', emoji: '⚗️', selected: true },
-    { id: 'ex4', name: 'Hücre Bölünmesi', subject: 'Biyoloji', day: 'Per', duration: '1 saat', emoji: '🌿', selected: true },
-    { id: 'ex5', name: 'Şiir Analizi', subject: 'Edebiyat', day: 'Cum', duration: '1 saat', emoji: '📖', selected: true },
-  ];
-  const [extractedTasks, setExtractedTasks] = useState(mockExtractedTasks);
-
-  const handleProcessing = () => {
-    setAiStep('processing');
-    setTimeout(() => setAiStep('results'), 2500);
-  };
-
-  const handleConfirm = () => {
-    showToast(`${extractedTasks.filter(t => t.selected).length} görev takvime eklendi!`, 'success', '📅');
-    setShowAiModal(false);
-    setAiStep('source');
-  };
 
   const today = new Date();
   const todayDayIdx = (today.getDay() + 6) % 7; // 0=Mon
@@ -69,7 +45,7 @@ export function PlanScreen() {
         <button
           className="btn-gradient"
           style={{ padding: '7px 14px', fontSize: 9 }}
-          onClick={() => { setShowAiModal(true); setAiStep('source'); }}
+          onClick={() => setShowAiPlan(true)}
         >✨ AI PLAN OLUŞTUR</button>
       </div>
 
@@ -231,121 +207,8 @@ export function PlanScreen() {
         </div>
       </div>
 
-      {/* AI Modal */}
-      {showAiModal && (
-        <div
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.85)', backdropFilter: 'blur(4px)', zIndex: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
-          onClick={e => e.target === e.currentTarget && setShowAiModal(false)}
-        >
-          <div className="card" style={{ maxWidth: 380, width: '100%', background: 'var(--s2)', border: '1px solid rgba(123,92,245,.3)', borderRadius: 16, padding: 20 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-              <span style={{ fontFamily: 'Orbitron', fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>
-                {aiStep === 'source' ? 'Planını Nasıl Oluşturalım?' : aiStep === 'input' ? `${aiSource === 'photo' ? '📸' : aiSource === 'text' ? '📝' : aiSource === 'voice' ? '🎤' : '🗓️'} Planını Yükle` : aiStep === 'processing' ? 'AI Analiz Ediyor...' : 'Bulunan Görevler'}
-              </span>
-              <button onClick={() => setShowAiModal(false)} style={{ background: 'none', border: 'none', color: 'var(--muted)', cursor: 'pointer', fontSize: 18 }}>×</button>
-            </div>
-
-            {aiStep === 'source' && (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-                {[
-                  { key: 'photo', emoji: '📸', label: 'Fotoğraf Yükle' },
-                  { key: 'text', emoji: '📝', label: 'Metni Yapıştır' },
-                  { key: 'voice', emoji: '🎤', label: 'Sesli Anlat' },
-                  { key: 'calendar', emoji: '🗓️', label: 'Takvimden Al' },
-                ].map(opt => (
-                  <button
-                    key={opt.key}
-                    onClick={() => { setAiSource(opt.key); setAiStep('input'); }}
-                    style={{
-                      padding: '16px 10px', borderRadius: 10, cursor: 'pointer', textAlign: 'center',
-                      background: aiSource === opt.key ? 'rgba(123,92,245,.15)' : 'rgba(255,255,255,.04)',
-                      border: `1px solid ${aiSource === opt.key ? 'rgba(123,92,245,.4)' : 'rgba(255,255,255,.08)'}`,
-                      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-                    }}
-                  >
-                    <span style={{ fontSize: 24 }}>{opt.emoji}</span>
-                    <span style={{ fontFamily: 'Rajdhani', fontSize: 11, fontWeight: 600, color: 'var(--text)' }}>{opt.label}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {aiStep === 'input' && (
-              <div>
-                {aiSource === 'text' && (
-                  <textarea
-                    rows={6}
-                    value={aiText}
-                    onChange={e => setAiText(e.target.value)}
-                    placeholder="Programını buraya yapıştır..."
-                    style={{ width: '100%', background: 'var(--s1)', border: '1px solid rgba(255,255,255,.1)', borderRadius: 8, padding: 12, color: 'var(--text)', fontFamily: 'Rajdhani', fontSize: 12, resize: 'none' }}
-                  />
-                )}
-                {aiSource === 'photo' && (
-                  <div style={{ border: '2px dashed rgba(123,92,245,.3)', borderRadius: 10, padding: 32, textAlign: 'center' }}>
-                    <div style={{ fontSize: 32, marginBottom: 8 }}>📸</div>
-                    <div style={{ fontFamily: 'Rajdhani', fontSize: 12, color: 'var(--muted)' }}>Sürükle bırak veya</div>
-                    <button className="btn-gradient" style={{ padding: '6px 16px', marginTop: 8 }}>Dosya Seç</button>
-                  </div>
-                )}
-                {aiSource === 'voice' && (
-                  <div style={{ textAlign: 'center', padding: 24 }}>
-                    <button style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(123,92,245,.2)', border: '2px solid #7B5CF5', fontSize: 28, cursor: 'pointer', animation: 'pulse-glow 1.5s infinite' }}>🎤</button>
-                    <div style={{ fontFamily: 'Space Mono', fontSize: 9, color: 'var(--muted)', marginTop: 12 }}>Programını sesle anlat</div>
-                  </div>
-                )}
-                {aiSource === 'calendar' && (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                    {['Google Calendar', 'Notion', 'Google Sheets'].map(opt => (
-                      <button key={opt} style={{ padding: '10px 14px', background: 'rgba(255,255,255,.04)', border: '1px solid rgba(255,255,255,.08)', borderRadius: 8, color: 'var(--text)', fontFamily: 'Rajdhani', fontSize: 12, cursor: 'pointer', textAlign: 'left' }}>
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                <button className="btn-gradient" style={{ width: '100%', marginTop: 12, padding: '11px 0' }} onClick={handleProcessing}>
-                  ANALİZ ET
-                </button>
-              </div>
-            )}
-
-            {aiStep === 'processing' && (
-              <div style={{ textAlign: 'center', padding: 24 }}>
-                <div style={{ width: 60, height: 60, borderRadius: '50%', background: 'rgba(123,92,245,.2)', border: '2px solid #7B5CF5', margin: '0 auto 16px', animation: 'pulse-glow 1s infinite', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>✨</div>
-                <div style={{ fontFamily: 'Orbitron', fontSize: 12, color: 'var(--text)', marginBottom: 8 }}>AI analiz ediyor...</div>
-                <div style={{ fontFamily: 'Space Mono', fontSize: 9, color: 'var(--muted)' }}>El yazısı tanınıyor · Görevler çıkarılıyor · Takvim oluşturuluyor</div>
-              </div>
-            )}
-
-            {aiStep === 'results' && (
-              <div>
-                <div style={{ fontFamily: 'Orbitron', fontSize: 11, color: 'var(--text)', marginBottom: 10 }}>Bulunan Görevler</div>
-                {extractedTasks.map(task => (
-                  <div key={task.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 0', borderBottom: '1px solid rgba(255,255,255,.04)' }}>
-                    <input
-                      type="checkbox"
-                      checked={task.selected}
-                      onChange={() => setExtractedTasks(ts => ts.map(t => t.id === task.id ? { ...t, selected: !t.selected } : t))}
-                      style={{ accentColor: '#7B5CF5' }}
-                    />
-                    <span style={{ fontSize: 14 }}>{task.emoji}</span>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontFamily: 'Rajdhani', fontSize: 11, fontWeight: 700, color: 'var(--text)' }}>{task.name}</div>
-                      <div style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--muted)' }}>{task.day} · {task.duration}</div>
-                    </div>
-                  </div>
-                ))}
-                <div style={{ fontFamily: 'Space Mono', fontSize: 9, color: 'var(--muted)', margin: '10px 0' }}>
-                  {extractedTasks.filter(t => t.selected).length} görev · Toplam {extractedTasks.filter(t => t.selected).length * 1.5} saat
-                </div>
-                <button className="btn-gradient" style={{ width: '100%', padding: '12px 0' }} onClick={handleConfirm}>
-                  📅 TAKVİME EKLE
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {/* AI Plan Modal */}
+      {showAiPlan && <AIPlanModal onClose={() => setShowAiPlan(false)} />}
     </div>
   );
 }
