@@ -401,7 +401,7 @@ export function CommunityScreen() {
           <PostCard
             key={post.id}
             post={post}
-            onJoin={(id) => { joinChallenge(id); openLobby(id); }}
+            onJoin={(id) => joinChallenge(id)}
             onReact={addPostReaction}
           />
         ))}

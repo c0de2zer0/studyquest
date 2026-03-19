@@ -400,7 +400,7 @@ export const useStore = create<StoreState>((set, get) => ({
     const newRoom: Room = {
       ...data,
       id: `room-${Date.now()}`,
-      members: [{ id: 'u1', name: get().user.name, emoji: get().user.emoji, color: '#7B5CF5' }],
+      members: [{ id: get().user.id, name: get().user.name, emoji: get().user.emoji, color: '#7B5CF5' }],
       messages: [],
     };
     set(s => ({ rooms: [newRoom, ...s.rooms], myRoom: newRoom }));
@@ -411,7 +411,7 @@ export const useStore = create<StoreState>((set, get) => ({
     // Leave current room first
     if (current) {
       set(s => ({
-        rooms: s.rooms.map(r => r.id === current.id ? { ...r, members: r.members.filter(m => m.id !== 'u1') } : r),
+        rooms: s.rooms.map(r => r.id === current.id ? { ...r, members: r.members.filter(m => m.id !== get().user.id) } : r),
       }));
     }
     const room = get().rooms.find(r => r.id === roomId);
@@ -421,7 +421,7 @@ export const useStore = create<StoreState>((set, get) => ({
       set(() => ({ myRoom: null }));
       return;
     }
-    const me: RoomMember = { id: 'u1', name: get().user.name, emoji: get().user.emoji, color: '#7B5CF5' };
+    const me: RoomMember = { id: get().user.id, name: get().user.name, emoji: get().user.emoji, color: '#7B5CF5' };
     set(s => ({
       myRoom: { ...room, members: [...room.members, me] },
       rooms: s.rooms.map(r => r.id === roomId ? { ...r, members: [...r.members, me] } : r),
@@ -432,14 +432,14 @@ export const useStore = create<StoreState>((set, get) => ({
     if (!room) return;
     set(s => ({
       myRoom: null,
-      rooms: s.rooms.map(r => r.id === room.id ? { ...r, members: r.members.filter(m => m.id !== 'u1') } : r),
+      rooms: s.rooms.map(r => r.id === room.id ? { ...r, members: r.members.filter(m => m.id !== get().user.id) } : r),
     }));
   },
   sendRoomMessage: (text) => {
     if (!text.trim() || !get().myRoom) return;
     const now = new Date();
     const ts = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-    const msg: RoomMessage = { id: `rm${Date.now()}`, userId: 'u1', userName: get().user.name, userEmoji: get().user.emoji, content: text, timestamp: ts };
+    const msg: RoomMessage = { id: `rm${Date.now()}`, userId: get().user.id, userName: get().user.name, userEmoji: get().user.emoji, content: text, timestamp: ts };
     const roomId = get().myRoom!.id;
     set(s => ({
       myRoom: s.myRoom ? { ...s.myRoom, messages: [...s.myRoom.messages, msg] } : null,
