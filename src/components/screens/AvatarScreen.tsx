@@ -17,6 +17,8 @@ export function AvatarScreen() {
   const { user, items, equipItem, unequipItem, setActiveTab, showToast } = useStore();
   const [wardrobeCat, setWardrobeCat] = useState(0);
   const [glowColor, setGlowColor] = useState(user.avatar.glowColor);
+  const [selectedEv, setSelectedEv] = useState<string | null>(null);
+  const [shakingEv, setShakingEv] = useState<string | null>(null);
 
   const totalHours = user.totalHours;
   const currentEvolution = mockEvolutionTree.find(e => e.current);
@@ -52,6 +54,13 @@ export function AvatarScreen() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <style>{`
+        @keyframes shake {
+          0%,100%{transform:translateX(0)}
+          20%,60%{transform:translateX(-4px)}
+          40%,80%{transform:translateX(4px)}
+        }
+      `}</style>
       {/* Avatar Stage */}
       <div className="card" style={{
         background: 'radial-gradient(ellipse 80% 60% at 50% 60%, rgba(123,92,245,.12), transparent)',
@@ -137,8 +146,17 @@ export function AvatarScreen() {
                     width: 54, cursor: ev.unlocked ? 'pointer' : 'default',
                     opacity: !ev.unlocked ? .25 : 1,
                     filter: !ev.unlocked ? 'grayscale(1)' : 'none',
+                    animation: shakingEv === ev.id ? 'shake 0.3s ease' : 'none',
                   }}
                   data-tooltip={!ev.unlocked ? `Gerekli: ${ev.reqHours} saat` : undefined}
+                  onClick={() => {
+                    if (ev.unlocked) {
+                      setSelectedEv(prev => prev === ev.id ? null : ev.id);
+                    } else {
+                      setShakingEv(ev.id);
+                      setTimeout(() => setShakingEv(null), 350);
+                    }
+                  }}
                 >
                   <div style={{
                     width: 42, height: 42, borderRadius: '50%',
@@ -171,6 +189,30 @@ export function AvatarScreen() {
               </div>
             </div>
           )}
+          {selectedEv && (() => {
+            const ev = mockEvolutionTree.find(e => e.id === selectedEv);
+            if (!ev) return null;
+            return (
+              <div style={{
+                marginTop: 10, background: 'rgba(123,92,245,.1)',
+                border: '1px solid rgba(123,92,245,.3)', borderRadius: 8, padding: '10px 12px',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                  <span style={{ fontSize: 24 }}>{ev.emoji}</span>
+                  <div>
+                    <div style={{ fontFamily: 'Orbitron', fontSize: 11, color: '#A78BFA' }}>{ev.name}</div>
+                    <div style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--muted)' }}>
+                      {ev.current
+                        ? '★ Mevcut formun'
+                        : ev.unlocked
+                        ? `✓ ${ev.reqHours} saatte ulaştın`
+                        : `🔒 Gerekli: ${ev.reqHours} saat çalışma`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </div>
 
