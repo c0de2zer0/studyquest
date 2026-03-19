@@ -1,6 +1,6 @@
 'use client';
 import { create } from 'zustand';
-import { mockUser, mockTasks, mockMarketItems, mockChatMessages, mockVoiceRooms, mockNotifications, mockTournaments, mockCommunityPosts, mockTaskHistory, mockIntegrationSubjects, type CommunityPost, type TaskHistoryEntry } from '@/lib/mock-data';
+import { mockUser, mockTasks, mockMarketItems, mockNotifications, mockTournaments, mockCommunityPosts, mockTaskHistory, mockIntegrationSubjects, mockRooms, type CommunityPost, type TaskHistoryEntry, type Room, type RoomMember, type RoomMessage } from '@/lib/mock-data';
 import { TIMER_MODES, POMODORO_COUNT, XP_PER_MINUTE, LP_PER_MINUTE, RANK_TIERS, SUBJECTS } from '@/lib/constants';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -46,19 +46,6 @@ export interface Toast {
   emoji?: string;
 }
 
-export interface Message {
-  id: string;
-  userId: string;
-  userName: string;
-  userEmoji: string;
-  userColor: string;
-  content: string;
-  timestamp: string;
-  channel: string;
-  reactions: { emoji: string; count: number; reacted?: boolean }[];
-  isSystem?: boolean;
-  replyTo?: string;
-}
 
 export interface StoreState {
   // Navigation
@@ -114,18 +101,18 @@ export interface StoreState {
   setMarketSort: (s: string) => void;
   setMarketSearch: (s: string) => void;
 
-  // Chat
-  messages: Message[];
-  activeChannel: string;
-  joinedRooms: string[];
-  voiceRooms: typeof mockVoiceRooms;
-  sendMessage: (text: string, replyTo?: string) => void;
-  addReaction: (msgId: string, emoji: string) => void;
-  setActiveChannel: (id: string) => void;
-  joinRoom: (roomId: string) => void;
-  leaveRoom: (roomId: string) => void;
+  // Status
   userStatus: UserStatus;
   setUserStatus: (status: UserStatus) => void;
+
+  // Rooms
+  rooms: Room[];
+  myRoom: Room | null;
+  createRoom: (data: Omit<Room, 'id' | 'members' | 'messages'>) => void;
+  joinRoomById: (roomId: string) => void;
+  leaveCurrentRoom: () => void;
+  sendRoomMessage: (text: string) => void;
+  addFullTask: (task: Task) => void;
 
   // Rando
   randoState: RandoState;
@@ -178,7 +165,7 @@ export interface StoreState {
 
   // Community posts
   communityPosts: CommunityPost[];
-  createPost: (post: Omit<CommunityPost, 'id' | 'participants' | 'reactions' | 'timestamp'>) => void;
+  createPost: (post: Omit<CommunityPost, 'id' | 'reactions' | 'timestamp'>) => void;
   joinChallenge: (postId: string) => void;
   addPostReaction: (postId: string, emoji: string) => void;
 
@@ -191,10 +178,6 @@ export interface StoreState {
   // All subjects (computed: SUBJECTS + integrationSubjects)
   getAllSubjects: () => { id: string; name: string; emoji: string; color: string }[];
 
-  // Lobby
-  activeLobbyRoom: string | null;
-  openLobby: (roomId: string) => void;
-  closeLobby: () => void;
 }
 
 function getDuration(mode: TimerMode, phase: TimerPhase, customWork: number, customBreak: number): number {
@@ -341,6 +324,9 @@ export const useStore = create<StoreState>((set, get) => ({
       user: { ...s.user, balance: parseFloat((s.user.balance - price).toFixed(2)), collectionCount: s.user.collectionCount + 1 }
     }));
     showToast(`${item.emoji} ${item.name} senin oldu! Dolaba eklendi.`, 'success', '🎉');
+    if (id === 'item-feature-blue-tick') {
+      set(s => ({ user: { ...s.user, isVerified: true } }));
+    }
     return true;
   },
   equipItem: (id) => {
@@ -403,57 +389,64 @@ export const useStore = create<StoreState>((set, get) => ({
   setMarketSort: (s) => set({ marketSort: s }),
   setMarketSearch: (s) => set({ marketSearch: s }),
 
-  // Chat
-  messages: mockChatMessages.map(m => ({ ...m })),
-  activeChannel: 'gen',
-  joinedRooms: [],
-  voiceRooms: [...mockVoiceRooms],
-  sendMessage: (text, replyTo) => {
-    if (!text.trim()) return;
-    const now = new Date();
-    const timestamp = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-    const channel = get().activeChannel;
-    set(s => ({
-      messages: [...s.messages, {
-        id: `m${Date.now()}`,
-        userId: 'u1',
-        userName: s.user.name,
-        userEmoji: s.user.emoji,
-        userColor: '#7B5CF5',
-        content: text,
-        timestamp,
-        channel,
-        reactions: [],
-        replyTo,
-      }]
-    }));
-  },
-  addReaction: (msgId, emoji) => set(s => ({
-    messages: s.messages.map(m => {
-      if (m.id !== msgId) return m;
-      const existing = m.reactions.find(r => r.emoji === emoji);
-      if (existing) {
-        return {
-          ...m,
-          reactions: m.reactions
-            .map(r => r.emoji === emoji ? { ...r, count: r.reacted ? r.count - 1 : r.count + 1, reacted: !r.reacted } : r)
-            .filter(r => r.count > 0)
-        };
-      }
-      return { ...m, reactions: [...m.reactions, { emoji, count: 1, reacted: true }] };
-    })
-  })),
-  setActiveChannel: (id) => set({ activeChannel: id }),
-  joinRoom: (roomId) => set(s => ({
-    joinedRooms: s.joinedRooms.includes(roomId) ? s.joinedRooms : [...s.joinedRooms, roomId],
-    voiceRooms: s.voiceRooms.map(r => r.id === roomId ? { ...r, occupied: r.occupied + 1 } : r)
-  })),
-  leaveRoom: (roomId) => set(s => ({
-    joinedRooms: s.joinedRooms.filter(id => id !== roomId),
-    voiceRooms: s.voiceRooms.map(r => r.id === roomId ? { ...r, occupied: Math.max(0, r.occupied - 1) } : r)
-  })),
+  // Status
   userStatus: 'studying',
   setUserStatus: (status) => set({ userStatus: status }),
+
+  // Rooms
+  rooms: [...mockRooms],
+  myRoom: null,
+  createRoom: (data) => {
+    const newRoom: Room = {
+      ...data,
+      id: `room-${Date.now()}`,
+      members: [{ id: 'u1', name: get().user.name, emoji: get().user.emoji, color: '#7B5CF5' }],
+      messages: [],
+    };
+    set(s => ({ rooms: [newRoom, ...s.rooms], myRoom: newRoom }));
+  },
+  joinRoomById: (roomId) => {
+    const current = get().myRoom;
+    if (current?.id === roomId) return; // already in this room
+    // Leave current room first
+    if (current) {
+      set(s => ({
+        rooms: s.rooms.map(r => r.id === current.id ? { ...r, members: r.members.filter(m => m.id !== 'u1') } : r),
+      }));
+    }
+    const room = get().rooms.find(r => r.id === roomId);
+    if (!room) return;
+    if (room.members.length >= room.capacity) {
+      get().showToast('Oda dolu!', 'error', '🚫');
+      set(() => ({ myRoom: null }));
+      return;
+    }
+    const me: RoomMember = { id: 'u1', name: get().user.name, emoji: get().user.emoji, color: '#7B5CF5' };
+    set(s => ({
+      myRoom: { ...room, members: [...room.members, me] },
+      rooms: s.rooms.map(r => r.id === roomId ? { ...r, members: [...r.members, me] } : r),
+    }));
+  },
+  leaveCurrentRoom: () => {
+    const room = get().myRoom;
+    if (!room) return;
+    set(s => ({
+      myRoom: null,
+      rooms: s.rooms.map(r => r.id === room.id ? { ...r, members: r.members.filter(m => m.id !== 'u1') } : r),
+    }));
+  },
+  sendRoomMessage: (text) => {
+    if (!text.trim() || !get().myRoom) return;
+    const now = new Date();
+    const ts = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    const msg: RoomMessage = { id: `rm${Date.now()}`, userId: 'u1', userName: get().user.name, userEmoji: get().user.emoji, content: text, timestamp: ts };
+    const roomId = get().myRoom!.id;
+    set(s => ({
+      myRoom: s.myRoom ? { ...s.myRoom, messages: [...s.myRoom.messages, msg] } : null,
+      rooms: s.rooms.map(r => r.id === roomId ? { ...r, messages: [...r.messages, msg] } : r),
+    }));
+  },
+  addFullTask: (task) => set(s => ({ tasks: [...s.tasks, task] })),
 
   // Rando
   randoState: 'idle',
@@ -590,7 +583,6 @@ export const useStore = create<StoreState>((set, get) => ({
       {
         ...post,
         id: `p${Date.now()}`,
-        participants: ['me'],
         reactions: [],
         timestamp: 'Az önce',
       },
@@ -598,11 +590,12 @@ export const useStore = create<StoreState>((set, get) => ({
     ],
   })),
   joinChallenge: (postId) => set(s => ({
-    communityPosts: s.communityPosts.map(p =>
-      p.id === postId && !p.participants.includes('me')
-        ? { ...p, participants: [...p.participants, 'me'] }
-        : p
-    ),
+    communityPosts: s.communityPosts.map(p => {
+      if (p.id !== postId) return p;
+      const parts = p.participants ?? [];
+      if (parts.includes('me')) return p;
+      return { ...p, participants: [...parts, 'me'] };
+    }),
   })),
   addPostReaction: (postId, emoji) => set(s => ({
     communityPosts: s.communityPosts.map(p => {
@@ -637,8 +630,4 @@ export const useStore = create<StoreState>((set, get) => ({
     ];
   },
 
-  // Lobby
-  activeLobbyRoom: null,
-  openLobby: (roomId) => set({ activeLobbyRoom: roomId }),
-  closeLobby: () => set({ activeLobbyRoom: null }),
 }));

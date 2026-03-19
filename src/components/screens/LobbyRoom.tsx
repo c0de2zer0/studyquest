@@ -116,8 +116,7 @@ const MockPlayer = React.memo(function MockPlayer({ player }: { player: MockLobb
   );
 });
 
-export function LobbyRoom() {
-  const closeLobby = useStore(state => state.closeLobby);
+export function LobbyRoom({ onClose }: { onClose?: () => void }) {
   const user = useStore(state => state.user);
 
   const keysRef = useRef<Set<string>>(new Set());
@@ -209,7 +208,7 @@ export function LobbyRoom() {
       paddingTop: 20,
     }}>
       <button
-        onClick={closeLobby}
+        onClick={onClose}
         style={{
           position: 'absolute', top: 16, right: 16, zIndex: 110,
           fontFamily: 'Space Mono', fontSize: 10,

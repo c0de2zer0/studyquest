@@ -22,6 +22,7 @@ export const mockUser = {
   followers: 34,
   following: 21,
   friends: 12,
+  isVerified: false,
   collectionCount: 12,
   collectionTotal: 30,
   status: 'studying' as 'online'|'studying'|'break'|'dnd'|'offline',
@@ -152,6 +153,8 @@ export const mockMarketItems = [
   { id: 'item-costume-4', name: 'Ninja Karanlık Seti', category: 'costume', emoji: '🥷', rarity: 'rare', price: 140, owned: false, equipped: false, costumeSlots: { hat: 'item-hat-costume-4', top: 'item-top-costume-4', bottom: 'item-bottom-costume-4', shoes: 'item-shoes-costume-4' } },
   { id: 'item-costume-5', name: 'Uzay Gezgini Seti', category: 'costume', emoji: '🚀', rarity: 'legendary', price: 950, owned: false, equipped: false, costumeSlots: { hat: 'item-hat-costume-5', top: 'item-top-costume-5', bottom: 'item-bottom-costume-5', shoes: 'item-shoes-costume-5' } },
   { id: 'item-costume-6', name: 'Piksel Kahraman Seti', category: 'costume', emoji: '🦸', rarity: 'common', price: 45, owned: false, equipped: false, costumeSlots: { hat: 'item-hat-costume-6', top: 'item-top-costume-6', bottom: 'item-bottom-costume-6', shoes: 'item-shoes-costume-6' } },
+  { id: 'item-feature-blue-tick', name: 'Mavi Tik ✓', category: 'ozellik',
+    emoji: '✓', rarity: 'legendary', price: 500, owned: false, equipped: false },
 ];
 
 export const mockChatMessages = [
@@ -286,20 +289,105 @@ export const mockEvolutionTree = [
   { id: 'ev7', emoji: '🌟', name: 'Efsane', reqHours: 800, unlocked: false, current: false },
 ];
 
-export interface CommunityPost {
+// ─── Room System ─────────────────────────────────────────────────────────────
+
+export interface RoomMember {
+  id: string;
+  name: string;
+  emoji: string;
+  color: string;
+}
+
+export interface RoomMessage {
   id: string;
   userId: string;
   userName: string;
   userEmoji: string;
-  userColor: string;
-  type: 'post' | 'challenge';
   content: string;
+  timestamp: string;
+}
+
+export interface Room {
+  id: string;
+  name: string;
+  subject: string;
+  subjectColor: string;
+  emoji: string;
+  ownerId: string;
+  ownerName: string;
+  capacity: number;
+  members: RoomMember[];
+  permissions: { canWrite: boolean; canCompete: boolean };
+  isOpen: boolean;
+  messages: RoomMessage[];
+}
+
+export const mockRooms: Room[] = [
+  {
+    id: 'room-1', name: 'Türev Kafası', subject: 'Matematik', subjectColor: '#7B5CF5',
+    emoji: '📐', ownerId: 'f1', ownerName: 'NightWolf', capacity: 10, isOpen: true,
+    permissions: { canWrite: true, canCompete: true },
+    members: [
+      { id: 'f1', name: 'NightWolf', emoji: '🐺', color: '#22D3EE' },
+      { id: 'f3', name: 'IronMind', emoji: '🧠', color: '#A78BFA' },
+      { id: 'u3', name: 'CyberSage', emoji: '🧙', color: '#10B981' },
+    ],
+    messages: [
+      { id: 'rm1', userId: 'f1', userName: 'NightWolf', userEmoji: '🐺', content: 'türev zincir kuralına baktım, şu soru bende var', timestamp: '10:41' },
+      { id: 'rm2', userId: 'u3', userName: 'CyberSage', userEmoji: '🧙', content: 'hangi konu?', timestamp: '10:42' },
+    ],
+  },
+  {
+    id: 'room-2', name: 'Fizik Sprint', subject: 'Fizik', subjectColor: '#22D3EE',
+    emoji: '⚡', ownerId: 'f3', ownerName: 'IronMind', capacity: 10, isOpen: true,
+    permissions: { canWrite: false, canCompete: false },
+    members: Array.from({ length: 10 }, (_, i) => ({ id: `rm${i}`, name: `Üye ${i+1}`, emoji: '👤', color: '#64748B' })),
+    messages: [],
+  },
+  {
+    id: 'room-3', name: 'Kimya Odası', subject: 'Kimya', subjectColor: '#F59E0B',
+    emoji: '⚗️', ownerId: 'u4', ownerName: 'StarGazer', capacity: 8, isOpen: true,
+    permissions: { canWrite: true, canCompete: false },
+    members: [{ id: 'u4', name: 'StarGazer', emoji: '⭐', color: '#F59E0B' }],
+    messages: [],
+  },
+];
+
+export type PostType = 'post' | 'challenge' | 'battle' | 'channel_post' | 'tournament';
+
+export interface CommunityPost {
+  id: string;
+  type: PostType;
+  userId: string;
+  userName: string;
+  userEmoji: string;
+  userColor: string;
+  timestamp: string;
+  content: string;
+  reactions: { emoji: string; count: number; reacted?: boolean }[];
+  // challenge
   subject?: string;
   subjectColor?: string;
   durationMin?: number;
-  participants: string[];
-  reactions: { emoji: string; count: number; reacted?: boolean }[];
-  timestamp: string;
+  participants?: string[];
+  // verified channel
+  isVerifiedChannel?: boolean;
+  channelName?: string;
+  followerCount?: number;
+  channelEmoji?: string;
+  channelBorderColor?: string;
+  // battle
+  player1?: { id: string; name: string; emoji: string; color: string; score: number };
+  player2?: { id: string; name: string; emoji: string; color: string; score: number };
+  battleSubject?: string;
+  battleDurationMin?: number;
+  timeRemainingSeconds?: number;
+  // tournament (inside channel posts)
+  tournamentName?: string;
+  tournamentPrize?: string;
+  tournamentCapacity?: number;
+  tournamentParticipants?: number;
+  tournamentStartTime?: string;
 }
 
 export interface TaskHistoryEntry {
@@ -309,6 +397,38 @@ export interface TaskHistoryEntry {
 }
 
 export const mockCommunityPosts: CommunityPost[] = [
+  // Verified channel — Gri Koç with tournament
+  {
+    id: 'ch1', type: 'channel_post' as PostType,
+    userId: 'grikos', userName: 'Gri Koç', userEmoji: '🦁', userColor: '#FFD700',
+    isVerifiedChannel: true, channelName: 'Gri Koç', followerCount: 847000,
+    channelEmoji: '🦁', channelBorderColor: '#FFD700',
+    content: '🏆 HAFTALIK MATEMATİK ŞAMPİYONASI başlıyor! 100 kişilik gruplar, eleme → final. Ödül: Nadir rozet + 50 sa coin.',
+    timestamp: '10 dk önce', reactions: [],
+    tournamentName: 'Haftalık Matematik Şampiyonası', tournamentPrize: 'Nadir Rozet + 50sa',
+    tournamentCapacity: 1000, tournamentParticipants: 847, tournamentStartTime: 'Pazar 20:00',
+  },
+  // Live battle card
+  {
+    id: 'b1', type: 'battle' as PostType,
+    userId: 'f1', userName: 'NightWolf', userEmoji: '🐺', userColor: '#A78BFA',
+    content: '',
+    timestamp: 'Şimdi', reactions: [],
+    player1: { id: 'f1', name: 'NightWolf', emoji: '🐺', color: '#A78BFA', score: 75 },
+    player2: { id: 'f3', name: 'IronMind', emoji: '🧠', color: '#22D3EE', score: 82 },
+    battleSubject: 'Türev', battleDurationMin: 30, timeRemainingSeconds: 763,
+  },
+  // Verified channel — Nit Dershanesi
+  {
+    id: 'ch2', type: 'channel_post' as PostType,
+    userId: 'nit', userName: 'Nit Dershanesi', userEmoji: '🏫', userColor: '#22D3EE',
+    isVerifiedChannel: true, channelName: 'Nit Dershanesi', followerCount: 234000,
+    channelEmoji: '🏫', channelBorderColor: '#22D3EE',
+    content: 'Bu hafta sonu 100 kişilik YKS Matematik grubumuz için özel soru seti hazır. Kendi sınıfınızla yarışın!',
+    timestamp: '1 sa önce', reactions: [],
+    tournamentName: 'YKS Matematik Grubu', tournamentPrize: 'Sertifika + 20sa',
+    tournamentCapacity: 100, tournamentParticipants: 67, tournamentStartTime: 'Cumartesi 14:00',
+  },
   {
     id: 'p1', userId: 'u2', userName: 'NightWolf', userEmoji: '🐺', userColor: '#7B5CF5',
     type: 'challenge', content: 'Kim benimle matematik kafası yapıyor? 1 saat sprint!',

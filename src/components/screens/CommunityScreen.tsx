@@ -14,7 +14,7 @@ function PostCard({ post, onJoin, onReact }: {
   onReact: (id: string, emoji: string) => void;
 }) {
   const isChallenge = post.type === 'challenge';
-  const alreadyJoined = post.participants.includes('me');
+  const alreadyJoined = (post.participants ?? []).includes('me');
   const [showReactions, setShowReactions] = useState(false);
 
   return (
@@ -70,7 +70,7 @@ function PostCard({ post, onJoin, onReact }: {
               {post.subject}
             </div>
             <div style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--dim)' }}>
-              {post.durationMin} dk · {post.participants.length} katılımcı
+              {post.durationMin} dk · {(post.participants ?? []).length} katılımcı
             </div>
           </div>
           <button
@@ -241,21 +241,19 @@ function CreatePostForm({ onClose, onSubmit }: {
 export function CommunityScreen() {
   const {
     communityPosts, createPost, joinChallenge, addPostReaction,
-    voiceRooms, joinRoom, leaveRoom, joinedRooms, openLobby,
-    activeChannel, setActiveChannel,
   } = useStore(useShallow(s => ({
     communityPosts: s.communityPosts,
     createPost: s.createPost,
     joinChallenge: s.joinChallenge,
     addPostReaction: s.addPostReaction,
-    voiceRooms: s.voiceRooms,
-    joinRoom: s.joinRoom,
-    leaveRoom: s.leaveRoom,
-    joinedRooms: s.joinedRooms,
-    openLobby: s.openLobby,
-    activeChannel: s.activeChannel,
-    setActiveChannel: s.setActiveChannel,
   })));
+  // TODO Task 9: replace with new room/channel store fields
+  const voiceRooms: { id: string; name: string; emoji: string; capacity: number; occupied: number }[] = [];
+  const joinedRooms: string[] = [];
+  const joinRoom = (_id: string) => {};
+  const leaveRoom = (_id: string) => {};
+  const openLobby = (_id: string) => {};
+  const [activeChannel, setActiveChannel] = useState('genel');
 
   const [showCreate, setShowCreate] = useState(false);
 
