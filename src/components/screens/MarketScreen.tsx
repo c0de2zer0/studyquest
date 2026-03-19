@@ -10,8 +10,8 @@ const RARITY_COLORS: Record<string, string> = {
   common: '#64748B', rare: '#22D3EE', epic: '#A78BFA', legendary: '#FFD700',
 };
 
-const CATEGORIES = ['Tümü', '🎓 Şapka', '💇 Saç', '🧥 Üst', '👖 Alt', '👟 Ayakkabı', '💎 Aksesuar', '🌌 Arka Plan', '🎭 Kostüm'];
-const CAT_KEYS   = ['all',  'hat',     'hair',    'top',   'bottom', 'shoes',       'accessory',   'background',   'costume'];
+const CATEGORIES = ['Tümü', '🎓 Şapka', '💇 Saç', '🧥 Üst', '👖 Alt', '👟 Ayakkabı', '💎 Aksesuar', '🌌 Arka Plan', '🎭 Kostüm', '✓ Özellik'];
+const CAT_KEYS   = ['all',  'hat',     'hair',    'top',   'bottom', 'shoes',       'accessory',   'background',   'costume',   'ozellik'];
 
 function ItemPixelPreview({ item }: { item: MarketItem }) {
   if (item.category === 'background') {
@@ -27,6 +27,15 @@ function ItemPixelPreview({ item }: { item: MarketItem }) {
   if (item.category === 'costume') {
     return (
       <div style={{ fontSize: 16, lineHeight: 1 }}>{item.emoji}</div>
+    );
+  }
+  if (item.category === 'ozellik') {
+    return (
+      <div style={{
+        width: '100%', height: '100%',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: 24, color: '#FFD700',
+      }}>✓</div>
     );
   }
   const layerDef = AVATAR_LAYER_MAP[item.id];

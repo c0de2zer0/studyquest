@@ -7,8 +7,8 @@ import { ProgressBar } from '@/components/atoms/ProgressBar';
 import { mockEvolutionTree, mockBadges } from '@/lib/mock-data';
 import PixelAvatar from '@/components/PixelAvatar';
 
-const ITEM_CATEGORIES = ['🎓 Şapka', '💇 Saç', '🧥 Üst', '👖 Alt', '👟 Ayak', '💎 Aksesuar', '🌌 Arka Plan', '🦸 Kostüm'] as const;
-const CAT_KEYS = ['hat', 'hair', 'top', 'bottom', 'shoes', 'accessory', 'background', 'costume'];
+const ITEM_CATEGORIES = ['🎓 Şapka', '💇 Saç', '🧥 Üst', '👖 Alt', '👟 Ayak', '💎 Aksesuar', '🌌 Arka Plan', '🦸 Kostüm', '✓ Özellik'] as const;
+const CAT_KEYS = ['hat', 'hair', 'top', 'bottom', 'shoes', 'accessory', 'background', 'costume', 'ozellik'];
 
 const SLOT_LABELS = ['Şapka', 'Saç', 'Üst', 'Alt', 'Ayak', 'Aksesuar', 'Arka Plan'];
 const SLOT_KEYS = ['hat', 'hair', 'top', 'bottom', 'shoes', 'accessory', 'background'];
