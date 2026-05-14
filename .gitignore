@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+studyquestfronthandversiyon1/node_modules
+studyquestfronthandversiyon1/.next
+
+# StudyQuest redesign backups (not part of main app)
+/studyquestfronthandversiyon1/node_modules
+/studyquestfronthandversiyon1/.next
+/redesign-huashu/node_modules
+/redesign-huashu/.next
+/redesign-v2/node_modules
+/redesign-v2/.next
+/redesign-merged/node_modules
+/redesign-merged/.next
+/studyquesteskifronthand
+/graphify-out
