@@ -13,3 +13,7 @@ graphify-out/
 *.sst
 
 .railway/
+
+# Build cache files - Railway mount conflict
+tsconfig.tsbuildinfo
+.next/
