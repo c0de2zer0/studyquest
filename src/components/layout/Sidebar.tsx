@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   LayoutDashboard, Timer, Calendar, User as UserIcon, ShoppingBag, Users,
-  Swords, Shuffle, Trophy, BarChart3, Settings,
+  Swords, Shuffle, Trophy, BarChart3, Settings, Gamepad2,
   Moon, Sun,
 } from 'lucide-react';
 import { mockUser } from '@/lib/mock-data';
@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils';
 type TabId =
   | 'dashboard' | 'timer' | 'plan' | 'avatar' | 'market'
   | 'community' | 'tournament' | 'rando' | 'leaderboard'
-  | 'analytics' | 'profile';
+  | 'analytics' | 'profile' | 'games';
 
 const navItems: { id: TabId; label: string; icon: typeof UserIcon; href: string }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/' },
@@ -29,6 +29,7 @@ const navItems: { id: TabId; label: string; icon: typeof UserIcon; href: string 
   { id: 'leaderboard', label: 'Leaderboard', icon: Trophy, href: '/leaderboard' },
   { id: 'rando', label: 'Rando', icon: Shuffle, href: '/rando' },
   { id: 'analytics', label: 'Analytics', icon: BarChart3, href: '/analytics' },
+  { id: 'games', label: 'Games', icon: Gamepad2, href: '/games' },
   { id: 'profile', label: 'Profile', icon: Settings, href: '/profile' },
 ];
 
