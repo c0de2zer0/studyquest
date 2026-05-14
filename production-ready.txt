@@ -1,5 +1,0 @@
-StudyQuest production-ready merge complete
-- New UI: App Router pages with dark/light theme
-- All state merged into @/lib/store
-- 12 screens: dashboard, timer, plan, avatar, market, community, tournament, leaderboard, analytics, profile, rando, + tournament detail
-- 0 TypeScript errors on build
