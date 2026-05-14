@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import {
   Flame, Clock, Target, TrendingUp, BookOpen, Zap, Trophy, Users,
 } from 'lucide-react';
@@ -196,28 +197,28 @@ export default function DashboardPage() {
                 { icon: Users, label: 'Topluluk', color: '#10b981', href: '/community' },
                 { icon: Trophy, label: 'S\u0131ralama', color: '#ffd700', href: '/leaderboard' },
               ].map((action) => (
-                <motion.a
-                  key={action.label}
-                  href={action.href}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="flex flex-col items-center gap-2 p-4 rounded-xl border transition-colors cursor-pointer"
-                  style={{
-                    backgroundColor: 'var(--bg-hover)',
-                    borderColor: 'var(--border-color)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--hover-bg)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--bg-hover)';
-                  }}
-                >
-                  <action.icon className="w-5 h-5" style={{ color: action.color }} />
-                  <span className="text-xs text-center" style={{ color: 'var(--text-secondary)' }}>
-                    {action.label}
-                  </span>
-                </motion.a>
+                <Link key={action.label} href={action.href}>
+                  <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="flex flex-col items-center gap-2 p-4 rounded-xl border transition-colors cursor-pointer"
+                    style={{
+                      backgroundColor: 'var(--bg-hover)',
+                      borderColor: 'var(--border-color)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'var(--hover-bg)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'var(--bg-hover)';
+                    }}
+                  >
+                    <action.icon className="w-5 h-5" style={{ color: action.color }} />
+                    <span className="text-xs text-center" style={{ color: 'var(--text-secondary)' }}>
+                      {action.label}
+                    </span>
+                  </motion.div>
+                </Link>
               ))}
             </div>
           </Card>

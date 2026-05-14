@@ -2,14 +2,15 @@
 
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import {
   Sparkles, Shield, Zap, Brain, Heart,
   Shirt, GraduationCap, ShoppingBag, ChevronRight,
-  Eye, Mountain, Star,
+  Eye, Mountain, Star, Clock, Flame, Medal,
 } from 'lucide-react';
 import { useStore } from '@/lib/store';
 import { mockEvolutionTree } from '@/lib/mock-data';
-import { cn } from '@/lib/utils';
+import { cn, formatHours } from '@/lib/utils';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
@@ -185,10 +186,12 @@ function EquipmentSlot({
   label,
   icon,
   item,
+  onClick,
 }: {
   label: string;
   icon: React.ReactNode;
   item: { id: string; name: string; emoji: string; rarity: string } | undefined;
+  onClick?: () => void;
 }) {
   const rarityColors: Record<string, string> = {
     common: 'border-[var(--border-subtle)]',
@@ -207,8 +210,10 @@ function EquipmentSlot({
   return (
     <motion.div
       whileHover={{ scale: 1.02, y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onClick}
       className={cn(
-        'flex items-center gap-3 p-3 rounded-xl border transition-all duration-200 shadow-sm',
+        'flex items-center gap-3 p-3 rounded-xl border transition-all duration-200 shadow-sm cursor-pointer',
         'bg-[var(--bg-card)]',
         item ? rarityColors[item.rarity] ?? rarityColors.common : 'border-[var(--border-color)]',
         item ? rarityGlow[item.rarity] ?? '' : '',
@@ -316,8 +321,10 @@ function EvolutionTree({ currentForm }: { currentForm: string }) {
 // ─── Avatar Page ────────────────────────────────────────────────────────────
 
 export default function AvatarPage() {
+  const router = useRouter();
   const user = useStore((s) => s.user);
   const items = useStore((s) => s.items);
+  const setMarketCategory = useStore((s) => s.setMarketCategory);
 
   const stats = user.stats;
   const avatar = user.avatar;
@@ -341,6 +348,11 @@ export default function AvatarPage() {
     return raw[s.slot] != null;
   }).length;
 
+  const handleSlotClick = (slot: string) => {
+    setMarketCategory(slot);
+    router.push('/market');
+  };
+
   return (
     <motion.div variants={containerVariants} initial="hidden" animate="show" className="space-y-8">
       {/* Header */}
@@ -362,23 +374,60 @@ export default function AvatarPage() {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
         {/* Left: Avatar Preview */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Avatar */}
+          {/* Avatar with 3D hover effect */}
           <motion.div variants={itemVariants}>
-            <Card className="flex flex-col items-center py-8" glow="purple">
-              <div className="w-48 h-96">
-                <PixelAvatarSVG
-                  equippedItems={user.equippedItems as Record<string, string | null>}
-                  items={items}
-                  avatarGlowColor={avatar.glowColor}
-                />
-              </div>
-              <div className="text-center mt-4">
-                <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
-                  {user.emoji} {user.name}
-                </h3>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  {user.rank}
-                </p>
+            <div className="relative group perspective-[800px]">
+              <motion.div
+                whileHover={{ rotateY: 5, rotateX: -5 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                className="transition-transform duration-300"
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                <Card className="flex flex-col items-center py-8" glow="purple">
+                  {/* Idle bob animation */}
+                  <motion.div
+                    animate={{ y: [0, -4, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                    className="w-48 h-96"
+                  >
+                    <PixelAvatarSVG
+                      equippedItems={user.equippedItems as Record<string, string | null>}
+                      items={items}
+                      avatarGlowColor={avatar.glowColor}
+                    />
+                  </motion.div>
+                  <div className="text-center mt-4">
+                    <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
+                      {user.emoji} {user.name}
+                    </h3>
+                    <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                      {user.rank}
+                    </p>
+                  </div>
+                </Card>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Quick Stats */}
+          <motion.div variants={itemVariants}>
+            <Card>
+              <h3 className="text-sm font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-secondary)' }}>
+                <Medal className="w-4 h-4 text-[#ffd700]" />
+                H\u0131zl\u0131 \u0130statistikler
+              </h3>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { icon: Clock, label: 'Toplam', value: formatHours(user.totalHours), color: '#00f0ff' },
+                  { icon: Flame, label: 'Seri', value: `${user.streak} g\u00fcn`, color: '#ffd700' },
+                  { icon: Star, label: 'Seviye', value: `Lv.${user.level}`, color: '#8b5cf6' },
+                ].map((stat) => (
+                  <div key={stat.label} className="text-center p-2 rounded-xl" style={{ backgroundColor: 'var(--bg-hover)' }}>
+                    <stat.icon className="w-4 h-4 mx-auto mb-1" style={{ color: stat.color }} />
+                    <p className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>{stat.value}</p>
+                    <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{stat.label}</p>
+                  </div>
+                ))}
               </div>
             </Card>
           </motion.div>
@@ -460,6 +509,7 @@ export default function AvatarPage() {
                     label={slotConfig.label}
                     icon={slotConfig.icon}
                     item={getEquippedItem(slotConfig.slot)}
+                    onClick={() => handleSlotClick(slotConfig.slot)}
                   />
                 ))}
               </div>
@@ -485,7 +535,7 @@ export default function AvatarPage() {
           {/* Quick Actions */}
           <motion.div variants={itemVariants}>
             <Card className="flex flex-wrap gap-3">
-              <Button variant="primary" size="md" icon={ShoppingBag}>
+              <Button variant="primary" size="md" icon={ShoppingBag} onClick={() => router.push('/market')}>
                 Marketi Ke\u015ffet
               </Button>
               <Button variant="secondary" size="md" icon={Star}>

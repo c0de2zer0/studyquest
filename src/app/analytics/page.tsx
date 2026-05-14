@@ -33,7 +33,7 @@ export default function AnalyticsPage() {
           Analitik
         </h1>
         <p className="mt-1" style={{ color: 'var(--text-secondary)' }}>
-          Calisma istatistiklerini goruntule
+          \u00c7al\u0131\u015fma istatistiklerini g\u00f6r\u00fcnt\u00fcle
         </p>
       </motion.div>
 
@@ -99,7 +99,7 @@ export default function AnalyticsPage() {
         <Card>
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <PieChart className="w-4 h-4 text-purple-500" />
-            Ders Dagi limi
+            Ders Da\u011f\u0131l\u0131m\u0131
           </h2>
           <div className="space-y-3">
             {subjectDistribution.map((s) => (
@@ -129,7 +129,7 @@ export default function AnalyticsPage() {
         <Card>
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <TrendingUp className="w-4 h-4 text-emerald-500" />
-            Gorev Tamamlama
+            G\u00f6rev Tamamlama
           </h2>
           <div className="space-y-2">
             {taskHistory.slice(-14).map((day) => (

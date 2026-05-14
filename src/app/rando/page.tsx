@@ -185,7 +185,7 @@ export default function RandoPage() {
             Rando
           </h1>
           <p className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-            Rastgele calisma partneri
+            Rastgele \u00e7al\u0131\u015fma partneri
           </p>
         </div>
       </div>
@@ -289,7 +289,7 @@ export default function RandoPage() {
                     className="text-xs font-semibold uppercase tracking-wider"
                     style={{ color: 'var(--text-secondary)' }}
                   >
-                    Sure
+                    S\u00fcre
                   </h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -344,7 +344,7 @@ export default function RandoPage() {
                 className="text-center text-xs -mt-4"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Baslamak icin bir ders sec
+                Ba\u015flamak i\u00e7in bir ders se\u00e7
               </p>
             )}
           </motion.div>
@@ -526,7 +526,7 @@ export default function RandoPage() {
                 icon={Play}
                 onClick={() => setRandoState('active')}
               >
-                Oturumu Baslat
+                Oturumu Ba\u015flat
               </Button>
             </div>
           </motion.div>
@@ -606,7 +606,7 @@ export default function RandoPage() {
               <div className="flex items-center gap-3 px-2">
                 <BookOpen className="w-4 h-4 text-cyan-600 shrink-0" />
                 <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                  Calisilan ders: {selectedSubject?.emoji} {selectedSubject?.name}
+                  \u00c7al\u0131\u015f\u0131lan ders: {selectedSubject?.emoji} {selectedSubject?.name}
                 </span>
               </div>
             </Card>
@@ -691,7 +691,7 @@ export default function RandoPage() {
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                     <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                      Sure
+                      S\u00fcre
                     </span>
                   </div>
                   <span
@@ -753,7 +753,7 @@ export default function RandoPage() {
                 className="text-sm font-semibold uppercase tracking-wider mb-4"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                Kazanilan Oduller
+                Kazan\u0131lan \u00d6d\u00fcller
               </h3>
               <div className="flex items-center justify-center gap-10">
                 <motion.div
@@ -764,7 +764,7 @@ export default function RandoPage() {
                 >
                   <p className="text-3xl font-bold text-purple-600">+{earnedXP}</p>
                   <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-                    XP Kazanilan
+                    XP Kazan\u0131lan
                   </p>
                 </motion.div>
                 <div
@@ -779,7 +779,7 @@ export default function RandoPage() {
                 >
                   <p className="text-3xl font-bold text-amber-600">+{earnedCoins}</p>
                   <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-                    Coin Kazanilan
+                    Coin Kazan\u0131lan
                   </p>
                 </motion.div>
               </div>
@@ -792,7 +792,7 @@ export default function RandoPage() {
                 icon={Shuffle}
                 onClick={cancelRando}
               >
-                Basa Don
+                Ba\u015fa D\u00f6n
               </Button>
             </div>
           </motion.div>
