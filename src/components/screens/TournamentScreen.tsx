@@ -15,9 +15,30 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const PAST_TOURNAMENTS = [
-  { id: 'p1', name: 'Sprint #48', result: '1. Sıra', emoji: '🥇', reward: 'Siber Maske + +5 sa', resultColor: '#FFD700' },
-  { id: 'p2', name: 'Maraton #21', result: '3. Sıra', emoji: '🥉', reward: '+2 sa', resultColor: '#CD7F32' },
-  { id: 'p3', name: 'Ders Düellosu', result: '5. Sıra', emoji: '🏅', reward: 'Katılım rozeti', resultColor: '#64748B' },
+  {
+    id: 'p1', name: 'Sprint #48', result: '1. Sıra', emoji: '🥇', reward: 'Siber Maske + +5 sa', resultColor: '#FFD700',
+    winners: [
+      { rank: 1, name: 'Shadow Fox', emoji: '🦊', score: '18.5 sa', color: '#7B5CF5', isMe: true },
+      { rank: 2, name: 'IronMind', emoji: '🧠', score: '16.2 sa', color: '#A78BFA', isMe: false },
+      { rank: 3, name: 'NightWolf', emoji: '🐺', score: '15.8 sa', color: '#22D3EE', isMe: false },
+    ],
+  },
+  {
+    id: 'p2', name: 'Maraton #21', result: '3. Sıra', emoji: '🥉', reward: '+2 sa', resultColor: '#CD7F32',
+    winners: [
+      { rank: 1, name: 'CyberSage', emoji: '🧙', score: '42.1 sa', color: '#10B981', isMe: false },
+      { rank: 2, name: 'StarGazer', emoji: '⭐', score: '38.7 sa', color: '#F59E0B', isMe: false },
+      { rank: 3, name: 'Shadow Fox', emoji: '🦊', score: '35.4 sa', color: '#7B5CF5', isMe: true },
+    ],
+  },
+  {
+    id: 'p3', name: 'Ders Düellosu', result: '5. Sıra', emoji: '🏅', reward: 'Katılım rozeti', resultColor: '#64748B',
+    winners: [
+      { rank: 1, name: 'MoonChild', emoji: '🌙', score: '97 puan', color: '#EC4899', isMe: false },
+      { rank: 2, name: 'TechNinja', emoji: '🥷', score: '89 puan', color: '#EF4444', isMe: false },
+      { rank: 3, name: 'DawnRider', emoji: '🌅', score: '84 puan', color: '#10B981', isMe: false },
+    ],
+  },
 ];
 
 export function TournamentScreen() {
@@ -27,8 +48,33 @@ export function TournamentScreen() {
 
   const activeTournament = tournaments.find(t => t.status === 'active');
 
+  const lastWin = PAST_TOURNAMENTS.find(pt => pt.winners[0].isMe);
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {/* Last Champion Banner — shown when user has a 1st place */}
+      {lastWin && (
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(255,215,0,.15), rgba(245,158,11,.08))',
+          border: '1px solid rgba(255,215,0,.4)',
+          borderRadius: 12, padding: 14, display: 'flex', alignItems: 'center', gap: 12,
+          position: 'relative', overflow: 'hidden',
+        }}>
+          <div style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', fontSize: 56, opacity: .12, pointerEvents: 'none' }}>🏆</div>
+          <div style={{
+            width: 50, height: 50, borderRadius: '50%',
+            background: 'rgba(255,215,0,.2)', border: '2px solid #FFD700',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, flexShrink: 0,
+          }}>🥇</div>
+          <div>
+            <div style={{ fontFamily: 'Space Mono', fontSize: 7, color: '#F59E0B', letterSpacing: 1, marginBottom: 3 }}>SON ŞAMPİYONLUK</div>
+            <div style={{ fontFamily: 'Orbitron', fontSize: 14, fontWeight: 700, color: '#FFD700' }}>{lastWin.name}</div>
+            <div style={{ fontFamily: 'Space Mono', fontSize: 9, color: 'var(--muted)', marginTop: 2 }}>
+              {lastWin.winners[0].score} · {lastWin.reward}
+            </div>
+          </div>
+        </div>
+      )}
       {/* Active Tournament Banner */}
       {activeTournament && (
         <div style={{
@@ -191,16 +237,46 @@ export function TournamentScreen() {
       {/* Past Tournaments */}
       <div>
         <SectionLabel>GEÇMİŞ TURNUVALAR</SectionLabel>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {PAST_TOURNAMENTS.map(pt => (
-            <div key={pt.id} className="card" style={{ padding: 10, display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontSize: 22 }}>{pt.emoji}</span>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: 'Rajdhani', fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>{pt.name}</div>
-                <div style={{ fontFamily: 'Space Mono', fontSize: 9, color: pt.resultColor }}>{pt.result}</div>
+            <div key={pt.id} className="card" style={{ padding: 12, border: pt.resultColor !== '#64748B' ? `1px solid ${pt.resultColor}40` : undefined }}>
+              {/* Header row */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                <span style={{ fontSize: 24 }}>{pt.emoji}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: 'Rajdhani', fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>{pt.name}</div>
+                  <div style={{ fontFamily: 'Space Mono', fontSize: 8, color: pt.resultColor }}>{pt.result} · {pt.reward}</div>
+                </div>
               </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontFamily: 'Space Mono', fontSize: 9, color: '#F59E0B' }}>{pt.reward}</div>
+              {/* Winners podium */}
+              <div style={{ background: 'rgba(255,255,255,.03)', borderRadius: 8, padding: '8px 10px' }}>
+                <div style={{ fontFamily: 'Space Mono', fontSize: 7, color: 'var(--dim)', marginBottom: 6, letterSpacing: 1 }}>KAZANANLAR</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  {pt.winners.map(w => (
+                    <div key={w.rank} style={{
+                      display: 'flex', alignItems: 'center', gap: 8, padding: '4px 8px',
+                      borderRadius: 6, background: w.isMe ? `${w.color}18` : 'transparent',
+                      border: w.isMe ? `1px solid ${w.color}40` : '1px solid transparent',
+                    }}>
+                      <span style={{ fontFamily: 'Space Mono', fontSize: 10, width: 20, textAlign: 'center' }}>
+                        {w.rank === 1 ? '🥇' : w.rank === 2 ? '🥈' : '🥉'}
+                      </span>
+                      <div style={{
+                        width: 24, height: 24, borderRadius: '50%',
+                        background: w.color + '33', border: `1.5px solid ${w.color}`,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12,
+                        flexShrink: 0,
+                      }}>{w.emoji}</div>
+                      <div style={{ flex: 1 }}>
+                        <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 12, color: w.isMe ? w.color : 'var(--text)' }}>
+                          {w.name}
+                        </span>
+                        {w.isMe && <span style={{ fontFamily: 'Space Mono', fontSize: 7, color: w.color, marginLeft: 5 }}>BEN</span>}
+                      </div>
+                      <span style={{ fontFamily: 'Space Mono', fontSize: 9, color: 'var(--muted)' }}>{w.score}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           ))}

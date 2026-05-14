@@ -1,0 +1,104 @@
+<h2>AI Plan Chatbot — Tam Ekran Modal</h2>
+<p class="subtitle">Plan sayfasında "AI PLAN OLUŞTUR" butonuna tıklayınca açılır. Konuşarak haftalık program oluşturur.</p>
+
+<div class="mockup">
+  <div class="mockup-header">Plan Sayfası → AI PLAN OLUŞTUR tıklandı</div>
+  <div class="mockup-body" style="background:#07080F;padding:0;overflow:hidden;border-radius:8px;">
+
+    <!-- Modal overlay -->
+    <div style="background:rgba(0,0,0,.85);min-height:560px;display:flex;flex-direction:column;font-family:monospace;">
+
+      <!-- Modal header -->
+      <div style="background:linear-gradient(135deg,#1A1040,#0F1A2E);border-bottom:1px solid rgba(123,92,245,.3);padding:16px 20px;display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#7B5CF5,#22D3EE);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">✨</div>
+        <div>
+          <div style="color:#A78BFA;font-size:12px;font-weight:bold;letter-spacing:1px;">AI PLAN ASİSTANI</div>
+          <div style="color:#64748B;font-size:8px;">Seninle konuşarak kişisel program oluşturuyor</div>
+        </div>
+        <div style="margin-left:auto;background:#EF444422;border:1px solid #EF444444;color:#EF4444;padding:4px 12px;border-radius:8px;font-size:9px;cursor:pointer;">✕ Kapat</div>
+      </div>
+
+      <!-- Chat area -->
+      <div style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
+
+        <!-- Bot message 1 -->
+        <div style="display:flex;gap:8px;align-items:flex-start;">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#7B5CF5,#22D3EE);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">✨</div>
+          <div style="max-width:75%;">
+            <div style="background:#1A1040;border:1px solid rgba(123,92,245,.3);border-radius:0 10px 10px 10px;padding:10px 12px;">
+              <div style="color:#D1D5DB;font-size:10px;line-height:1.6;">Merhaba! Sana özel bir çalışma programı hazırlayacağım. 🎯</div>
+              <div style="color:#D1D5DB;font-size:10px;line-height:1.6;margin-top:4px;">Önce hangi derslere çalışıyorsun?</div>
+            </div>
+            <div style="color:#374151;font-size:7px;margin-top:3px;margin-left:4px;">AI Asistan · Az önce</div>
+          </div>
+        </div>
+
+        <!-- User message -->
+        <div style="display:flex;gap:8px;align-items:flex-start;flex-direction:row-reverse;">
+          <div style="width:28px;height:28px;background:#7B5CF533;border:1.5px solid #7B5CF5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">🦊</div>
+          <div style="max-width:75%;">
+            <div style="background:rgba(123,92,245,.15);border:1px solid rgba(123,92,245,.3);border-radius:10px 0 10px 10px;padding:10px 12px;">
+              <div style="color:#D1D5DB;font-size:10px;">Matematik, Fizik, Kimya ve Biyoloji</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bot message 2 -->
+        <div style="display:flex;gap:8px;align-items:flex-start;">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#7B5CF5,#22D3EE);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">✨</div>
+          <div style="max-width:75%;">
+            <div style="background:#1A1040;border:1px solid rgba(123,92,245,.3);border-radius:0 10px 10px 10px;padding:10px 12px;">
+              <div style="color:#D1D5DB;font-size:10px;line-height:1.6;">Harika! 4 ders var. Günde kaç saat çalışabiliyorsun?</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User message -->
+        <div style="display:flex;gap:8px;align-items:flex-start;flex-direction:row-reverse;">
+          <div style="width:28px;height:28px;background:#7B5CF533;border:1.5px solid #7B5CF5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">🦊</div>
+          <div style="max-width:75%;">
+            <div style="background:rgba(123,92,245,.15);border:1px solid rgba(123,92,245,.3);border-radius:10px 0 10px 10px;padding:10px 12px;">
+              <div style="color:#D1D5DB;font-size:10px;">Hafta içi 6 saat, hafta sonu 8 saat</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bot message — plan oluşturuldu -->
+        <div style="display:flex;gap:8px;align-items:flex-start;">
+          <div style="width:28px;height:28px;background:linear-gradient(135deg,#7B5CF5,#22D3EE);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">✨</div>
+          <div style="max-width:85%;">
+            <div style="background:#1A1040;border:1px solid rgba(123,92,245,.3);border-radius:0 10px 10px 10px;padding:10px 12px;">
+              <div style="color:#D1D5DB;font-size:10px;line-height:1.6;margin-bottom:8px;">Sınav tarihin 89 gün sonra. Haftalık programın hazır! 🎉</div>
+              <!-- Oluşturulan plan önizleme -->
+              <div style="background:#0D1117;border:1px solid rgba(123,92,245,.2);border-radius:8px;padding:10px;">
+                <div style="color:#A78BFA;font-size:9px;font-weight:bold;margin-bottom:6px;">📅 ÖNERİLEN HAFTALIK PROGRAM</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:8px;">
+                  <div style="background:#7B5CF522;border-radius:4px;padding:4px 6px;color:#A78BFA;">Pzt: 📐 Mat 2sa · ⚡ Fiz 2sa</div>
+                  <div style="background:#22D3EE22;border-radius:4px;padding:4px 6px;color:#22D3EE;">Sal: ⚗️ Kim 2sa · 🌿 Bio 2sa</div>
+                  <div style="background:#7B5CF522;border-radius:4px;padding:4px 6px;color:#A78BFA;">Çar: 📐 Mat 3sa · Tekrar 1sa</div>
+                  <div style="background:#F59E0B22;border-radius:4px;padding:4px 6px;color:#F59E0B;">Per: ⚡ Fiz 3sa · ⚗️ Kim 1sa</div>
+                  <div style="background:#10B98122;border-radius:4px;padding:4px 6px;color:#10B981;">Cum: 🌿 Bio 2sa · Karma 2sa</div>
+                  <div style="background:#7B5CF522;border-radius:4px;padding:4px 6px;color:#A78BFA;">C.tes: 📐 Mat 4sa · ⚡ Fiz 2sa</div>
+                </div>
+                <div style="margin-top:6px;color:#64748B;font-size:7px;">Toplam: 38 sa/hafta · 89 günde 570+ saat</div>
+              </div>
+            </div>
+            <!-- Action buttons -->
+            <div style="display:flex;gap:6px;margin-top:8px;">
+              <button style="flex:1;background:linear-gradient(135deg,#7B5CF5,#22D3EE);color:#fff;border:none;padding:8px;border-radius:8px;font-size:9px;font-weight:bold;cursor:pointer;">📅 TAKVİME EKLE</button>
+              <button style="background:#1E293B;color:#94A3B8;border:1px solid #374151;padding:8px 12px;border-radius:8px;font-size:9px;cursor:pointer;">🔄 Yeniden Oluştur</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Input area -->
+      <div style="background:#111827;border-top:1px solid #1E293B;padding:12px 16px;display:flex;gap:8px;align-items:center;">
+        <div style="flex:1;background:#0D1117;border:1px solid rgba(123,92,245,.3);border-radius:10px;padding:10px 14px;color:#64748B;font-size:10px;">Bir şey sor veya değişiklik iste...</div>
+        <button style="background:linear-gradient(135deg,#7B5CF5,#22D3EE);border:none;width:36px;height:36px;border-radius:10px;font-size:16px;cursor:pointer;">→</button>
+      </div>
+
+    </div>
+  </div>
+</div>

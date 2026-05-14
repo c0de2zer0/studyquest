@@ -123,11 +123,13 @@ export const AVATAR_LAYER_MAP: Record<string, AnimatedLayerDef> = {
     slot: 'hat',
     pixels: [
       // crown
-      { x: 3, y: 0, w: 10, h: 3, color: '#1E293B' },
+      { x: 3, y: 0, w: 10, h: 3, color: '#1E3A5F' },
       // brim
-      { x: 2, y: 3, w: 12, h: 1, color: '#1E293B' },
-      // neon band
-      { x: 3, y: 2, w: 10, h: 1, color: '#22D3EE' },
+      { x: 2, y: 3, w: 12, h: 1, color: '#2D4F7A' },
+      // neon band (2px tall)
+      { x: 3, y: 1, w: 10, h: 2, color: '#22D3EE' },
+      // neon highlight
+      { x: 4, y: 1, w: 8, h: 1, color: '#67E8F9' },
     ],
   },
 
@@ -167,15 +169,18 @@ export const AVATAR_LAYER_MAP: Record<string, AnimatedLayerDef> = {
     slot: 'top',
     pixels: [
       // jacket body
-      { x: 4, y: 10, w: 8, h: 10, color: '#1E293B' },
+      { x: 4, y: 10, w: 8, h: 10, color: '#1A2744' },
       // left sleeve
-      { x: 1, y: 10, w: 3, h: 8, color: '#1E293B' },
+      { x: 1, y: 10, w: 3, h: 8, color: '#1A2744' },
       // right sleeve
-      { x: 12, y: 10, w: 3, h: 8, color: '#1E293B' },
+      { x: 12, y: 10, w: 3, h: 8, color: '#1A2744' },
       // collar
-      { x: 6, y: 10, w: 4, h: 1, color: '#334155' },
+      { x: 6, y: 10, w: 4, h: 1, color: '#2A3F60' },
       // school badge
       { x: 5, y: 12, w: 2, h: 2, color: '#22D3EE' },
+      // neon trim on sleeves
+      { x: 1, y: 17, w: 3, h: 1, color: '#22D3EE' },
+      { x: 12, y: 17, w: 3, h: 1, color: '#22D3EE' },
     ],
   },
 

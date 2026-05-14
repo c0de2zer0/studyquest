@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { useStore } from '@/store';
 import type { CommunityPost } from '@/lib/mock-data';
 
-export function BattleCard({ post }: { post: CommunityPost }) {
+type OnUserClick = (user: { id: string; name: string; emoji: string; color: string }) => void;
+
+export function BattleCard({ post, onUserClick }: { post: CommunityPost; onUserClick?: OnUserClick }) {
   const setActiveTab = useStore(s => s.setActiveTab);
   const [showScore, setShowScore] = useState(false);
   const p1 = post.player1!;
@@ -22,13 +24,13 @@ export function BattleCard({ post }: { post: CommunityPost }) {
       </div>
       {/* VS row */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 8, marginBottom: 10 }}>
-        <div style={{ width: 28, height: 28, background: p1.color + '33', border: `1.5px solid ${p1.color}`,
-          borderRadius: '50%', textAlign: 'center', lineHeight: '26px', fontSize: 14, flexShrink: 0 }}>{p1.emoji}</div>
-        <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, color: p1.color }}>{p1.name}</div>
+        <div onClick={() => onUserClick?.({ id: p1.id, name: p1.name, emoji: p1.emoji, color: p1.color })} style={{ width: 28, height: 28, background: p1.color + '33', border: `1.5px solid ${p1.color}`,
+          borderRadius: '50%', textAlign: 'center', lineHeight: '26px', fontSize: 14, flexShrink: 0, cursor: onUserClick ? 'pointer' : 'default' }}>{p1.emoji}</div>
+        <div onClick={() => onUserClick?.({ id: p1.id, name: p1.name, emoji: p1.emoji, color: p1.color })} style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, color: p1.color, cursor: onUserClick ? 'pointer' : 'default' }}>{p1.name}</div>
         <div style={{ flex: 1, textAlign: 'center', fontFamily: 'Orbitron', fontSize: 14, fontWeight: 900, color: '#EF4444' }}>VS</div>
-        <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, color: p2.color }}>{p2.name}</div>
-        <div style={{ width: 28, height: 28, background: p2.color + '33', border: `1.5px solid ${p2.color}`,
-          borderRadius: '50%', textAlign: 'center', lineHeight: '26px', fontSize: 14, flexShrink: 0 }}>{p2.emoji}</div>
+        <div onClick={() => onUserClick?.({ id: p2.id, name: p2.name, emoji: p2.emoji, color: p2.color })} style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 11, color: p2.color, cursor: onUserClick ? 'pointer' : 'default' }}>{p2.name}</div>
+        <div onClick={() => onUserClick?.({ id: p2.id, name: p2.name, emoji: p2.emoji, color: p2.color })} style={{ width: 28, height: 28, background: p2.color + '33', border: `1.5px solid ${p2.color}`,
+          borderRadius: '50%', textAlign: 'center', lineHeight: '26px', fontSize: 14, flexShrink: 0, cursor: onUserClick ? 'pointer' : 'default' }}>{p2.emoji}</div>
       </div>
       {/* Score bars */}
       <div style={{ background: '#0D1117', borderRadius: 8, padding: 8, marginBottom: 8 }}>

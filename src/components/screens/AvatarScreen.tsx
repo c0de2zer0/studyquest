@@ -73,7 +73,7 @@ export function AvatarScreen() {
             animation: 'float 3s ease-in-out infinite',
             display: 'inline-block',
             cursor: 'pointer',
-            background: 'linear-gradient(180deg, #0D1117 0%, #1A1040 60%, #0D1117 100%)',
+            background: 'linear-gradient(180deg, #0A0612 0%, #0F0A20 20%, #1E1050 50%, #2A1868 65%, #1A0D40 80%, #0D1117 100%)',
             border: '1px solid rgba(123,92,245,.4)',
             borderRadius: 12,
             alignItems: 'center',
@@ -82,6 +82,13 @@ export function AvatarScreen() {
             minHeight: 200,
             position: 'relative',
           }}>
+            {/* Room floor glow */}
+            <div style={{
+              position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)',
+              width: 120, height: 24, borderRadius: '50%',
+              background: 'radial-gradient(ellipse, rgba(123,92,245,.35) 0%, rgba(123,92,245,.08) 60%, transparent 100%)',
+              pointerEvents: 'none',
+            }} />
             <PixelAvatar
               equippedItems={user.equippedItems}
               size="preview"

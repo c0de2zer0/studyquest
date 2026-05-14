@@ -13,7 +13,7 @@ interface PixelAvatarProps {
   frameIndex?: number;
 }
 
-const SIZE_MAP = { preview: 96, lobby: 48 } as const;
+const SIZE_MAP = { preview: 144, lobby: 48 } as const;
 
 function selectPixels(
   layer: AnimatedLayerDef,

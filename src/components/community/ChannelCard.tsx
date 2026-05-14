@@ -38,9 +38,10 @@ function TournamentCard({ post }: { post: CommunityPost }) {
   );
 }
 
-export function ChannelCard({ post, onReact }: {
+export function ChannelCard({ post, onReact, onUserClick }: {
   post: CommunityPost;
   onReact: (id: string, emoji: string) => void;
+  onUserClick?: (user: { id: string; name: string; emoji: string; color: string }) => void;
 }) {
   const [following, setFollowing] = useState(false);
   const borderColor = post.channelBorderColor ?? '#7B5CF5';
@@ -57,14 +58,19 @@ export function ChannelCard({ post, onReact }: {
       </div>
       {/* Channel header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6, marginBottom: 8 }}>
-        <div style={{ width: 36, height: 36, background: borderColor + '33',
-          border: `2px solid ${borderColor}`, borderRadius: 10,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>
+        <div
+          onClick={() => onUserClick?.({ id: post.userId, name: post.channelName ?? post.userName, emoji: post.channelEmoji ?? post.userEmoji, color: borderColor })}
+          style={{ width: 36, height: 36, background: borderColor + '33',
+            border: `2px solid ${borderColor}`, borderRadius: 10,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
+            cursor: onUserClick ? 'pointer' : 'default' }}>
           {post.channelEmoji}
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <span style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, color: borderColor }}>
+            <span
+              onClick={() => onUserClick?.({ id: post.userId, name: post.channelName ?? post.userName, emoji: post.channelEmoji ?? post.userEmoji, color: borderColor })}
+              style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, color: borderColor, cursor: onUserClick ? 'pointer' : 'default' }}>
               {post.channelName}
             </span>
             <span style={{ color: borderColor, fontSize: 12 }}>✓</span>

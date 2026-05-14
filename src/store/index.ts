@@ -37,6 +37,7 @@ export interface MarketItem {
   equipped: boolean;
   isDaily?: boolean;
   dailyPrice?: number;
+  costumeSlots?: { hat?: string; top?: string; bottom?: string; shoes?: string };
 }
 
 export interface Toast {
@@ -341,7 +342,7 @@ export const useStore = create<StoreState>((set, get) => ({
       const newEquipped = { ...s.user.equippedItems };
 
       if (isEquipped) {
-        // Toggle off
+        // Toggle off — clear all slots this item occupies
         if (item.category === 'costume') {
           costumeSlots.forEach(slot => { newEquipped[slot] = null; });
         } else {
@@ -356,7 +357,8 @@ export const useStore = create<StoreState>((set, get) => ({
 
       // Equipping
       if (item.category === 'costume') {
-        costumeSlots.forEach(slot => { newEquipped[slot] = id; });
+        const subSlots = item.costumeSlots ?? {};
+        costumeSlots.forEach(slot => { newEquipped[slot] = subSlots[slot] ?? null; });
       } else {
         if (equippedCostume) {
           costumeSlots.forEach(slot => { newEquipped[slot] = null; });
@@ -381,7 +383,24 @@ export const useStore = create<StoreState>((set, get) => ({
       };
     });
   },
-  unequipItem: (id) => set(s => ({ items: s.items.map(i => i.id === id ? { ...i, equipped: false } : i) })),
+  unequipItem: (id) => {
+    const item = get().items.find(i => i.id === id);
+    if (!item) return;
+    set(s => {
+      const newEquipped = { ...s.user.equippedItems };
+      if (item.category === 'costume') {
+        const costumeSlots = ['hat', 'top', 'bottom', 'shoes'] as const;
+        costumeSlots.forEach(slot => { newEquipped[slot] = null; });
+      } else {
+        const slot = item.category as keyof typeof newEquipped;
+        if (slot in newEquipped) newEquipped[slot] = null;
+      }
+      return {
+        items: s.items.map(i => i.id === id ? { ...i, equipped: false } : i),
+        user: { ...s.user, equippedItems: newEquipped },
+      };
+    });
+  },
   marketCategory: 'all',
   marketSort: 'rarity',
   marketSearch: '',

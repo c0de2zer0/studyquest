@@ -8,6 +8,7 @@ import { CreateRoomModal } from '@/components/community/CreateRoomModal';
 import { PostCard } from '@/components/community/PostCard';
 import { BattleCard } from '@/components/community/BattleCard';
 import { ChannelCard } from '@/components/community/ChannelCard';
+import { UserProfileModal } from '@/components/community/UserProfileModal';
 import type { CommunityPost } from '@/lib/mock-data';
 
 type FeedTab = 'all' | 'battle' | 'channel_post' | 'tournament';
@@ -120,6 +121,7 @@ export function CommunityScreen() {
   const [activeTab, setActiveTab] = useState<FeedTab>('all');
   const [showCreate, setShowCreate] = useState(false);
   const [showCreateRoom, setShowCreateRoom] = useState(false);
+  const [viewingUser, setViewingUser] = useState<{ id: string; name: string; emoji: string; color: string; isVerified?: boolean } | null>(null);
 
   const filteredPosts = communityPosts.filter(p => {
     if (activeTab === 'all') return true;
@@ -128,10 +130,14 @@ export function CommunityScreen() {
     return p.type === activeTab;
   });
 
+  const handleUserClick = (u: { id: string; name: string; emoji: string; color: string }) => {
+    setViewingUser(u);
+  };
+
   const renderPost = (post: CommunityPost) => {
-    if (post.type === 'battle') return <BattleCard key={post.id} post={post} />;
-    if (post.isVerifiedChannel) return <ChannelCard key={post.id} post={post} onReact={addPostReaction} />;
-    return <PostCard key={post.id} post={post} onReact={addPostReaction} onJoin={joinChallenge} />;
+    if (post.type === 'battle') return <BattleCard key={post.id} post={post} onUserClick={handleUserClick} />;
+    if (post.isVerifiedChannel) return <ChannelCard key={post.id} post={post} onReact={addPostReaction} onUserClick={handleUserClick} />;
+    return <PostCard key={post.id} post={post} onReact={addPostReaction} onJoin={joinChallenge} onUserClick={handleUserClick} />;
   };
 
   return (
@@ -172,6 +178,9 @@ export function CommunityScreen() {
 
       {/* Create room modal */}
       {showCreateRoom && <CreateRoomModal onClose={() => setShowCreateRoom(false)} />}
+
+      {/* User profile modal */}
+      {viewingUser && <UserProfileModal user={viewingUser} onClose={() => setViewingUser(null)} />}
     </div>
   );
 }

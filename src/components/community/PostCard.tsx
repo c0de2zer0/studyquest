@@ -5,10 +5,11 @@ import { SUBJECTS } from '@/lib/constants';
 
 const REACTION_EMOJIS = ['🔥', '💪', '❤️', '🎉', '😤', '👑'];
 
-export function PostCard({ post, onReact, onJoin }: {
+export function PostCard({ post, onReact, onJoin, onUserClick }: {
   post: CommunityPost;
   onReact: (id: string, emoji: string) => void;
   onJoin?: (id: string) => void;
+  onUserClick?: (user: { id: string; name: string; emoji: string; color: string }) => void;
 }) {
   const [showPicker, setShowPicker] = useState(false);
   const isChallenge = post.type === 'challenge';
@@ -23,13 +24,18 @@ export function PostCard({ post, onReact, onJoin }: {
     }}>
       {/* Author */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <div style={{
-          width: 36, height: 36, borderRadius: '50%',
-          background: post.userColor + '33', border: `2px solid ${post.userColor}`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
-        }}>{post.userEmoji}</div>
+        <div
+          onClick={() => onUserClick?.({ id: post.userId, name: post.userName, emoji: post.userEmoji, color: post.userColor })}
+          style={{
+            width: 36, height: 36, borderRadius: '50%',
+            background: post.userColor + '33', border: `2px solid ${post.userColor}`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18,
+            cursor: onUserClick ? 'pointer' : 'default',
+          }}>{post.userEmoji}</div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, color: post.userColor }}>
+          <div
+            onClick={() => onUserClick?.({ id: post.userId, name: post.userName, emoji: post.userEmoji, color: post.userColor })}
+            style={{ fontFamily: 'Rajdhani', fontWeight: 700, fontSize: 13, color: post.userColor, cursor: onUserClick ? 'pointer' : 'default', display: 'inline-block' }}>
             {post.userName}
           </div>
           <div style={{ fontFamily: 'Space Mono', fontSize: 8, color: 'var(--dim)' }}>{post.timestamp}</div>

@@ -18,7 +18,48 @@
     "section-09-community",
     "section-10-lobby"
   ],
-  "sections_state": {},
+  "sections_state": {
+    "section-10-lobby": {
+      "status": "complete",
+      "commit_hash": "e2b8fed"
+    },
+    "section-01-store": {
+      "status": "complete",
+      "commit_hash": "164a821"
+    },
+    "section-02-constants-mockdata": {
+      "status": "complete",
+      "commit_hash": "164a821"
+    },
+    "section-03-avatar-layers": {
+      "status": "complete",
+      "commit_hash": "09eb0aa"
+    },
+    "section-04-pixel-avatar": {
+      "status": "complete",
+      "commit_hash": "32f7b7d"
+    },
+    "section-05-rank-components": {
+      "status": "complete",
+      "commit_hash": "35a2fbc"
+    },
+    "section-06-market-expansion": {
+      "status": "complete",
+      "commit_hash": "f2819f0"
+    },
+    "section-07-avatar-screen": {
+      "status": "complete",
+      "commit_hash": "566695a"
+    },
+    "section-08-rank-ui": {
+      "status": "complete",
+      "commit_hash": "91fc272"
+    },
+    "section-09-community": {
+      "status": "complete",
+      "commit_hash": "6bdb808"
+    }
+  },
   "pre_commit": {
     "present": false,
     "type": "none",

@@ -1,0 +1,101 @@
+<h2>Topluluk Sayfası — Hangi Layout?</h2>
+<p class="subtitle">İkisi de Discord sidebar'ı kaldırıyor. Fark: içerik nasıl organize edildiği.</p>
+
+<div class="cards">
+
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0D1117; border-radius:8px; padding:12px; font-family:monospace; font-size:11px; color:#94A3B8;">
+      <div style="background:#7B5CF5;color:#fff;padding:4px 10px;border-radius:20px;display:inline-block;font-size:10px;margin-bottom:8px;">🎧 Aktif Çalışma Odaları</div>
+      <div style="display:flex;gap:6px;margin-bottom:10px;">
+        <div style="background:#1A1040;border:1px solid #7B5CF5;border-radius:8px;padding:6px 10px;flex:1;">
+          <div style="color:#A78BFA;font-size:9px;">📐 Matematik Odası</div>
+          <div style="color:#64748B;font-size:8px;">🐺 NightWolf · 🧠 IronMind · +3</div>
+          <div style="background:#7B5CF5;color:#fff;padding:2px 8px;border-radius:10px;font-size:8px;display:inline-block;margin-top:4px;">KATIL</div>
+        </div>
+        <div style="background:#1A1040;border:1px solid #22D3EE;border-radius:8px;padding:6px 10px;flex:1;">
+          <div style="color:#22D3EE;font-size:9px;">⚡ Fizik Sprint</div>
+          <div style="color:#64748B;font-size:8px;">⭐ StarGazer · 🌙 MoonChild</div>
+          <div style="background:#22D3EE;color:#000;padding:2px 8px;border-radius:10px;font-size:8px;display:inline-block;margin-top:4px;">KATIL</div>
+        </div>
+      </div>
+      <div style="border-top:1px solid #1E293B;padding-top:8px;">
+        <div style="background:#111827;border:1px solid #1E293B;border-radius:8px;padding:8px;margin-bottom:6px;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+            <div style="width:22px;height:22px;background:#7B5CF533;border:1px solid #7B5CF5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;">🐺</div>
+            <span style="color:#7B5CF5;font-size:9px;">NightWolf</span><span style="color:#374151;font-size:8px;margin-left:auto;">2dk önce</span>
+          </div>
+          <div style="color:#D1D5DB;font-size:9px;">Kim benimle matematik kafası yapıyor? 1 saat sprint!</div>
+          <div style="margin-top:4px;display:flex;gap:4px;">
+            <span style="background:#1E293B;padding:1px 6px;border-radius:8px;font-size:8px;color:#94A3B8;">🔥 12</span>
+            <span style="background:#1E293B;padding:1px 6px;border-radius:8px;font-size:8px;color:#94A3B8;">💪 8</span>
+          </div>
+        </div>
+        <div style="background:#111827;border:1px solid #1E293B;border-radius:8px;padding:8px;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+            <div style="width:22px;height:22px;background:#22D3EE33;border:1px solid #22D3EE;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;">🧠</div>
+            <span style="color:#22D3EE;font-size:9px;">CyberSage</span>
+          </div>
+          <div style="color:#D1D5DB;font-size:9px;">Fizik sorusunu sonunda çözdüm! ⚡</div>
+          <div style="background:#0F3460;border:1px solid #22D3EE33;border-radius:6px;padding:5px 8px;margin-top:4px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="color:#22D3EE;font-size:8px;">⚡ Fizik · 60 dk · 2 katılımcı</span>
+            <span style="background:#22D3EE;color:#000;padding:2px 8px;border-radius:8px;font-size:7px;">KATIL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Clubhouse + Instagram</h3>
+      <p>Üstte aktif çalışma odaları (Clubhouse kartları), altında Instagram tarzı paylaşım feed'i. Odalar feed'den ayrı, her zaman görünür.</p>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0D1117; border-radius:8px; padding:12px; font-family:monospace; font-size:11px; color:#94A3B8;">
+      <div style="display:flex;gap:6px;margin-bottom:8px;">
+        <button style="background:rgba(123,92,245,.2);border:1px solid #7B5CF5;color:#A78BFA;padding:4px 12px;border-radius:16px;font-size:9px;cursor:pointer;">📰 Keşfet</button>
+        <button style="background:none;border:1px solid #1E293B;color:#64748B;padding:4px 12px;border-radius:16px;font-size:9px;cursor:pointer;">🎧 Odalar</button>
+        <button style="background:none;border:1px solid #1E293B;color:#64748B;padding:4px 12px;border-radius:16px;font-size:9px;cursor:pointer;">⚔️ Yarışmalar</button>
+      </div>
+      <div style="background:#111827;border:1px solid #1A1040;border-radius:8px;padding:8px;margin-bottom:6px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+          <div style="width:26px;height:26px;background:#7B5CF533;border:2px solid #7B5CF5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;">🐺</div>
+          <div>
+            <div style="color:#7B5CF5;font-size:9px;font-weight:bold;">NightWolf</div>
+            <div style="color:#374151;font-size:7px;">2 dk önce</div>
+          </div>
+          <div style="margin-left:auto;background:#7B5CF5;color:#fff;padding:2px 8px;border-radius:10px;font-size:7px;">🎧 CANLI ODA</div>
+        </div>
+        <div style="color:#D1D5DB;font-size:9px;margin-bottom:5px;">Matematik kafası açıyorum — kim var? 1 saat sprint!</div>
+        <div style="background:#1A1040;border:1px solid #7B5CF544;border-radius:6px;padding:5px 8px;display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="color:#A78BFA;font-size:8px;">📐 Matematik · 5 kişi dinliyor</div>
+            <div style="color:#374151;font-size:7px;">🐺 🧠 ⭐ +2 dinleyici</div>
+          </div>
+          <span style="background:#7B5CF5;color:#fff;padding:3px 10px;border-radius:8px;font-size:7px;">KATIL</span>
+        </div>
+      </div>
+      <div style="background:#111827;border:1px solid #1E293B;border-radius:8px;padding:8px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+          <div style="width:26px;height:26px;background:#22D3EE33;border:2px solid #22D3EE;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;">🧠</div>
+          <div>
+            <div style="color:#22D3EE;font-size:9px;font-weight:bold;">CyberSage</div>
+            <div style="color:#374151;font-size:7px;">15 dk önce</div>
+          </div>
+        </div>
+        <div style="color:#D1D5DB;font-size:9px;margin-bottom:5px;">Fizik sorusunu sonunda çözdüm! Elektrik devreleri artık kafamda net 🎉</div>
+        <div style="display:flex;gap:4px;">
+          <span style="background:#1E293B;padding:2px 8px;border-radius:10px;font-size:8px;color:#94A3B8;">🚀 15</span>
+          <span style="background:#1E293B;padding:2px 8px;border-radius:10px;font-size:8px;color:#94A3B8;">❤️ 6</span>
+          <span style="background:none;border:1px solid #1E293B;padding:2px 8px;border-radius:10px;font-size:8px;color:#374151;">+ 😊</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Tek Feed (Tab'lı)</h3>
+      <p>Hepsi tek akışta. Canlı oda paylaşımları normal postlar gibi feed'de görünür, üstte "CANLI ODA" rozeti alır. Tab'larla Keşfet / Odalar / Yarışmalar arasında geçiş.</p>
+    </div>
+  </div>
+
+</div>
