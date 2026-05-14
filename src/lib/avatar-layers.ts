@@ -98,6 +98,328 @@ export const BASE_HEAD_LAYER: AnimatedLayerDef = {
   ],
 };
 
+// ─── Warrior & Female Variant Layers ────────────────────────────────────────
+
+export const WARRIOR_BODY_LAYER: AnimatedLayerDef = {
+  id: 'warrior-body',
+  slot: 'body',
+  pixels: [
+    // neck
+    { x: 6, y: 9, w: 4, h: 1, color: '#E8B48A' },
+    // torso (more rectangular / armored)
+    { x: 2, y: 10, w: 12, h: 11, color: '#E8B48A' },
+    // left arm (wider shoulder)
+    { x: 0, y: 10, w: 3, h: 10, color: '#E8B48A' },
+    // right arm (wider shoulder)
+    { x: 13, y: 10, w: 3, h: 10, color: '#E8B48A' },
+    // hip connector
+    { x: 2, y: 21, w: 12, h: 1, color: '#D4956A' },
+    // left leg
+    { x: 3, y: 22, w: 4, h: 9, color: '#E8B48A' },
+    // right leg
+    { x: 9, y: 22, w: 4, h: 9, color: '#E8B48A' },
+    // feet
+    { x: 2, y: 30, w: 5, h: 2, color: '#D4956A' },
+    { x: 9, y: 30, w: 5, h: 2, color: '#D4956A' },
+  ],
+};
+
+export const WARRIOR_HEAD_LAYER: AnimatedLayerDef = {
+  id: 'warrior-head',
+  slot: 'head',
+  pixels: [
+    // head shape (more angular / squared)
+    { x: 3, y: 1, w: 10, h: 8, color: '#F5C89A' },
+    // forehead
+    { x: 4, y: 1, w: 8, h: 1, color: '#E8B48A' },
+    // left eye (narrower)
+    { x: 4, y: 3, w: 3, h: 2, color: '#FFFFFF' },
+    // right eye (narrower)
+    { x: 9, y: 3, w: 3, h: 2, color: '#FFFFFF' },
+    // left pupil
+    { x: 5, y: 3, w: 2, h: 2, color: '#1A1A2E' },
+    // right pupil
+    { x: 10, y: 3, w: 2, h: 2, color: '#1A1A2E' },
+    // eyebrow left (stern)
+    { x: 4, y: 2, w: 3, h: 1, color: '#1A1A2E' },
+    // eyebrow right (stern)
+    { x: 9, y: 2, w: 3, h: 1, color: '#1A1A2E' },
+    // nose
+    { x: 7, y: 5, w: 2, h: 2, color: '#D4956A' },
+    // mouth (straight / serious)
+    { x: 5, y: 7, w: 6, h: 1, color: '#C07050' },
+    // jaw line
+    { x: 3, y: 8, w: 10, h: 1, color: '#D4956A' },
+    // ear left
+    { x: 2, y: 3, w: 2, h: 4, color: '#E8B48A' },
+    // ear right
+    { x: 12, y: 3, w: 2, h: 4, color: '#E8B48A' },
+  ],
+};
+
+export const FEMALE_BASE_BODY_LAYER: AnimatedLayerDef = {
+  id: 'female-base-body',
+  slot: 'body',
+  pixels: [
+    // neck
+    { x: 6, y: 9, w: 4, h: 1, color: '#E8B48A' },
+    // torso (narrower waist)
+    { x: 4, y: 10, w: 8, h: 11, color: '#E8B48A' },
+    // left arm
+    { x: 2, y: 10, w: 3, h: 10, color: '#E8B48A' },
+    // right arm
+    { x: 11, y: 10, w: 3, h: 10, color: '#E8B48A' },
+    // hip connector (wider)
+    { x: 3, y: 21, w: 10, h: 1, color: '#D4956A' },
+    // left leg
+    { x: 4, y: 22, w: 4, h: 9, color: '#E8B48A' },
+    // right leg
+    { x: 8, y: 22, w: 4, h: 9, color: '#E8B48A' },
+    // feet
+    { x: 3, y: 30, w: 5, h: 2, color: '#D4956A' },
+    { x: 8, y: 30, w: 5, h: 2, color: '#D4956A' },
+  ],
+};
+
+export const FEMALE_BASE_HEAD_LAYER: AnimatedLayerDef = {
+  id: 'female-base-head',
+  slot: 'head',
+  pixels: [
+    // head shape (rounder)
+    { x: 3, y: 1, w: 10, h: 8, color: '#F5C89A' },
+    // forehead
+    { x: 4, y: 1, w: 8, h: 1, color: '#E8B48A' },
+    // left eye (bigger)
+    { x: 4, y: 3, w: 3, h: 3, color: '#FFFFFF' },
+    // right eye (bigger)
+    { x: 9, y: 3, w: 3, h: 3, color: '#FFFFFF' },
+    // left pupil
+    { x: 5, y: 4, w: 2, h: 2, color: '#1A1A2E' },
+    // right pupil
+    { x: 10, y: 4, w: 2, h: 2, color: '#1A1A2E' },
+    // left eye shine
+    { x: 5, y: 4, w: 1, h: 1, color: '#4A90E2' },
+    // right eye shine
+    { x: 10, y: 4, w: 1, h: 1, color: '#4A90E2' },
+    // nose (smaller)
+    { x: 7, y: 6, w: 2, h: 1, color: '#D4956A' },
+    // mouth
+    { x: 5, y: 7, w: 6, h: 1, color: '#C07050' },
+    // chin
+    { x: 4, y: 8, w: 8, h: 1, color: '#E8B48A' },
+    // ear left
+    { x: 2, y: 3, w: 2, h: 4, color: '#E8B48A' },
+    // ear right
+    { x: 12, y: 3, w: 2, h: 4, color: '#E8B48A' },
+  ],
+};
+
+export const FEMALE_WARRIOR_BODY_LAYER: AnimatedLayerDef = {
+  id: 'female-warrior-body',
+  slot: 'body',
+  pixels: [
+    // neck
+    { x: 6, y: 9, w: 4, h: 1, color: '#E8B48A' },
+    // torso
+    { x: 3, y: 10, w: 10, h: 11, color: '#E8B48A' },
+    // left arm (armored)
+    { x: 1, y: 10, w: 3, h: 10, color: '#E8B48A' },
+    // right arm (armored)
+    { x: 12, y: 10, w: 3, h: 10, color: '#E8B48A' },
+    // hip connector
+    { x: 3, y: 21, w: 10, h: 1, color: '#D4956A' },
+    // left leg
+    { x: 4, y: 22, w: 4, h: 9, color: '#E8B48A' },
+    // right leg
+    { x: 8, y: 22, w: 4, h: 9, color: '#E8B48A' },
+    // feet
+    { x: 3, y: 30, w: 5, h: 2, color: '#D4956A' },
+    { x: 8, y: 30, w: 5, h: 2, color: '#D4956A' },
+  ],
+};
+
+export const FEMALE_WARRIOR_HEAD_LAYER: AnimatedLayerDef = {
+  id: 'female-warrior-head',
+  slot: 'head',
+  pixels: [
+    // head shape
+    { x: 3, y: 1, w: 10, h: 8, color: '#F5C89A' },
+    // forehead
+    { x: 4, y: 1, w: 8, h: 1, color: '#E8B48A' },
+    // left eye (determined)
+    { x: 4, y: 3, w: 3, h: 2, color: '#FFFFFF' },
+    // right eye (determined)
+    { x: 9, y: 3, w: 3, h: 2, color: '#FFFFFF' },
+    // left pupil
+    { x: 5, y: 3, w: 2, h: 2, color: '#1A1A2E' },
+    // right pupil
+    { x: 10, y: 3, w: 2, h: 2, color: '#1A1A2E' },
+    // left eye shine
+    { x: 5, y: 3, w: 1, h: 1, color: '#4A90E2' },
+    // right eye shine
+    { x: 10, y: 3, w: 1, h: 1, color: '#4A90E2' },
+    // eyebrow left (focused)
+    { x: 4, y: 2, w: 3, h: 1, color: '#1A1A2E' },
+    // eyebrow right (focused)
+    { x: 9, y: 2, w: 3, h: 1, color: '#1A1A2E' },
+    // nose
+    { x: 7, y: 5, w: 2, h: 2, color: '#D4956A' },
+    // mouth (determined)
+    { x: 5, y: 7, w: 6, h: 1, color: '#C07050' },
+    // chin
+    { x: 4, y: 8, w: 8, h: 1, color: '#E8B48A' },
+    // ear left
+    { x: 2, y: 3, w: 2, h: 4, color: '#E8B48A' },
+    // ear right
+    { x: 12, y: 3, w: 2, h: 4, color: '#E8B48A' },
+  ],
+};
+
+// ─── Avatar Style Types ─────────────────────────────────────────────────────
+
+export type EyeStyle = 'big' | 'narrow' | 'anime' | 'round';
+export type MouthStyle = 'smile' | 'open' | 'serious' | 'neutral';
+export type HairStyle = 'short' | 'long' | 'spiky' | 'ponytail' | 'bald';
+export type StyleMode = 'cute' | 'warrior';
+export type Gender = 'male' | 'female';
+
+// ─── Color Palettes ─────────────────────────────────────────────────────────
+
+export const SKIN_COLORS = {
+  light: '#F5C89A',
+  medium: '#E8B48A',
+  tan: '#D4956A',
+  dark: '#C07050',
+  pale: '#FFDAB9',
+  warm: '#F0E6D3',
+};
+
+export const HAIR_COLORS = {
+  black: '#1A1A2E',
+  brown: '#92400E',
+  blonde: '#FFD700',
+  red: '#EF4444',
+  blue: '#22D3EE',
+  purple: '#A78BFA',
+  pink: '#FF69B4',
+};
+
+export const AURA_COLORS = {
+  fire: '#EF4444',
+  ice: '#22D3EE',
+  lightning: '#A78BFA',
+  dark: '#1A1A2E',
+  nature: '#34D399',
+  gold: '#FFD700',
+};
+
+// ─── Face Generation Helpers ────────────────────────────────────────────────
+
+export function generateEyes(style: EyeStyle, skinColor: string): PixelRect[] {
+  switch (style) {
+    case 'narrow':
+      return [
+        { x: 4, y: 4, w: 3, h: 1, color: '#FFFFFF' },
+        { x: 9, y: 4, w: 3, h: 1, color: '#FFFFFF' },
+        { x: 5, y: 4, w: 2, h: 1, color: '#1A1A2E' },
+        { x: 10, y: 4, w: 2, h: 1, color: '#1A1A2E' },
+      ];
+    case 'anime':
+      return [
+        { x: 3, y: 3, w: 4, h: 4, color: '#FFFFFF' },
+        { x: 9, y: 3, w: 4, h: 4, color: '#FFFFFF' },
+        { x: 4, y: 4, w: 2, h: 3, color: '#1A1A2E' },
+        { x: 10, y: 4, w: 2, h: 3, color: '#1A1A2E' },
+        { x: 4, y: 4, w: 1, h: 1, color: '#4A90E2' },
+        { x: 10, y: 4, w: 1, h: 1, color: '#4A90E2' },
+      ];
+    case 'round':
+      return [
+        { x: 4, y: 3, w: 3, h: 3, color: '#FFFFFF' },
+        { x: 9, y: 3, w: 3, h: 3, color: '#FFFFFF' },
+        { x: 5, y: 4, w: 2, h: 2, color: '#1A1A2E' },
+        { x: 10, y: 4, w: 2, h: 2, color: '#1A1A2E' },
+        { x: 5, y: 4, w: 1, h: 1, color: '#4A90E2' },
+        { x: 10, y: 4, w: 1, h: 1, color: '#4A90E2' },
+      ];
+    case 'big':
+    default:
+      return [
+        { x: 4, y: 3, w: 3, h: 3, color: '#FFFFFF' },
+        { x: 9, y: 3, w: 3, h: 3, color: '#FFFFFF' },
+        { x: 5, y: 4, w: 2, h: 2, color: '#1A1A2E' },
+        { x: 10, y: 4, w: 2, h: 2, color: '#1A1A2E' },
+        { x: 5, y: 4, w: 1, h: 1, color: '#4A90E2' },
+        { x: 10, y: 4, w: 1, h: 1, color: '#4A90E2' },
+      ];
+  }
+}
+
+export function generateMouth(style: MouthStyle): PixelRect[] {
+  switch (style) {
+    case 'open':
+      return [
+        { x: 5, y: 7, w: 6, h: 2, color: '#C07050' },
+        { x: 6, y: 7, w: 4, h: 2, color: '#1A1A2E' },
+      ];
+    case 'serious':
+      return [
+        { x: 5, y: 7, w: 6, h: 1, color: '#A06040' },
+      ];
+    case 'neutral':
+      return [
+        { x: 6, y: 7, w: 4, h: 1, color: '#C07050' },
+      ];
+    case 'smile':
+    default:
+      return [
+        { x: 5, y: 7, w: 6, h: 1, color: '#C07050' },
+        { x: 5, y: 7, w: 1, h: 1, color: '#A06040' },
+        { x: 10, y: 7, w: 1, h: 1, color: '#A06040' },
+      ];
+  }
+}
+
+export function generateCheeks(): PixelRect[] {
+  return [
+    { x: 2, y: 5, w: 2, h: 2, color: '#FF8FA080' },
+    { x: 12, y: 5, w: 2, h: 2, color: '#FF8FA080' },
+  ];
+}
+
+export function generateHair(style: HairStyle, color: string): PixelRect[] {
+  switch (style) {
+    case 'long':
+      return [
+        { x: 3, y: 1, w: 10, h: 2, color },
+        { x: 2, y: 2, w: 2, h: 8, color },
+        { x: 12, y: 2, w: 2, h: 8, color },
+        { x: 4, y: 0, w: 8, h: 1, color },
+      ];
+    case 'spiky':
+      return [
+        { x: 3, y: 1, w: 10, h: 2, color },
+        { x: 4, y: 0, w: 2, h: 1, color },
+        { x: 7, y: 0, w: 2, h: 1, color },
+        { x: 10, y: 0, w: 2, h: 1, color },
+      ];
+    case 'ponytail':
+      return [
+        { x: 3, y: 1, w: 10, h: 2, color },
+        { x: 4, y: 0, w: 8, h: 1, color },
+        { x: 11, y: 2, w: 2, h: 5, color },
+      ];
+    case 'bald':
+      return [];
+    case 'short':
+    default:
+      return [
+        { x: 3, y: 1, w: 10, h: 2, color },
+        { x: 4, y: 0, w: 8, h: 1, color },
+      ];
+  }
+}
+
 // ─── AVATAR_LAYER_MAP ────────────────────────────────────────────────────────
 // Maps every equippable MarketItem.id to its AnimatedLayerDef.
 // background items have no SVG layer — they are rendered as CSS background.

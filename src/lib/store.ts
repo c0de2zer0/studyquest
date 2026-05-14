@@ -214,6 +214,10 @@ export interface StoreState {
   // Badges
   badges: Badge[];
 
+  // Tetris
+  tetrisHighScore: number;
+  saveTetrisScore: (score: number, lines: number, elapsed: number) => void;
+
   // Analytics data
   dailyHours: number[];
   subjectDistribution: SubjectDistribution[];
@@ -687,6 +691,12 @@ export const useStore = create<StoreState>((set, get) => ({
 
   // Badges
   badges: [...mockBadges],
+
+  // Tetris
+  tetrisHighScore: 0,
+  saveTetrisScore: (score, lines, elapsed) => set(s => ({
+    tetrisHighScore: Math.max(s.tetrisHighScore, score),
+  })),
 
   // Analytics data
   dailyHours: [...mockDailyHours],
