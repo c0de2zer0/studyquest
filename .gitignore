@@ -17,3 +17,4 @@ graphify-out/
 # Build cache files - Railway mount conflict
 tsconfig.tsbuildinfo
 .next/
+.nixpacks/
