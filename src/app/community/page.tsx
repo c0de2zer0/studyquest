@@ -237,7 +237,7 @@ function MyRoomCard() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        'sticky top-[60px] z-30 rounded-2xl border p-4',
+        'sticky top-[60px] z-10 rounded-2xl border p-4',
         'bg-gradient-to-br from-purple-900/20 via-[var(--bg-card)] to-cyan-900/10',
         'border-purple-500/20 shadow-lg shadow-purple-500/5 backdrop-blur-xl'
       )}

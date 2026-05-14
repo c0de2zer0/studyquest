@@ -1,0 +1,216 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: SQ
+        - generic [ref=e7]: StudyQuest
+      - navigation [ref=e8]:
+        - link "Dashboard" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e10]:
+            - img [ref=e12]
+            - generic [ref=e17]: Dashboard
+        - link "Timer" [ref=e19] [cursor=pointer]:
+          - /url: /timer
+          - generic [ref=e20]:
+            - img [ref=e21]
+            - generic [ref=e24]: Timer
+        - link "Plan" [ref=e25] [cursor=pointer]:
+          - /url: /plan
+          - generic [ref=e26]:
+            - img [ref=e27]
+            - generic [ref=e29]: Plan
+        - link "Avatar" [ref=e30] [cursor=pointer]:
+          - /url: /avatar
+          - generic [ref=e31]:
+            - img [ref=e32]
+            - generic [ref=e35]: Avatar
+        - link "Market" [ref=e36] [cursor=pointer]:
+          - /url: /market
+          - generic [ref=e37]:
+            - img [ref=e38]
+            - generic [ref=e41]: Market
+        - link "Community" [ref=e42] [cursor=pointer]:
+          - /url: /community
+          - generic [ref=e43]:
+            - img [ref=e44]
+            - generic [ref=e49]: Community
+        - link "Tournament" [ref=e50] [cursor=pointer]:
+          - /url: /tournament
+          - generic [ref=e51]:
+            - img [ref=e52]
+            - generic [ref=e61]: Tournament
+        - link "Leaderboard" [ref=e62] [cursor=pointer]:
+          - /url: /leaderboard
+          - generic [ref=e63]:
+            - img [ref=e64]
+            - generic [ref=e70]: Leaderboard
+        - link "Rando" [ref=e71] [cursor=pointer]:
+          - /url: /rando
+          - generic [ref=e72]:
+            - img [ref=e73]
+            - generic [ref=e79]: Rando
+        - link "Analytics" [ref=e80] [cursor=pointer]:
+          - /url: /analytics
+          - generic [ref=e81]:
+            - img [ref=e82]
+            - generic [ref=e84]: Analytics
+        - link "Games" [ref=e85] [cursor=pointer]:
+          - /url: /games
+          - generic [ref=e86]:
+            - img [ref=e87]
+            - generic [ref=e89]: Games
+        - link "Profile" [ref=e90] [cursor=pointer]:
+          - /url: /profile
+          - generic [ref=e91]:
+            - img [ref=e92]
+            - generic [ref=e95]: Profile
+      - generic [ref=e96]:
+        - generic [ref=e97]:
+          - generic [ref=e98]: 🦊
+          - generic [ref=e99]:
+            - paragraph [ref=e100]: Shadow Fox
+            - paragraph [ref=e101]: Altın IV · Lv.14
+        - button "Dark Mode" [ref=e102]:
+          - img [ref=e103]
+          - generic [ref=e105]: Dark Mode
+    - main [ref=e106]:
+      - generic [ref=e108]:
+        - generic [ref=e109]:
+          - generic [ref=e110]:
+            - heading "Merhaba, 🦊 Shadow Fox" [level=1] [ref=e111]
+            - paragraph [ref=e112]: Bugün öğrenmeye hazır mısın?
+          - generic [ref=e113]:
+            - generic [ref=e114]: 🦉
+            - generic [ref=e115]:
+              - paragraph [ref=e116]: Altın IV
+              - paragraph [ref=e117]: Bilge · 247 saat
+        - generic [ref=e118]:
+          - generic [ref=e120]:
+            - img [ref=e122]
+            - generic [ref=e124]:
+              - paragraph [ref=e125]: Seri
+              - paragraph [ref=e126]: 23 gün
+          - generic [ref=e128]:
+            - img [ref=e130]
+            - generic [ref=e133]:
+              - paragraph [ref=e134]: Bugün
+              - paragraph [ref=e135]: 4sa 12dk
+          - generic [ref=e137]:
+            - img [ref=e139]
+            - generic [ref=e143]:
+              - paragraph [ref=e144]: Hedef
+              - paragraph [ref=e145]: 89 gün
+          - generic [ref=e147]:
+            - img [ref=e149]
+            - generic [ref=e152]:
+              - paragraph [ref=e153]: XP
+              - paragraph [ref=e154]: "3.420"
+        - generic [ref=e155]:
+          - generic [ref=e156]:
+            - generic [ref=e157]:
+              - generic [ref=e158]:
+                - heading "Bugünkü Görevler" [level=2] [ref=e159]:
+                  - img [ref=e160]
+                  - text: Bugünkü Görevler
+                - generic [ref=e162]: 4 aktif
+              - generic [ref=e163]:
+                - generic [ref=e164]:
+                  - generic [ref=e166]:
+                    - paragraph [ref=e167]: Türev ve İntegral
+                    - paragraph [ref=e168]: 📐 Matematik · 09:00-11:00
+                  - generic [ref=e169]: ✓
+                - generic [ref=e170]:
+                  - generic [ref=e172]:
+                    - paragraph [ref=e173]: Elektrik Devreleri
+                    - paragraph [ref=e174]: ⚡ Fizik · 11:30-13:00
+                  - generic [ref=e175]: ○
+                - generic [ref=e176]:
+                  - generic [ref=e178]:
+                    - paragraph [ref=e179]: Organik Kimya
+                    - paragraph [ref=e180]: ⚗️ Kimya · 14:00-15:30
+                  - generic [ref=e181]: ○
+                - generic [ref=e182]:
+                  - generic [ref=e184]:
+                    - paragraph [ref=e185]: Hücre Bölünmesi
+                    - paragraph [ref=e186]: 🌿 Biyoloji · 16:00-17:00
+                  - generic [ref=e187]: ○
+                - generic [ref=e188]:
+                  - generic [ref=e190]:
+                    - paragraph [ref=e191]: Şiir Analizi
+                    - paragraph [ref=e192]: 📖 Edebiyat · 17:30-18:30
+                  - generic [ref=e193]: ○
+            - generic [ref=e194]:
+              - generic [ref=e195]:
+                - heading "Haftal\\u0131k \\u00c7al\\u0131\\u015fma" [level=2] [ref=e196]:
+                  - img [ref=e197]
+                  - text: Haftal\u0131k \u00c7al\u0131\u015fma
+                - generic [ref=e203]: 6.920 XP
+              - generic [ref=e204]:
+                - generic [ref=e207]: Pzt
+                - generic [ref=e210]: Sal
+                - generic [ref=e213]: Çar
+                - generic [ref=e216]: Per
+                - generic [ref=e219]: Cum
+                - generic [ref=e222]: Cmt
+                - generic [ref=e225]: Paz
+            - generic [ref=e226]:
+              - generic [ref=e227]:
+                - heading "Seviye \\u0130lerlemesi" [level=3] [ref=e228]
+                - generic [ref=e229]: Lv.14
+              - generic [ref=e233]: 3420/5000
+          - generic [ref=e234]:
+            - generic [ref=e235]:
+              - heading "H\\u0131zl\\u0131 \\u0130\\u015flemler" [level=2] [ref=e236]
+              - generic [ref=e237]:
+                - link "Çalışmaya Başla" [ref=e238] [cursor=pointer]:
+                  - /url: /timer
+                  - generic [ref=e239]:
+                    - img [ref=e240]
+                    - generic [ref=e242]: Çalışmaya Başla
+                - link "Planla" [ref=e243] [cursor=pointer]:
+                  - /url: /plan
+                  - generic [ref=e244]:
+                    - img [ref=e245]
+                    - generic [ref=e247]: Planla
+                - link "Topluluk" [ref=e248] [cursor=pointer]:
+                  - /url: /community
+                  - generic [ref=e249]:
+                    - img [ref=e250]
+                    - generic [ref=e255]: Topluluk
+                - link "Sıralama" [ref=e256] [cursor=pointer]:
+                  - /url: /leaderboard
+                  - generic [ref=e257]:
+                    - img [ref=e258]
+                    - generic [ref=e264]: Sıralama
+            - generic [ref=e265]:
+              - generic [ref=e266]:
+                - heading "Arkada\\u015flar" [level=2] [ref=e267]
+                - generic [ref=e268]: 3 \u00e7evrimi\u00e7i
+              - generic [ref=e269]:
+                - generic [ref=e270]:
+                  - generic [ref=e271]: 🐺
+                  - generic [ref=e273]:
+                    - paragraph [ref=e274]: NightWolf
+                    - paragraph [ref=e275]: Matematik çalışıyor · 1sa 20dk
+                  - generic [ref=e276]: Lv.16
+                - generic [ref=e277]:
+                  - generic [ref=e278]: ⭐
+                  - generic [ref=e280]:
+                    - paragraph [ref=e281]: StarGazer
+                    - paragraph [ref=e282]: Mola – 8 dk önce
+                  - generic [ref=e283]: Lv.11
+                - generic [ref=e284]:
+                  - generic [ref=e285]: 🧠
+                  - generic [ref=e287]:
+                    - paragraph [ref=e288]: IronMind
+                    - paragraph [ref=e289]: Rahatsız etme modu
+                  - generic [ref=e290]: Lv.19
+                - generic [ref=e291]:
+                  - generic [ref=e292]: 🌅
+                  - generic [ref=e294]:
+                    - paragraph [ref=e295]: DawnRider
+                    - paragraph [ref=e296]: 2 saat önce çevrimiçiydi
+                  - generic [ref=e297]: Lv.8
+  - button "Open Next.js Dev Tools" [ref=e303] [cursor=pointer]:
+    - img [ref=e304]

@@ -1,0 +1,40 @@
+{
+  "scenarioName": "mobile-layout-check",
+  "status": "pass",
+  "totalSteps": 4,
+  "passedSteps": 4,
+  "failedSteps": 0,
+  "skippedSteps": 0,
+  "duration": 238,
+  "steps": [
+    {
+      "stepIndex": 0,
+      "stepName": "Navigate to homepage",
+      "action": "navigate",
+      "status": "pass",
+      "duration": 121
+    },
+    {
+      "stepIndex": 1,
+      "stepName": "Take mobile screenshot",
+      "action": "screenshot",
+      "status": "pass",
+      "duration": 78,
+      "screenshotPath": "/home/behlul/studyquest/.browser-sessions/scenarios/mobile-layout-check-1778755287168/screenshots/1-mobile-homepage.png"
+    },
+    {
+      "stepIndex": 2,
+      "stepName": "Check no console errors",
+      "action": "assert",
+      "status": "pass",
+      "duration": 0
+    },
+    {
+      "stepIndex": 3,
+      "stepName": "Check content is visible",
+      "action": "assert",
+      "status": "pass",
+      "duration": 38
+    }
+  ]
+}
