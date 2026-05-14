@@ -29,7 +29,7 @@ export default function AnalyticsPage() {
     <motion.div variants={containerVariants} initial="hidden" animate="show" className="space-y-8">
       {/* Header */}
       <motion.div variants={itemVariants}>
-        <h1 className="text-3xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+        <h1 className="text-2xl md:text-3xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
           Analitik
         </h1>
         <p className="mt-1" style={{ color: 'var(--text-secondary)' }}>
@@ -38,7 +38,7 @@ export default function AnalyticsPage() {
       </motion.div>
 
       {/* Summary Cards */}
-      <motion.div variants={itemVariants} className="grid grid-cols-4 gap-4">
+      <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         {[
           { icon: Clock, label: 'Bu Ay', value: formatHours(totalMonth), color: '#00f0ff' },
           { icon: Flame, label: 'Seri', value: `${user.streak} gun`, color: '#ffd700' },
@@ -158,7 +158,7 @@ export default function AnalyticsPage() {
       </motion.div>
 
       {/* Stats Grid */}
-      <motion.div variants={itemVariants} className="grid grid-cols-3 gap-4">
+      <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
         {[
           { label: 'Ort. Gunluk', value: formatHours(totalMonth / 30), color: '#00f0ff' },
           { label: 'En Iyi Gun', value: formatHours(maxVal), color: '#ffd700' },

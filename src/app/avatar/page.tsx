@@ -416,7 +416,7 @@ export default function AvatarPage() {
                 <Medal className="w-4 h-4 text-[#ffd700]" />
                 H\u0131zl\u0131 \u0130statistikler
               </h3>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
                   { icon: Clock, label: 'Toplam', value: formatHours(user.totalHours), color: '#00f0ff' },
                   { icon: Flame, label: 'Seri', value: `${user.streak} g\u00fcn`, color: '#ffd700' },

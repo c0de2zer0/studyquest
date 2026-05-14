@@ -35,9 +35,9 @@ export default function DashboardPage() {
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-8">
       {/* Welcome + Rank Badge */}
-      <motion.div variants={item} className="flex items-center justify-between">
+      <motion.div variants={item} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
             Merhaba, {user.emoji} {user.name}
           </h1>
           <p className="mt-1" style={{ color: 'var(--text-secondary)' }}>
@@ -63,17 +63,17 @@ export default function DashboardPage() {
       </motion.div>
 
       {/* Stats Grid */}
-      <motion.div variants={item} className="grid grid-cols-4 gap-4">
+      <motion.div variants={item} className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <StatCard icon={Flame} label="Seri" value={`${user.streak} gün`} color="#ffd700" />
         <StatCard icon={Clock} label="Bugün" value={formatHours(user.todayHours)} color="#00f0ff" />
         <StatCard icon={Target} label="Hedef" value={`${user.examDaysLeft} gün`} color="#8b5cf6" />
         <StatCard icon={TrendingUp} label="XP" value={user.xp.toLocaleString()} color="#10b981" />
       </motion.div>
 
-      {/* Main Grid: 2 columns */}
-      <div className="grid grid-cols-3 gap-6">
+      {/* Main Grid: responsive */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Left: Tasks + Weekly Chart */}
-        <div className="col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           {/* Today's Tasks */}
           <Card>
             <div className="flex items-center justify-between mb-4">
@@ -184,7 +184,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Right: Friends + Quick Actions */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Quick Actions */}
           <Card>
             <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>

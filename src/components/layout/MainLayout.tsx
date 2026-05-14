@@ -19,8 +19,10 @@ export default function MainLayout({ children }: MainLayoutProps) {
     >
       <Sidebar />
       <ToastContainer />
-      <main className="pl-64 min-h-screen">
-        <div className="max-w-7xl mx-auto px-8 py-8">
+      {/* Mobile hamburger spacer */}
+      <div className="lg:hidden h-16" />
+      <main className="lg:pl-64 min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
           {children}
         </div>
       </main>

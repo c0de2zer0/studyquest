@@ -96,7 +96,8 @@ export default function PlanPage() {
 
   // ── Week View ──────────────────────────────────────────────────────────
   const renderWeekView = () => (
-    <div className="grid grid-cols-7 gap-3">
+    <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+      <div className="grid grid-cols-7 gap-3 min-w-[600px] sm:min-w-0">
       {weekDays.map((date, idx) => {
         const dayKey = DAY_KEYS[idx];
         const sessions: Session[] = weeklyCalendar[dayKey] ?? [];
@@ -183,6 +184,7 @@ export default function PlanPage() {
           </motion.div>
         );
       })}
+    </div>
     </div>
   );
 

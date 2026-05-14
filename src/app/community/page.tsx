@@ -786,7 +786,7 @@ function UserProfileModal({
           </div>
 
           {/* Stats row */}
-          <div className="grid grid-cols-4 gap-0 mb-4 rounded-xl overflow-hidden border border-[var(--border-subtle)]">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-0 mb-4 rounded-xl overflow-hidden border border-[var(--border-subtle)]">
             {stats.map((s, i) => (
               <div
                 key={s.label}

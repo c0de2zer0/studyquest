@@ -252,7 +252,7 @@ export default function RandoPage() {
                   Ders
                 </h2>
               </div>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {SUBJECTS.map((subject) => (
                   <motion.button
                     key={subject.id}

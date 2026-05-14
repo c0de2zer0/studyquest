@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, Timer, Calendar, User as UserIcon, ShoppingBag, Users,
   Swords, Shuffle, Trophy, BarChart3, Settings, Gamepad2,
-  Moon, Sun,
+  Moon, Sun, Menu, X,
 } from 'lucide-react';
 import { mockUser } from '@/lib/mock-data';
 import type { User as UserType } from '@/lib/mock-data';
@@ -37,6 +37,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   const activeTab = pathname === '/' ? 'dashboard' : (pathname.slice(1) as TabId);
   const [dark, setDark] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   // On mount, read localStorage preference
   useEffect(() => {
@@ -51,6 +52,21 @@ export default function Sidebar() {
     }
   }, []);
 
+  // Close mobile sidebar on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  // Prevent body scroll when mobile sidebar is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileOpen]);
+
   const toggleTheme = () => {
     const next = !dark;
     setDark(next);
@@ -64,80 +80,118 @@ export default function Sidebar() {
   };
 
   return (
-    <aside
-      className="fixed left-0 top-0 h-screen w-64 z-40 flex flex-col backdrop-blur-xl"
-      style={{
-        backgroundColor: 'var(--sidebar-bg)',
-        borderRight: '1px solid var(--sidebar-border)',
-      }}
-    >
-      {/* Logo */}
-      <div
-        className="flex items-center gap-3 px-6 h-16 shrink-0"
-        style={{ borderBottom: '1px solid var(--sidebar-border)' }}
+    <>
+      {/* Mobile hamburger button */}
+      <button
+        onClick={() => setMobileOpen(!mobileOpen)}
+        className="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 rounded-xl flex items-center justify-center"
+        style={{
+          backgroundColor: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
+          color: 'var(--text-primary)',
+        }}
+        aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'}
       >
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center">
-          <span className="text-white text-sm font-bold">SQ</span>
+        {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+      </button>
+
+      {/* Mobile backdrop */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+            onClick={() => setMobileOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Sidebar */}
+      <aside
+        className={cn(
+          'fixed left-0 top-0 h-screen w-64 z-40 flex flex-col backdrop-blur-xl',
+          // On mobile: slide in/out
+          'lg:translate-x-0 transition-transform duration-300 ease-in-out',
+          mobileOpen ? 'translate-x-0' : '-translate-x-full',
+        )}
+        style={{
+          backgroundColor: 'var(--sidebar-bg)',
+          borderRight: '1px solid var(--sidebar-border)',
+        }}
+      >
+        {/* Logo */}
+        <div
+          className="flex items-center gap-3 px-6 h-16 shrink-0"
+          style={{ borderBottom: '1px solid var(--sidebar-border)' }}
+        >
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center">
+            <span className="text-white text-sm font-bold">SQ</span>
+          </div>
+          <span style={{ color: 'var(--text-primary)' }} className="font-semibold tracking-tight">
+            StudyQuest
+          </span>
         </div>
-        <span style={{ color: 'var(--text-primary)' }} className="font-semibold tracking-tight">
-          StudyQuest
-        </span>
-      </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
-        {navItems.map((item) => {
-          const isActive = activeTab === item.id;
-          return (
-            <Link key={item.id} href={item.href}>
-              <motion.div
-                whileHover={{ x: 2 }}
-                className={cn(
-                  'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors relative',
-                )}
-                style={{
-                  color: isActive ? 'var(--text-primary)' : 'var(--text-muted)',
-                  backgroundColor: isActive ? 'var(--active-bg)' : 'transparent',
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.backgroundColor = 'var(--hover-bg)';
-                    e.currentTarget.style.color = 'var(--text-secondary)';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = 'var(--text-muted)';
-                  }
-                }}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="sidebar-active"
-                    className="absolute inset-0 rounded-xl"
-                    style={{ backgroundColor: 'var(--active-bg)' }}
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-                <item.icon className="w-4 h-4 relative z-10" />
-                <span className="relative z-10">{item.label}</span>
-                {isActive && (
-                  <motion.div
-                    layoutId="sidebar-indicator"
-                    className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-cyan-400 rounded-full"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </motion.div>
-            </Link>
-          );
-        })}
-      </nav>
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+          {navItems.map((item) => {
+            const isActive = activeTab === item.id;
+            return (
+              <Link key={item.id} href={item.href}>
+                <motion.div
+                  whileHover={{ x: 2 }}
+                  className={cn(
+                    'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors relative',
+                    // Ensure touch targets are at least 44px
+                    'min-h-[44px]',
+                  )}
+                  style={{
+                    color: isActive ? 'var(--text-primary)' : 'var(--text-muted)',
+                    backgroundColor: isActive ? 'var(--active-bg)' : 'transparent',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.backgroundColor = 'var(--hover-bg)';
+                      e.currentTarget.style.color = 'var(--text-secondary)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = 'var(--text-muted)';
+                    }
+                  }}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="sidebar-active"
+                      className="absolute inset-0 rounded-xl"
+                      style={{ backgroundColor: 'var(--active-bg)' }}
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <item.icon className="w-4 h-4 relative z-10 shrink-0" />
+                  <span className="relative z-10">{item.label}</span>
+                  {isActive && (
+                    <motion.div
+                      layoutId="sidebar-indicator"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-cyan-400 rounded-full"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </motion.div>
+              </Link>
+            );
+          })}
+        </nav>
 
-      {/* User mini profile + Theme toggle */}
-      <SidebarFooter user={mockUser} dark={dark} onToggleTheme={toggleTheme} />
-    </aside>
+        {/* User mini profile + Theme toggle */}
+        <SidebarFooter user={mockUser} dark={dark} onToggleTheme={toggleTheme} />
+      </aside>
+    </>
   );
 }
 
@@ -173,7 +227,7 @@ function SidebarFooter({
       {/* Theme toggle */}
       <button
         onClick={onToggleTheme}
-        className="flex items-center justify-center gap-2 w-full py-2 rounded-xl text-sm font-medium transition-colors"
+        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-medium transition-colors min-h-[44px]"
         style={{
           color: 'var(--text-secondary)',
           backgroundColor: 'var(--badge-bg)',

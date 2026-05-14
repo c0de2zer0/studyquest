@@ -88,7 +88,7 @@ export default function ProfilePage() {
           </Card>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             {[
               { icon: Zap, label: 'Toplam XP', value: user.xp.toLocaleString(), color: '#8b5cf6' },
               { icon: Coins, label: 'Bakiye', value: `${user.balance}`, color: '#ca8a04' },
@@ -105,7 +105,7 @@ export default function ProfilePage() {
           {/* Badges */}
           <Card>
             <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Rozetler</h2>
-            <div className="grid grid-cols-6 gap-3">
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
               {badges.map((badge) => (
                 <div
                   key={badge.id}
