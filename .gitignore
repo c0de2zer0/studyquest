@@ -1,55 +1,13 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-studyquestfronthandversiyon1/node_modules
-studyquestfronthandversiyon1/.next
-
-# StudyQuest redesign backups (not part of main app)
-/studyquestfronthandversiyon1/node_modules
-/studyquestfronthandversiyon1/.next
-/redesign-huashu/node_modules
-/redesign-huashu/.next
-/redesign-v2/node_modules
-/redesign-v2/.next
-/redesign-merged/node_modules
-/redesign-merged/.next
-/studyquesteskifronthand
-/graphify-out
+node_modules/
+.next/
+*.log
+.env
+.env.local
+.env.*.local
+studyquesteskifronthand/
+redesign-huashu/
+redesign-v2/
+redesign-merged/
+studyquestfronthandversiyon1/
+graphify-out/
+*.sst
